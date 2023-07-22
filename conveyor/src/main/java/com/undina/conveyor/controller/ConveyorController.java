@@ -1,7 +1,9 @@
 package com.undina.conveyor.controller;
 
+import com.undina.conveyor.dto.CreditDTO;
 import com.undina.conveyor.dto.LoanApplicationRequestDTO;
 import com.undina.conveyor.dto.LoanOfferDTO;
+import com.undina.conveyor.dto.ScoringDataDTO;
 import com.undina.conveyor.service.ConveyorService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,5 +27,12 @@ public class ConveyorController {
         log.info("getLoanOffers: " + loanApplicationRequestDTO.toString());
         return ResponseEntity.ok()
                 .body( conveyorService.getLoanOffers(loanApplicationRequestDTO));
+    }
+
+    @PostMapping("/calculation")
+    public ResponseEntity<CreditDTO> getCalculation(@RequestBody ScoringDataDTO scoringDataDTO) {
+        log.info("getCalculation: " + scoringDataDTO.toString());
+        return ResponseEntity.ok()
+                .body( conveyorService.getCalculation(scoringDataDTO));
     }
 }
