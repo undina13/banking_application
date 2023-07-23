@@ -10,8 +10,8 @@ import java.lang.annotation.RetentionPolicy;
 @Past
 public @interface ValidateDate {
     String message() default "Вам должно быть 18 лет";
-    Class<?>[] groups() default {};
-    Class<?>[] payload() default {};
 
-  //  String value() default date;
+    Class<?>[] groups() default {};
+
+    Class<?>[] payload() default {};
 }

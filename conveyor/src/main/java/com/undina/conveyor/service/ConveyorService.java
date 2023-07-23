@@ -18,12 +18,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ConveyorService {
 
-    private  final OfferService offerService;
+    private final OfferService offerService;
+
     public List<LoanOfferDTO> getLoanOffers(@Valid LoanApplicationRequestDTO loanApplicationRequestDTO) {
-        return  null;
+        log.info("getLoanOffers " + loanApplicationRequestDTO.toString());
+        return offerService.generateOffers(loanApplicationRequestDTO);
     }
 
     public CreditDTO getCalculation(@Valid ScoringDataDTO scoringDataDTO) {
-        return  null;
+        log.info("getCalculation " + scoringDataDTO.toString());
+        return null;
     }
 }
