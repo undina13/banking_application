@@ -19,6 +19,7 @@ import java.util.List;
 public class ConveyorService {
 
     private final OfferService offerService;
+    private final CreditService creditService;
 
     public List<LoanOfferDTO> getLoanOffers(@Valid LoanApplicationRequestDTO loanApplicationRequestDTO) {
         log.info("getLoanOffers " + loanApplicationRequestDTO.toString());
@@ -27,6 +28,6 @@ public class ConveyorService {
 
     public CreditDTO getCalculation(@Valid ScoringDataDTO scoringDataDTO) {
         log.info("getCalculation " + scoringDataDTO.toString());
-        return null;
+        return creditService.getCalculation(scoringDataDTO);
     }
 }

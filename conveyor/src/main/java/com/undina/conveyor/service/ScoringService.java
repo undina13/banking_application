@@ -11,8 +11,7 @@ import java.math.RoundingMode;
 @Service
 @Slf4j
 public class ScoringService {
-    @Value("${base_rate}")
-    private BigDecimal baseRate;
+
     @Value("${insurance_rate}")
     private BigDecimal insuranceRate;
     @Value("${salary_rate}")
@@ -25,16 +24,15 @@ public class ScoringService {
                 isInsuranceEnabled, term);
         if (isInsuranceEnabled) {
             BigDecimal insurancePrice = amount.multiply(insurancePercentPrice.divide(BigDecimal.valueOf(100), MathContext.DECIMAL128)).multiply(BigDecimal.valueOf(term));
-            insurancePrice = insurancePrice.setScale(2);
+            insurancePrice = insurancePrice.setScale(2, RoundingMode.HALF_UP);
             return amount.add(insurancePrice);
         } else {
             return amount;
         }
     }
 
-    public BigDecimal calculateRate(Boolean isInsuranceEnabled, Boolean isSalaryClient) {
+    public BigDecimal calculateRate(Boolean isInsuranceEnabled, Boolean isSalaryClient, BigDecimal rate) {
         log.info("calculateRate - isInsuranceEnabled: {}, isSalaryClient: {}", isInsuranceEnabled, isSalaryClient);
-        BigDecimal rate = baseRate;
 
         if (isInsuranceEnabled) {
             rate = rate.subtract(insuranceRate);

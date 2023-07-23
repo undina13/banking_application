@@ -4,6 +4,7 @@ import com.undina.conveyor.dto.LoanApplicationRequestDTO;
 import com.undina.conveyor.dto.LoanOfferDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -17,6 +18,9 @@ import java.util.List;
 @Slf4j
 public class OfferService {
     private final ScoringService scoringService;
+
+    @Value("${base_rate}")
+    private BigDecimal baseRate;
 
     public List<LoanOfferDTO> generateOffers(LoanApplicationRequestDTO loanApplicationRequestDTO) {
         log.info("generateOffers " + loanApplicationRequestDTO.toString());
@@ -34,7 +38,7 @@ public class OfferService {
                                      LoanApplicationRequestDTO loanApplicationRequestDTO) {
         BigDecimal totalAmount = scoringService.evaluateTotalAmountByServices(loanApplicationRequestDTO.getAmount(),
                 isInsuranceEnabled, loanApplicationRequestDTO.getTerm());
-        BigDecimal rate = scoringService.calculateRate(isInsuranceEnabled, isSalaryClient);
+        BigDecimal rate = scoringService.calculateRate(isInsuranceEnabled, isSalaryClient, baseRate);
         return LoanOfferDTO.builder()
                 .requestedAmount(loanApplicationRequestDTO.getAmount())
                 .totalAmount(totalAmount)
