@@ -1,5 +1,6 @@
 package com.undina.conveyor.dto;
 
+import lombok.Builder;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 import util.ValidateDate;
@@ -12,6 +13,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
+@Builder
 public class LoanApplicationRequestDTO {
     @Min(10000)
     @NotNull

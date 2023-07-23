@@ -25,6 +25,7 @@ public class ScoringService {
                 isInsuranceEnabled, term);
         if (isInsuranceEnabled) {
             BigDecimal insurancePrice = amount.multiply(insurancePercentPrice.divide(BigDecimal.valueOf(100), MathContext.DECIMAL128)).multiply(BigDecimal.valueOf(term));
+            insurancePrice = insurancePrice.setScale(2);
             return amount.add(insurancePrice);
         } else {
             return amount;
@@ -41,7 +42,6 @@ public class ScoringService {
         if (isSalaryClient) {
             rate = rate.subtract(salaryRate);
         }
-
         return rate;
     }
 
