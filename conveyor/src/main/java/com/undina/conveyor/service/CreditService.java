@@ -108,11 +108,11 @@ public class CreditService {
                                                                  BigDecimal monthlyPayment, BigDecimal totalAmount) {
         List<PaymentScheduleElement> paymentScheduleElements = new ArrayList<>();
         BigDecimal interestPayment = monthlyPayment.subtract(amount.divide(BigDecimal.valueOf(term),
-                MathContext.DECIMAL128));
-        BigDecimal debtPayment = monthlyPayment.subtract(interestPayment);
+                MathContext.DECIMAL128)).setScale(2, RoundingMode.HALF_DOWN);
+        BigDecimal debtPayment = monthlyPayment.subtract(interestPayment).setScale(2, RoundingMode.HALF_DOWN);
         LocalDate date = LocalDate.now();
         BigDecimal remainingDebt = totalAmount;
-        for (int i = 1; i <= term; i++) {
+        for (int i = 1; i < term; i++) {
             date = date.plusMonths(1);
             remainingDebt = remainingDebt.subtract(monthlyPayment);
             paymentScheduleElements.add(PaymentScheduleElement.builder()
@@ -124,17 +124,17 @@ public class CreditService {
                     .remainingDebt(remainingDebt)
                     .build());
         }
-        if(!remainingDebt.equals(BigDecimal.valueOf(0))){
-            date = date.plusMonths(1);
+
+
             paymentScheduleElements.add(PaymentScheduleElement.builder()
-                    .number(term + 1)
-                    .date(date)
+                    .number(term)
+                    .date(date.plusMonths(1))
                     .totalPayment(remainingDebt)
-                    .interestPayment(BigDecimal.valueOf(0))
-                    .debtPayment(BigDecimal.valueOf(0))
+                    .interestPayment(interestPayment)
+                    .debtPayment(remainingDebt.subtract(interestPayment).setScale(2, RoundingMode.HALF_DOWN))
                     .remainingDebt(BigDecimal.valueOf(0))
                     .build());
-        }
+
         return paymentScheduleElements;
     }
 }
