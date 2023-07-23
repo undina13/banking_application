@@ -33,7 +33,8 @@ public class ConveyorControllerTest {
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
-                .andExpect(content().json(mapper.writeValueAsString(List.of(loanOfferDTO1, loanOfferDTO2, loanOfferDTO3, loanOfferDTO4))));
+                .andExpect(content().json(mapper.writeValueAsString(List.of(loanOfferDTO1, loanOfferDTO2, loanOfferDTO3,
+                        loanOfferDTO4))));
     }
 
     @Test
@@ -43,5 +44,24 @@ public class ConveyorControllerTest {
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void getCalculationTestOk() throws Exception {
+        this.mockMvc.perform(post("/conveyor/calculation")
+                        .content(mapper.writeValueAsString(scoringDataDTO1))
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(content().json(mapper.writeValueAsString(creditDTO)));
+    }
+
+    @Test
+    void getCalculationTestRejection() throws Exception {
+        this.mockMvc.perform(post("/conveyor/calculation")
+                        .content(mapper.writeValueAsString(scoringDataDTOUnemployed))
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isInternalServerError());
     }
 }
