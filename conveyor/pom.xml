@@ -16,6 +16,8 @@
 	<properties>
 		<java.version>11</java.version>
 		<lombok.version>1.18.28</lombok.version>
+		<swagger-annotations.version>2.2.15</swagger-annotations.version>
+		<springdoc.version>1.7.0</springdoc.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -44,7 +46,23 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
-    </dependencies>
+
+
+		<dependency>
+			<groupId>io.swagger.core.v3</groupId>
+			<artifactId>swagger-annotations</artifactId>
+			<version>${swagger-annotations.version}</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-ui</artifactId>
+			<version>${springdoc.version}</version>
+		</dependency>
+
+
+	</dependencies>
 
 	<build>
 		<plugins>
