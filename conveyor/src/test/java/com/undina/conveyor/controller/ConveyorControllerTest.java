@@ -11,7 +11,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-import static com.undina.conveyor.DataDTO.*;
+import static com.undina.conveyor.model.CreditDTOData.creditDTO;
+import static com.undina.conveyor.model.LoanApplicationRequestDTOData.loanApplicationRequestDTO1;
+import static com.undina.conveyor.model.LoanApplicationRequestDTOData.loanApplicationRequestDTOTooYoung;
+import static com.undina.conveyor.model.LoanOfferDTOData.*;
+import static com.undina.conveyor.model.ScoringDataDTOData.scoringDataDTO1;
+import static com.undina.conveyor.model.ScoringDataDTOData.scoringDataDTOUnemployed;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;

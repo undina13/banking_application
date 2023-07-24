@@ -1,9 +1,9 @@
 package com.undina.conveyor.service;
 
-import com.undina.conveyor.dto.CreditDTO;
-import com.undina.conveyor.dto.LoanApplicationRequestDTO;
-import com.undina.conveyor.dto.LoanOfferDTO;
-import com.undina.conveyor.dto.ScoringDataDTO;
+import com.undina.conveyor.model.CreditDTO;
+import com.undina.conveyor.model.LoanApplicationRequestDTO;
+import com.undina.conveyor.model.LoanOfferDTO;
+import com.undina.conveyor.model.ScoringDataDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

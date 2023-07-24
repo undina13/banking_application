@@ -1,7 +1,7 @@
 package com.undina.conveyor.service;
 
-import com.undina.conveyor.dto.LoanApplicationRequestDTO;
-import com.undina.conveyor.dto.LoanOfferDTO;
+import com.undina.conveyor.model.LoanApplicationRequestDTO;
+import com.undina.conveyor.model.LoanOfferDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 

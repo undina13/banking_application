@@ -1,6 +1,6 @@
 package com.undina.conveyor.service;
 
-import com.undina.conveyor.dto.*;
+import com.undina.conveyor.model.*;
 import com.undina.conveyor.exception.RejectionException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -104,14 +104,14 @@ public class CreditService {
                 .setScale(2, RoundingMode.HALF_UP);
     }
 
-    List<PaymentScheduleElement> calculatePaymentScheduleElement(BigDecimal amount, Integer term,
+   private List<PaymentScheduleElement> calculatePaymentScheduleElement(BigDecimal amount, Integer term,
                                                                  BigDecimal monthlyPayment, BigDecimal totalAmount) {
         List<PaymentScheduleElement> paymentScheduleElements = new ArrayList<>();
         BigDecimal interestPayment = monthlyPayment.subtract(amount.divide(BigDecimal.valueOf(term),
                 MathContext.DECIMAL128)).setScale(2, RoundingMode.HALF_DOWN);
         BigDecimal debtPayment = monthlyPayment.subtract(interestPayment).setScale(2, RoundingMode.HALF_DOWN);
         LocalDate date = LocalDate.now();
-        BigDecimal remainingDebt = totalAmount;
+        BigDecimal remainingDebt = monthlyPayment.multiply(BigDecimal.valueOf(term));
         for (int i = 1; i < term; i++) {
             date = date.plusMonths(1);
             remainingDebt = remainingDebt.subtract(monthlyPayment);

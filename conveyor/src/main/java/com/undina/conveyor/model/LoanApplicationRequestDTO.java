@@ -1,4 +1,4 @@
-package com.undina.conveyor.dto;
+package com.undina.conveyor.model;
 
 import lombok.Builder;
 import lombok.Data;

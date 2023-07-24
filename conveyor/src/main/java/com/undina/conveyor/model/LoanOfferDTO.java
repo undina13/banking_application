@@ -1,20 +1,19 @@
-package com.undina.conveyor.dto;
+package com.undina.conveyor.model;
 
 import lombok.Builder;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @Data
 @Builder
-public class CreditDTO {
-    private final BigDecimal amount;
+public class LoanOfferDTO {
+    private final Long applicationId;
+    private final BigDecimal requestedAmount;
+    private final BigDecimal totalAmount;
     private final Integer term;
     private final BigDecimal monthlyPayment;
     private final BigDecimal rate;
-    private final BigDecimal psk;
     private final Boolean isInsuranceEnabled;
     private final Boolean isSalaryClient;
-    private final List<PaymentScheduleElement> paymentSchedule;
 }
