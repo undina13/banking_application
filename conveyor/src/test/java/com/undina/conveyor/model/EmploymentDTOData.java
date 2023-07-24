@@ -22,4 +22,14 @@ public class EmploymentDTOData {
             .workExperienceTotal(17)
             .workExperienceCurrent(5)
             .build();
+
+    public static EmploymentDTO employmentDTO3 = EmploymentDTO
+            .builder()
+            .employmentStatus(EmploymentStatus.BUSINESS_OWNER)
+            .employerINN("567676686767")
+            .salary(BigDecimal.valueOf(80000))
+            .position(Position.TOP_MANAGER)
+            .workExperienceTotal(100)
+            .workExperienceCurrent(50)
+            .build();
 }

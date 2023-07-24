@@ -49,7 +49,7 @@ public class ScoringService {
         log.info("calculateMonthlyPayment - totalAmount: {}, term: {}, rate: {}", totalAmount, term, rate);
         BigDecimal monthlyRate = rate.divide(new BigDecimal("100"), MathContext.DECIMAL128)
                 .divide(new BigDecimal("12"), MathContext.DECIMAL128);
-        log.info("monthlyRate = " + monthlyRate);
+
 
         return monthlyRate.divide((new BigDecimal("1").add(monthlyRate)).pow(term)
                         .subtract(new BigDecimal("1")), MathContext.DECIMAL128)

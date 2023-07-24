@@ -1,8 +1,9 @@
 package com.undina.conveyor.service;
 
-import com.undina.conveyor.model.*;
 import com.undina.conveyor.exception.RejectionException;
+import com.undina.conveyor.model.*;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -18,10 +19,12 @@ import java.util.List;
 @Service
 @Slf4j
 @RequiredArgsConstructor
+@Setter
 public class CreditService {
     private final ScoringService scoringService;
     @Value("${base_rate}")
     private BigDecimal baseRate;
+    private static final BigDecimal MONTH_IN_YEAR = BigDecimal.valueOf(12);
 
     public CreditDTO getCalculation(ScoringDataDTO scoringDataDTO) {
         log.info("getCalculation - scoringDataDTO: {}", scoringDataDTO.toString());
@@ -30,12 +33,17 @@ public class CreditService {
         BigDecimal personalRate = getPersonalRate(scoringDataDTO, age);
         BigDecimal rate = scoringService.calculateRate(scoringDataDTO.getIsInsuranceEnabled(),
                 scoringDataDTO.getIsSalaryClient(), personalRate);
+        log.info("scoringService.calculateRate {} {} {}", scoringDataDTO.getIsInsuranceEnabled(),
+                scoringDataDTO.getIsSalaryClient(), personalRate);
         BigDecimal totalAmount = scoringService.evaluateTotalAmountByServices(scoringDataDTO.getAmount(),
                 scoringDataDTO.getIsInsuranceEnabled(), scoringDataDTO.getTerm());
+        log.info("evaluateTotalAmountByServices {} {} {}", scoringDataDTO.getAmount(),
+                scoringDataDTO.getIsInsuranceEnabled(), scoringDataDTO.getTerm());
         BigDecimal monthlyPayment = scoringService.calculateMonthlyPayment(totalAmount, scoringDataDTO.getTerm(), rate);
+        log.info("calculateMonthlyPayment {} {} {}", totalAmount, scoringDataDTO.getTerm(), rate);
         BigDecimal psk = calculatePsk(monthlyPayment, totalAmount, scoringDataDTO.getTerm());
-        List<PaymentScheduleElement> paymentScheduleElements = calculatePaymentScheduleElement(scoringDataDTO.getAmount(),
-                scoringDataDTO.getTerm(), monthlyPayment, totalAmount);
+        List<PaymentScheduleElement> paymentScheduleElements = calculatePaymentScheduleElement(scoringDataDTO.getTerm(),
+                monthlyPayment, rate);
         return CreditDTO.builder()
                 .amount(scoringDataDTO.getAmount())
                 .term(scoringDataDTO.getTerm())
@@ -94,26 +102,28 @@ public class CreditService {
         return rate;
     }
 
-    private BigDecimal calculatePsk(BigDecimal monthlyPayment, BigDecimal totalAmount, Integer term) {
+    private BigDecimal calculatePsk(BigDecimal monthlyPayment, BigDecimal amount, Integer term) {
         return monthlyPayment.multiply(new BigDecimal(term))
-                .divide(totalAmount, MathContext.DECIMAL128)
+                .divide(amount, MathContext.DECIMAL128)
                 .subtract(new BigDecimal("1"))
-                .multiply(new BigDecimal("12"))
+                .multiply(MONTH_IN_YEAR)
                 .divide(new BigDecimal(term), MathContext.DECIMAL128)
                 .multiply(new BigDecimal("100"))
                 .setScale(2, RoundingMode.HALF_UP);
     }
 
-   private List<PaymentScheduleElement> calculatePaymentScheduleElement(BigDecimal amount, Integer term,
-                                                                 BigDecimal monthlyPayment, BigDecimal totalAmount) {
+    private List<PaymentScheduleElement> calculatePaymentScheduleElement(Integer term, BigDecimal monthlyPayment,
+                                                                         BigDecimal rate) {
         List<PaymentScheduleElement> paymentScheduleElements = new ArrayList<>();
-        BigDecimal interestPayment = monthlyPayment.subtract(amount.divide(BigDecimal.valueOf(term),
-                MathContext.DECIMAL128)).setScale(2, RoundingMode.HALF_DOWN);
-        BigDecimal debtPayment = monthlyPayment.subtract(interestPayment).setScale(2, RoundingMode.HALF_DOWN);
-        LocalDate date = LocalDate.now();
         BigDecimal remainingDebt = monthlyPayment.multiply(BigDecimal.valueOf(term));
-        for (int i = 1; i < term; i++) {
+        BigDecimal interestPayment;
+        BigDecimal debtPayment;
+        LocalDate date = LocalDate.now();
+
+        for (int i = 1; i <= term; i++) {
             date = date.plusMonths(1);
+            interestPayment = getInterestPayment(remainingDebt, rate);
+            debtPayment = monthlyPayment.subtract(interestPayment).setScale(2, RoundingMode.HALF_DOWN);
             remainingDebt = remainingDebt.subtract(monthlyPayment);
             paymentScheduleElements.add(PaymentScheduleElement.builder()
                     .number(i)
@@ -124,17 +134,13 @@ public class CreditService {
                     .remainingDebt(remainingDebt)
                     .build());
         }
-
-
-            paymentScheduleElements.add(PaymentScheduleElement.builder()
-                    .number(term)
-                    .date(date.plusMonths(1))
-                    .totalPayment(remainingDebt)
-                    .interestPayment(interestPayment)
-                    .debtPayment(remainingDebt.subtract(interestPayment).setScale(2, RoundingMode.HALF_DOWN))
-                    .remainingDebt(BigDecimal.valueOf(0))
-                    .build());
-
         return paymentScheduleElements;
     }
+
+    private BigDecimal getInterestPayment(BigDecimal remainingDebt, BigDecimal rate) {
+        return rate.divide(BigDecimal.valueOf(100).multiply(MONTH_IN_YEAR), 10, RoundingMode.HALF_UP)
+                .multiply(remainingDebt)
+                .setScale(2, RoundingMode.HALF_DOWN);
+    }
+
 }
