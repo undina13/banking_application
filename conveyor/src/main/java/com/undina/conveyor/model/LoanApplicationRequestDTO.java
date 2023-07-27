@@ -1,7 +1,8 @@
 package com.undina.conveyor.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import org.springframework.format.annotation.DateTimeFormat;
 import util.ValidateDate;
 
@@ -12,7 +13,8 @@ import javax.validation.constraints.Pattern;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@Data
+@AllArgsConstructor
+@Getter
 @Builder
 public class LoanApplicationRequestDTO {
     @Min(10000)
@@ -50,4 +52,14 @@ public class LoanApplicationRequestDTO {
     @Pattern(regexp = "^[0-9]{6}$")
     @NotBlank
     private final String passportNumber;
+
+    @Override
+    public String toString() {
+        return "LoanApplicationRequestDTO{" +
+                "amount=" + amount +
+                ", term=" + term +
+                ", email='" + email + '\'' +
+                ", birthdate=" + birthdate +
+                '}';
+    }
 }

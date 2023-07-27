@@ -1,13 +1,15 @@
 package com.undina.conveyor.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
-@Data
+@AllArgsConstructor
+@Getter
 @Builder
 public class EmploymentDTO {
     @NotNull
@@ -27,4 +29,15 @@ public class EmploymentDTO {
 
     @NotNull
     private final Integer workExperienceCurrent;
+
+    @Override
+    public String toString() {
+        return "EmploymentDTO{" +
+                "employmentStatus=" + employmentStatus +
+                ", salary=" + salary +
+                ", position=" + position +
+                ", workExperienceTotal=" + workExperienceTotal +
+                ", workExperienceCurrent=" + workExperienceCurrent +
+                '}';
+    }
 }

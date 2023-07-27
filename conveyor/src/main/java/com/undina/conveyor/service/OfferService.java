@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
@@ -22,14 +22,14 @@ public class OfferService {
     private BigDecimal baseRate;
 
     public List<LoanOfferDTO> generateOffers(LoanApplicationRequestDTO loanApplicationRequestDTO) {
-        log.info("generateOffers " + loanApplicationRequestDTO.toString());
-        List<LoanOfferDTO> loanOfferDTOS = new ArrayList<>();
-
-        loanOfferDTOS.add(createOffer(false, false, loanApplicationRequestDTO));
-        loanOfferDTOS.add(createOffer(true, false, loanApplicationRequestDTO));
-        loanOfferDTOS.add(createOffer(false, true, loanApplicationRequestDTO));
-        loanOfferDTOS.add(createOffer(true, true, loanApplicationRequestDTO));
+        log.info("generateOffers " + loanApplicationRequestDTO);
+        List<LoanOfferDTO> loanOfferDTOS =
+                Arrays.asList(createOffer(false, false, loanApplicationRequestDTO),
+                        createOffer(true, false, loanApplicationRequestDTO),
+                        createOffer(false, true, loanApplicationRequestDTO),
+                        createOffer(true, true, loanApplicationRequestDTO));
         loanOfferDTOS.sort(Comparator.comparing(LoanOfferDTO::getRate).reversed());
+        log.info("generateOffers result " + loanOfferDTOS);
         return loanOfferDTOS;
     }
 

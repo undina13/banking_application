@@ -1,14 +1,17 @@
 package com.undina.conveyor.model;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import static com.undina.conveyor.model.EmploymentDTOData.*;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ScoringDataDTOData {
     public static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
     public static ScoringDataDTO scoringDataDTO1 = ScoringDataDTO
             .builder()
             .term(6)

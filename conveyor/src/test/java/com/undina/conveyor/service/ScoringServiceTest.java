@@ -7,6 +7,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -15,15 +16,15 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @ExtendWith(MockitoExtension.class)
-public class ScoringServiceTest {
+class ScoringServiceTest {
     @InjectMocks
     private ScoringService scoringService;
 
     @BeforeEach
     void before() {
-        scoringService.setSalaryRate(BigDecimal.valueOf(3));
-        scoringService.setInsuranceRate(BigDecimal.valueOf(2));
-        scoringService.setInsurancePercentPrice(BigDecimal.valueOf(0.1));
+        ReflectionTestUtils.setField(scoringService, "insuranceRate", BigDecimal.valueOf(2));
+        ReflectionTestUtils.setField(scoringService, "salaryRate", BigDecimal.valueOf(3));
+        ReflectionTestUtils.setField(scoringService, "insurancePercentPrice", BigDecimal.valueOf(0.1));
     }
 
     @ParameterizedTest

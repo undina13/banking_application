@@ -3,7 +3,6 @@ package com.undina.conveyor.service;
 import com.undina.conveyor.exception.RejectionException;
 import com.undina.conveyor.model.*;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,6 @@ import java.util.List;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-@Setter
 public class CreditService {
     private final ScoringService scoringService;
     @Value("${base_rate}")
@@ -27,7 +25,7 @@ public class CreditService {
     private static final BigDecimal MONTH_IN_YEAR = BigDecimal.valueOf(12);
 
     public CreditDTO getCalculation(ScoringDataDTO scoringDataDTO) {
-        log.info("getCalculation - scoringDataDTO: {}", scoringDataDTO.toString());
+        log.info("getCalculation - scoringDataDTO: {}", scoringDataDTO);
         Integer age = Period.between(scoringDataDTO.getBirthdate(), LocalDate.now()).getYears();
         checkScoringData(scoringDataDTO, age);
         BigDecimal personalRate = getPersonalRate(scoringDataDTO, age);
@@ -44,7 +42,7 @@ public class CreditService {
         BigDecimal psk = calculatePsk(monthlyPayment, totalAmount, scoringDataDTO.getTerm());
         List<PaymentScheduleElement> paymentScheduleElements = calculatePaymentScheduleElement(scoringDataDTO.getTerm(),
                 monthlyPayment, rate);
-        return CreditDTO.builder()
+        CreditDTO creditDTO = CreditDTO.builder()
                 .amount(scoringDataDTO.getAmount())
                 .term(scoringDataDTO.getTerm())
                 .monthlyPayment(monthlyPayment)
@@ -54,6 +52,8 @@ public class CreditService {
                 .isSalaryClient(scoringDataDTO.getIsSalaryClient())
                 .paymentSchedule(paymentScheduleElements)
                 .build();
+        log.info("getCalculation result: " + creditDTO);
+        return creditDTO;
     }
 
     private void checkScoringData(ScoringDataDTO scoringDataDTO, Integer age) {
@@ -142,5 +142,4 @@ public class CreditService {
                 .multiply(remainingDebt)
                 .setScale(2, RoundingMode.HALF_DOWN);
     }
-
 }

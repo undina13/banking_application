@@ -1,10 +1,14 @@
 package com.undina.conveyor.model;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.math.BigDecimal;
 
 import static com.undina.conveyor.model.PaymentScheduleElementData.paymentScheduleElements;
 import static com.undina.conveyor.model.PaymentScheduleElementData.paymentScheduleElements1;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CreditDTOData {
     public static CreditDTO creditDTO = CreditDTO
             .builder()

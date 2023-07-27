@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class ConveyorControllerTest {
+class ConveyorControllerIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
 
@@ -33,7 +33,7 @@ public class ConveyorControllerTest {
 
     @Test
     void getLoanOffersTestOk() throws Exception {
-        this.mockMvc.perform(post("/conveyor/offers")
+        mockMvc.perform(post("/conveyor/offers")
                         .content(mapper.writeValueAsString(loanApplicationRequestDTO1))
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON))
@@ -44,7 +44,7 @@ public class ConveyorControllerTest {
 
     @Test
     void getLoanOffersTestBadRequest() throws Exception {
-        this.mockMvc.perform(post("/conveyor/offers")
+        mockMvc.perform(post("/conveyor/offers")
                         .content(mapper.writeValueAsString(loanApplicationRequestDTOTooYoung))
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON))
@@ -53,7 +53,7 @@ public class ConveyorControllerTest {
 
     @Test
     void getCalculationTestOk() throws Exception {
-        this.mockMvc.perform(post("/conveyor/calculation")
+        mockMvc.perform(post("/conveyor/calculation")
                         .content(mapper.writeValueAsString(scoringDataDTO1))
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON))
@@ -63,7 +63,7 @@ public class ConveyorControllerTest {
 
     @Test
     void getCalculationTestRejection() throws Exception {
-        this.mockMvc.perform(post("/conveyor/calculation")
+        mockMvc.perform(post("/conveyor/calculation")
                         .content(mapper.writeValueAsString(scoringDataDTOUnemployed))
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON))

@@ -1,7 +1,8 @@
 package com.undina.conveyor.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.Valid;
@@ -12,7 +13,8 @@ import javax.validation.constraints.Pattern;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@Data
+@AllArgsConstructor
+@Getter
 @Builder
 public class ScoringDataDTO {
     @Min(10000)
@@ -74,4 +76,19 @@ public class ScoringDataDTO {
 
     @NotNull
     private final Boolean isSalaryClient;
+
+    @Override
+    public String toString() {
+        return "ScoringDataDTO{" +
+                "amount=" + amount +
+                ", term=" + term +
+                ", gender=" + gender +
+                ", birthdate=" + birthdate +
+                ", maritalStatus=" + maritalStatus +
+                ", dependentAmount=" + dependentAmount +
+                ", employment=" + employment +
+                ", isInsuranceEnabled=" + isInsuranceEnabled +
+                ", isSalaryClient=" + isSalaryClient +
+                '}';
+    }
 }

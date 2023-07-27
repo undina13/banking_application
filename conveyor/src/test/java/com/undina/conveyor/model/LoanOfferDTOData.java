@@ -1,7 +1,11 @@
 package com.undina.conveyor.model;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.math.BigDecimal;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class LoanOfferDTOData {
     public static LoanOfferDTO loanOfferDTO1 = LoanOfferDTO
             .builder()

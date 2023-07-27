@@ -10,9 +10,14 @@ import java.time.LocalDate;
 @Builder
 public class PaymentScheduleElement {
     private final Integer number;
+
     private final LocalDate date;
+
     private final BigDecimal totalPayment;
+
     private final BigDecimal interestPayment;
+
     private final BigDecimal debtPayment;
+
     private final BigDecimal remainingDebt;
 }

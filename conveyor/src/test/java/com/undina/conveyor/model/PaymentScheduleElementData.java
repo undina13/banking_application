@@ -1,10 +1,14 @@
 package com.undina.conveyor.model;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.List;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PaymentScheduleElementData {
     public static PaymentScheduleElement paymentScheduleElement1 = PaymentScheduleElement
             .builder()
