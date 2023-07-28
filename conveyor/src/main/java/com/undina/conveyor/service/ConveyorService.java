@@ -1,13 +1,14 @@
 package com.undina.conveyor.service;
 
-import com.undina.conveyor.model.CreditDTO;
-import com.undina.conveyor.model.LoanApplicationRequestDTO;
-import com.undina.conveyor.model.LoanOfferDTO;
-import com.undina.conveyor.model.ScoringDataDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.openapitools.client.model.CreditDTO;
+import org.openapitools.client.model.LoanApplicationRequestDTO;
+import org.openapitools.client.model.LoanOfferDTO;
+import org.openapitools.client.model.ScoringDataDTO;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Service
@@ -18,7 +19,7 @@ public class ConveyorService {
 
     private final CreditService creditService;
 
-    public List<LoanOfferDTO> getLoanOffers(LoanApplicationRequestDTO loanApplicationRequestDTO) {
+    public List<LoanOfferDTO> getLoanOffers(@Valid LoanApplicationRequestDTO loanApplicationRequestDTO) {
         log.info("getLoanOffers " + loanApplicationRequestDTO);
         List<LoanOfferDTO> loanOfferDTOS = offerService.generateOffers(loanApplicationRequestDTO);
         log.info("getLoanOffers result: " + loanOfferDTOS);

@@ -2,6 +2,7 @@ package com.undina.conveyor.model;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.openapitools.client.model.CreditDTO;
 
 import java.math.BigDecimal;
 
@@ -10,8 +11,7 @@ import static com.undina.conveyor.model.PaymentScheduleElementData.paymentSchedu
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CreditDTOData {
-    public static CreditDTO creditDTO = CreditDTO
-            .builder()
+    public static CreditDTO creditDTO = new CreditDTO()
             .amount(BigDecimal.valueOf(10000))
             .term(6)
             .monthlyPayment(BigDecimal.valueOf(1725.48))
@@ -19,11 +19,9 @@ public class CreditDTOData {
             .psk(BigDecimal.valueOf(7.06))
             .isInsuranceEnabled(false)
             .isSalaryClient(false)
-            .paymentSchedule(paymentScheduleElements)
-            .build();
+            .paymentSchedule(paymentScheduleElements);
 
-    public static CreditDTO creditDTO1 = CreditDTO
-            .builder()
+    public static CreditDTO creditDTO1 = new CreditDTO()
             .amount(BigDecimal.valueOf(100000))
             .term(12)
             .monthlyPayment(BigDecimal.valueOf(8652.67))
@@ -31,7 +29,7 @@ public class CreditDTOData {
             .psk(BigDecimal.valueOf(3.83))
             .isInsuranceEnabled(false)
             .isSalaryClient(true)
-            .paymentSchedule(paymentScheduleElements1)
-            .build();
+            .paymentSchedule(paymentScheduleElements1);
+
 
 }

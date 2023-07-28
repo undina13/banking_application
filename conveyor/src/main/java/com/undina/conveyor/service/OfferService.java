@@ -1,9 +1,9 @@
 package com.undina.conveyor.service;
 
-import com.undina.conveyor.model.LoanApplicationRequestDTO;
-import com.undina.conveyor.model.LoanOfferDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.openapitools.client.model.LoanApplicationRequestDTO;
+import org.openapitools.client.model.LoanOfferDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -38,7 +38,7 @@ public class OfferService {
         BigDecimal totalAmount = scoringService.evaluateTotalAmountByServices(loanApplicationRequestDTO.getAmount(),
                 isInsuranceEnabled, loanApplicationRequestDTO.getTerm());
         BigDecimal rate = scoringService.calculateRate(isInsuranceEnabled, isSalaryClient, baseRate);
-        return LoanOfferDTO.builder()
+        LoanOfferDTO loanOfferDTO = new LoanOfferDTO()
                 .requestedAmount(loanApplicationRequestDTO.getAmount())
                 .totalAmount(totalAmount)
                 .term(loanApplicationRequestDTO.getTerm())
@@ -46,7 +46,7 @@ public class OfferService {
                 .isSalaryClient(isSalaryClient)
                 .rate(rate)
                 .monthlyPayment(scoringService.calculateMonthlyPayment(totalAmount, loanApplicationRequestDTO.getTerm(),
-                        rate))
-                .build();
+                        rate));
+        return loanOfferDTO;
     }
 }
