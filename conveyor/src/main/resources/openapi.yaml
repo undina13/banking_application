@@ -166,7 +166,8 @@
           },
           "birthdate": {
             "type": "string",
-            "format": "date"
+            "format": "date",
+            "x-constraints": "@ValidateDate"
           },
           "passportSeries": {
             "pattern": "^[0-9]{4}$",

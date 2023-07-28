@@ -133,6 +133,9 @@
                                 <sourceFolder>src/gen/java/main</sourceFolder>
                                 <delegatePattern>true</delegatePattern>
                             </configOptions>
+                            <templateDirectory>
+                                ${project.basedir}/src/main/resources/templates
+                            </templateDirectory>
 
                         </configuration>
                     </execution>
