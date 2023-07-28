@@ -20,14 +20,24 @@ public class ConveyorService {
     private final CreditService creditService;
 
     public List<LoanOfferDTO> getLoanOffers(@Valid LoanApplicationRequestDTO loanApplicationRequestDTO) {
-        log.info("getLoanOffers " + loanApplicationRequestDTO);
+        log.info("getLoanOffers: amount - {}, email - {}, term - {} , birthdate - {}",
+                loanApplicationRequestDTO.getAmount(), loanApplicationRequestDTO.getEmail(),
+                loanApplicationRequestDTO.getTerm(), loanApplicationRequestDTO.getBirthdate());
         List<LoanOfferDTO> loanOfferDTOS = offerService.generateOffers(loanApplicationRequestDTO);
         log.info("getLoanOffers result: " + loanOfferDTOS);
         return loanOfferDTOS;
     }
 
     public CreditDTO getCalculation(ScoringDataDTO scoringDataDTO) {
-        log.info("getCalculation " + scoringDataDTO);
+        log.info("getCalculation scoringDataDTO : amount={} , term={}, gender={}, birthdate={}, maritalStatus={}" +
+                        "dependentAmount={},isInsuranceEnabled={}, isSalaryClient={}, employmentStatus={}, " +
+                        "salary={}, position={}, workExperienceTotal={}, workExperienceCurrent={}",
+                scoringDataDTO.getAmount(), scoringDataDTO.getTerm(), scoringDataDTO.getGender(),
+                scoringDataDTO.getBirthdate(), scoringDataDTO.getMaritalStatus(), scoringDataDTO.getDependentAmount(),
+                scoringDataDTO.getIsInsuranceEnabled(), scoringDataDTO.getIsSalaryClient(),
+                scoringDataDTO.getEmployment().getEmploymentStatus(), scoringDataDTO.getEmployment().getSalary(),
+                scoringDataDTO.getEmployment().getPosition(), scoringDataDTO.getEmployment().getWorkExperienceTotal(),
+                scoringDataDTO.getEmployment().getWorkExperienceCurrent());
         CreditDTO creditDTO = creditService.getCalculation(scoringDataDTO);
         log.info("getCalculation result: " + creditDTO);
         return creditDTO;
