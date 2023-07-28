@@ -2,7 +2,7 @@ package com.undina.conveyor.model;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.openapitools.client.model.ScoringDataDTO;
+import org.openapitools.model.ScoringDataDTO;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

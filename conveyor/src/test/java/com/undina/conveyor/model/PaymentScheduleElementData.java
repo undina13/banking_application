@@ -2,7 +2,7 @@ package com.undina.conveyor.model;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.openapitools.client.model.PaymentScheduleElement;
+import org.openapitools.model.PaymentScheduleElement;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

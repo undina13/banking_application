@@ -13,6 +13,7 @@ import java.util.List;
 
 import static com.undina.conveyor.model.CreditDTOData.creditDTO;
 import static com.undina.conveyor.model.LoanApplicationRequestDTOData.loanApplicationRequestDTO1;
+import static com.undina.conveyor.model.LoanApplicationRequestDTOData.loanApplicationRequestDTOSmallAmount;
 import static com.undina.conveyor.model.LoanOfferDTOData.*;
 import static com.undina.conveyor.model.ScoringDataDTOData.scoringDataDTO1;
 import static com.undina.conveyor.model.ScoringDataDTOData.scoringDataDTOUnemployed;
@@ -39,6 +40,15 @@ class ConveyorControllerIntegrationTest {
                 .andDo(print())
                 .andExpect(content().json(mapper.writeValueAsString(List.of(loanOfferDTO1, loanOfferDTO2, loanOfferDTO3,
                         loanOfferDTO4))));
+    }
+
+    @Test
+    void getLoanOffersTestBadRequest() throws Exception {
+        mockMvc.perform(post("/conveyor/offers")
+                        .content(mapper.writeValueAsString(loanApplicationRequestDTOSmallAmount))
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
     }
 
     @Test

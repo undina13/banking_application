@@ -2,7 +2,7 @@ package com.undina.conveyor.model;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.openapitools.client.model.LoanOfferDTO;
+import org.openapitools.model.LoanOfferDTO;
 
 import java.math.BigDecimal;
 

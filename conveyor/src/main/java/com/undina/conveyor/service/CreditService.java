@@ -3,10 +3,10 @@ package com.undina.conveyor.service;
 import com.undina.conveyor.exception.RejectionException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.openapitools.client.model.CreditDTO;
-import org.openapitools.client.model.EmploymentDTO;
-import org.openapitools.client.model.PaymentScheduleElement;
-import org.openapitools.client.model.ScoringDataDTO;
+import org.openapitools.model.CreditDTO;
+import org.openapitools.model.EmploymentDTO;
+import org.openapitools.model.PaymentScheduleElement;
+import org.openapitools.model.ScoringDataDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 

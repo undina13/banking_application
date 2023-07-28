@@ -2,10 +2,10 @@ package com.undina.conveyor.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.openapitools.client.model.CreditDTO;
-import org.openapitools.client.model.LoanApplicationRequestDTO;
-import org.openapitools.client.model.LoanOfferDTO;
-import org.openapitools.client.model.ScoringDataDTO;
+import org.openapitools.model.CreditDTO;
+import org.openapitools.model.LoanApplicationRequestDTO;
+import org.openapitools.model.LoanOfferDTO;
+import org.openapitools.model.ScoringDataDTO;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
