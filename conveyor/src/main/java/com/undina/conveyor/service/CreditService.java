@@ -9,6 +9,7 @@ import org.openapitools.model.PaymentScheduleElement;
 import org.openapitools.model.ScoringDataDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import util.ModelFormatter;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -28,15 +29,7 @@ public class CreditService {
     private static final BigDecimal MONTH_IN_YEAR = BigDecimal.valueOf(12);
 
     public CreditDTO getCalculation(ScoringDataDTO scoringDataDTO) {
-        log.info("getCalculation scoringDataDTO : amount={} , term={}, gender={}, birthdate={}, maritalStatus={}" +
-                        "dependentAmount={},isInsuranceEnabled={}, isSalaryClient={}, employmentStatus={}, " +
-                        "salary={}, position={}, workExperienceTotal={}, workExperienceCurrent={}",
-                scoringDataDTO.getAmount(), scoringDataDTO.getTerm(), scoringDataDTO.getGender(),
-                scoringDataDTO.getBirthdate(), scoringDataDTO.getMaritalStatus(), scoringDataDTO.getDependentAmount(),
-                scoringDataDTO.getIsInsuranceEnabled(), scoringDataDTO.getIsSalaryClient(),
-                scoringDataDTO.getEmployment().getEmploymentStatus(), scoringDataDTO.getEmployment().getSalary(),
-                scoringDataDTO.getEmployment().getPosition(), scoringDataDTO.getEmployment().getWorkExperienceTotal(),
-                scoringDataDTO.getEmployment().getWorkExperienceCurrent());
+        log.info("getCalculation  {}", ModelFormatter.format(scoringDataDTO));
         Integer age = Period.between(scoringDataDTO.getBirthdate(), LocalDate.now()).getYears();
         checkScoringData(scoringDataDTO, age);
         BigDecimal personalRate = getPersonalRate(scoringDataDTO, age);
