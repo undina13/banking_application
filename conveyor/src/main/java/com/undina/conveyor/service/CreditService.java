@@ -29,7 +29,7 @@ public class CreditService {
     private static final BigDecimal MONTH_IN_YEAR = BigDecimal.valueOf(12);
 
     public CreditDTO getCalculation(ScoringDataDTO scoringDataDTO) {
-        log.info("getCalculation  {}", ModelFormatter.format(scoringDataDTO));
+        log.info("getCalculation  {}", ModelFormatter.toLogFormat(scoringDataDTO));
         Integer age = Period.between(scoringDataDTO.getBirthdate(), LocalDate.now()).getYears();
         checkScoringData(scoringDataDTO, age);
         BigDecimal personalRate = getPersonalRate(scoringDataDTO, age);

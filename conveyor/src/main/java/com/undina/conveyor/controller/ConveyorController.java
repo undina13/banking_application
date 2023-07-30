@@ -22,7 +22,7 @@ public class ConveyorController implements ConveyorApi {
 
     @Override
     public ResponseEntity<List<LoanOfferDTO>> getLoanOffers(LoanApplicationRequestDTO loanApplicationRequestDTO) {
-        log.info("getLoanOffers  {}", ModelFormatter.format(loanApplicationRequestDTO));
+        log.info("getLoanOffers  {}", ModelFormatter.toLogFormat(loanApplicationRequestDTO));
         List<LoanOfferDTO> loanOfferDTOS = conveyorService.getLoanOffers(loanApplicationRequestDTO);
         log.info("getLoanOffers result: " + loanOfferDTOS);
         return ResponseEntity.ok()
@@ -32,7 +32,7 @@ public class ConveyorController implements ConveyorApi {
 
     @Override
     public ResponseEntity<CreditDTO> getCalculation(ScoringDataDTO scoringDataDTO) {
-        log.info("getCalculation  {}", ModelFormatter.format(scoringDataDTO));
+        log.info("getCalculation  {}", ModelFormatter.toLogFormat(scoringDataDTO));
         CreditDTO creditDTO = conveyorService.getCalculation(scoringDataDTO);
         log.info("getCalculation result: " + creditDTO);
         return ResponseEntity.ok()

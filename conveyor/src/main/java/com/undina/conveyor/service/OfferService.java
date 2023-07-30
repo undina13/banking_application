@@ -23,7 +23,7 @@ public class OfferService {
     private BigDecimal baseRate;
 
     public List<LoanOfferDTO> generateOffers(LoanApplicationRequestDTO loanApplicationRequestDTO) {
-        log.info("getLoanOffers  {}", ModelFormatter.format(loanApplicationRequestDTO));
+        log.info("getLoanOffers  {}", ModelFormatter.toLogFormat(loanApplicationRequestDTO));
         List<LoanOfferDTO> loanOfferDTOS =
                 Arrays.asList(createOffer(false, false, loanApplicationRequestDTO),
                         createOffer(true, false, loanApplicationRequestDTO),

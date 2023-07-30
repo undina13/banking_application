@@ -20,14 +20,14 @@ public class ConveyorService {
     private final CreditService creditService;
 
     public List<LoanOfferDTO> getLoanOffers(LoanApplicationRequestDTO loanApplicationRequestDTO) {
-        log.info("getLoanOffers  {}", ModelFormatter.format(loanApplicationRequestDTO));
+        log.info("getLoanOffers  {}", ModelFormatter.toLogFormat(loanApplicationRequestDTO));
         List<LoanOfferDTO> loanOfferDTOS = offerService.generateOffers(loanApplicationRequestDTO);
         log.info("getLoanOffers result: " + loanOfferDTOS);
         return loanOfferDTOS;
     }
 
     public CreditDTO getCalculation(ScoringDataDTO scoringDataDTO) {
-        log.info("getCalculation  {}", ModelFormatter.format(scoringDataDTO));
+        log.info("getCalculation  {}", ModelFormatter.toLogFormat(scoringDataDTO));
         CreditDTO creditDTO = creditService.getCalculation(scoringDataDTO);
         log.info("getCalculation result: " + creditDTO);
         return creditDTO;
