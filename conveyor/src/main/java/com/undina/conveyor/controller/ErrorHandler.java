@@ -16,7 +16,7 @@ import javax.validation.ConstraintViolationException;
 public class ErrorHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<ErrorResponse> validationException(final Exception e) {
+    public ResponseEntity<ErrorResponse> validationException(final ConstraintViolationException e) {
         log.error("validationException " + e.getMessage());
         return ResponseEntity.internalServerError()
                 .body(new ErrorResponse(e.getMessage()));
@@ -24,7 +24,7 @@ public class ErrorHandler {
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(RejectionException.class)
-    public ResponseEntity<ErrorResponse> rejectionException(final Exception e) {
+    public ResponseEntity<ErrorResponse> rejectionException(final RejectionException e) {
         log.error("rejectionException " + e.getMessage());
         return ResponseEntity.internalServerError()
                 .body(new ErrorResponse(e.getMessage()));
