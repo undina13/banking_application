@@ -2,38 +2,34 @@ package com.undina.conveyor.model;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.openapitools.model.EmploymentDTO;
 
 import java.math.BigDecimal;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class EmploymentDTOData {
-    public static EmploymentDTO employmentDTO = EmploymentDTO
-            .builder()
-            .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
+    public static EmploymentDTO employmentDTO = new EmploymentDTO()
+            .employmentStatus(EmploymentDTO.EmploymentStatusEnum.SELF_EMPLOYED)
             .employerINN("567676686767")
             .salary(BigDecimal.valueOf(50000))
-            .position(Position.MANAGER)
+            .position(EmploymentDTO.PositionEnum.MANAGER)
             .workExperienceTotal(17)
-            .workExperienceCurrent(5)
-            .build();
+            .workExperienceCurrent(5);
 
-    public static EmploymentDTO employmentDTO2 = EmploymentDTO
-            .builder()
-            .employmentStatus(EmploymentStatus.UNEMPLOYED)
+
+    public static EmploymentDTO employmentDTO2 = new EmploymentDTO()
+            .employmentStatus(EmploymentDTO.EmploymentStatusEnum.UNEMPLOYED)
             .employerINN("567676686767")
             .salary(BigDecimal.valueOf(50000))
-            .position(Position.MANAGER)
+            .position(EmploymentDTO.PositionEnum.MANAGER)
             .workExperienceTotal(17)
-            .workExperienceCurrent(5)
-            .build();
+            .workExperienceCurrent(5);
 
-    public static EmploymentDTO employmentDTO3 = EmploymentDTO
-            .builder()
-            .employmentStatus(EmploymentStatus.BUSINESS_OWNER)
+    public static EmploymentDTO employmentDTO3 = new EmploymentDTO()
+            .employmentStatus(EmploymentDTO.EmploymentStatusEnum.BUSINESS_OWNER)
             .employerINN("567676686767")
             .salary(BigDecimal.valueOf(80000))
-            .position(Position.TOP_MANAGER)
+            .position(EmploymentDTO.PositionEnum.TOP_MANAGER)
             .workExperienceTotal(100)
-            .workExperienceCurrent(50)
-            .build();
+            .workExperienceCurrent(50);
 }
