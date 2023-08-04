@@ -6,17 +6,24 @@ import com.undina.deal.dto.Gender;
 import com.undina.deal.dto.MaritalStatus;
 import com.undina.deal.dto.Passport;
 import jakarta.persistence.*;
+import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDate;
 
-
+@ToString
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "client_id", nullable = false)
+    private Long clientId;
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
