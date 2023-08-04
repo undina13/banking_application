@@ -1,11 +1,10 @@
 package com.undina.deal.model;
 
 import com.undina.deal.dto.PaymentScheduleElement;
-import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -37,7 +36,8 @@ public class Credit {
     @Column(nullable = false)
     private BigDecimal psk;
 
-    @JdbcTypeCode(SqlTypes.JSON)
+    @Type(type = "jsonb")
+    @Column(name = "payment_schedule", nullable = false)
     private List<PaymentScheduleElement> paymentSchedule;
 
     @Column(nullable = false)

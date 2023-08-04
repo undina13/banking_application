@@ -1,8 +1,8 @@
 package com.undina.deal.util;
 
-import jakarta.validation.Constraint;
-import jakarta.validation.constraints.Past;
 
+import javax.validation.Constraint;
+import javax.validation.constraints.Past;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 

@@ -3,11 +3,10 @@ package com.undina.deal.model;
 import com.undina.deal.dto.ApplicationStatus;
 import com.undina.deal.dto.LoanOfferDTO;
 import com.undina.deal.dto.StatusHistory;
-import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @ToString
@@ -37,7 +36,7 @@ public class Application {
     private LocalDate creationDate;
 
     @Column(name = "applied_offer", nullable = false)
-    @JdbcTypeCode(SqlTypes.JSON)
+    @Type(type = "jsonb")
     private LoanOfferDTO appliedOffer;
 
     @Column(name = "sign_date", nullable = false)
@@ -46,6 +45,7 @@ public class Application {
     @Column(name = "ses_code")
     private String sesCode;
 
-    @JdbcTypeCode(SqlTypes.JSON)
+    @Type(type = "jsonb")
+    @Column(name = "status_history", nullable = false)
     private StatusHistory statusHistory;
 }

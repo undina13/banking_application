@@ -5,11 +5,11 @@ import com.undina.deal.dto.Employment;
 import com.undina.deal.dto.Gender;
 import com.undina.deal.dto.MaritalStatus;
 import com.undina.deal.dto.Passport;
-import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
-
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @ToString
@@ -19,6 +19,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,10 +49,10 @@ public class Client {
     @Column(name = "dependent_amount", nullable = false)
     Integer dependentAmount;
 
-    @JdbcTypeCode(SqlTypes.JSON)
+    @Type(type = "jsonb")
     private Passport passport;
 
-    @JdbcTypeCode(SqlTypes.JSON)
+    @Type(type = "jsonb")
     private Employment employment;
 
     @Column(nullable = false)
