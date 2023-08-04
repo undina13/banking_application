@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+    <changeSet id="create-table-credit" author="undina">
+        <validCheckSum>7:19f99d93fcb9909c7749b7fc2dce1417</validCheckSum>
+        <createTable tableName="credit">
+            <column name="credit_id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="amount" type="number">
+                <constraints nullable="false"/>
+            </column>
+            <column name="term" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="monthly_payment" type="NUMBER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="rate" type="NUMBER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="psk" type="NUMBER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="payment_schedule" type="JSONB"/>
+            <column name="is_insurance_enabled" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_salary_client" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="credit_status" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
