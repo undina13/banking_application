@@ -20,9 +20,9 @@ public class DealController {
 
     @PostMapping("/application")
     public ResponseEntity<List<LoanOfferDTO>> createApplication(@RequestBody LoanApplicationRequestDTO loanApplication) {
-       log.info("createApplication " + loanApplication);
-       List<LoanOfferDTO> loanOfferDTOList = dealService.createApplication(loanApplication);
-       log.info("createApplication result " + loanOfferDTOList);
+        log.info("createApplication " + loanApplication);
+        List<LoanOfferDTO> loanOfferDTOList = dealService.createApplication(loanApplication);
+        log.info("createApplication result " + loanOfferDTOList);
         return ResponseEntity.ok(loanOfferDTOList);
     }
 

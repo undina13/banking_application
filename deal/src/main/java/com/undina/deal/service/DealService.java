@@ -20,7 +20,6 @@ public class DealService {
     public void applyOffer(LoanOfferDTO loanOffer) {
     }
 
-
     public void calculateCredit(Long applicationId, FinishRegistrationRequestDTO finishRegistrationRequestDTO) {
     }
 }
