@@ -1,8 +1,7 @@
 package com.undina.deal.dto;
 
 public enum Position {
-    WORKER,
-    MID_MANAGER,
+    MIDDLE_MANAGER,
     TOP_MANAGER,
-    OWNER
+    MANAGER
 }

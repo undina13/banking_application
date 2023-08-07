@@ -22,7 +22,7 @@ public class Application {
     @Column(name = "application_id", nullable = false)
     private Long applicationId;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     private Client client;
 
     @OneToOne(cascade = CascadeType.ALL)

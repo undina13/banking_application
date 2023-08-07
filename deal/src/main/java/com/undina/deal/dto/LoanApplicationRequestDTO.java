@@ -1,8 +1,6 @@
 package com.undina.deal.dto;
 
-import com.undina.deal.util.ValidateDate;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -15,7 +13,6 @@ import java.time.LocalDate;
 
 @AllArgsConstructor
 @Getter
-@Builder
 public class LoanApplicationRequestDTO {
     @Min(10000)
     @NotNull
@@ -41,7 +38,6 @@ public class LoanApplicationRequestDTO {
     private final String email;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @ValidateDate
     @NotNull
     private final LocalDate birthdate;
 

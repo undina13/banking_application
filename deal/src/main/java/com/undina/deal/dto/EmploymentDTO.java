@@ -2,7 +2,6 @@ package com.undina.deal.dto;
 
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
@@ -11,7 +10,6 @@ import java.math.BigDecimal;
 
 @AllArgsConstructor
 @Getter
-@Builder
 public class EmploymentDTO {
     @NotNull
     private final EmploymentStatus employmentStatus;

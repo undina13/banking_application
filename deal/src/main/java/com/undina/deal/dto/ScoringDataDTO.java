@@ -2,7 +2,6 @@ package com.undina.deal.dto;
 
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -16,7 +15,6 @@ import java.time.LocalDate;
 
 @AllArgsConstructor
 @Getter
-@Builder
 public class ScoringDataDTO {
     @Min(10000)
     @NotNull
