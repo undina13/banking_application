@@ -8,11 +8,11 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @ToString
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -22,7 +22,7 @@ public class Application {
     @Column(name = "application_id", nullable = false)
     private Long applicationId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     private Client client;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -35,11 +35,11 @@ public class Application {
     @Column(name = "creation_date", nullable = false)
     private LocalDate creationDate;
 
-    @Column(name = "applied_offer", nullable = false)
+    @Column(name = "applied_offer")
     @Type(type = "jsonb")
     private LoanOfferDTO appliedOffer;
 
-    @Column(name = "sign_date", nullable = false)
+    @Column(name = "sign_date")
     private LocalDate signDate;
 
     @Column(name = "ses_code")
@@ -47,5 +47,5 @@ public class Application {
 
     @Type(type = "jsonb")
     @Column(name = "status_history", nullable = false)
-    private StatusHistory statusHistory;
+    private List<StatusHistory> statusHistory;
 }

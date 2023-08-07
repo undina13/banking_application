@@ -2,7 +2,7 @@ package com.undina.deal.dto;
 
 import lombok.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -10,9 +10,9 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StatusHistory {
-    private String status;
+    private ApplicationStatus status;
 
-    private LocalDate time;
+    private LocalDateTime time;
 
     private ChangeType changeType;
 }

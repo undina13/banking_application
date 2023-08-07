@@ -6,20 +6,20 @@ import java.math.BigDecimal;
 
 @Data
 public class LoanOfferDTO {
-    private final Long applicationId;
+    private Long applicationId;
 
-    private final BigDecimal requestedAmount;
+    private BigDecimal requestedAmount;
 
-    private final BigDecimal totalAmount;
+    private BigDecimal totalAmount;
 
-    private final Integer term;
+    private Integer term;
 
-    private final BigDecimal monthlyPayment;
+    private BigDecimal monthlyPayment;
 
-    private final BigDecimal rate;
+    private BigDecimal rate;
 
-    private final Boolean isInsuranceEnabled;
+    private Boolean isInsuranceEnabled;
 
-    private final Boolean isSalaryClient;
+    private Boolean isSalaryClient;
 }
 
