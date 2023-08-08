@@ -2,7 +2,7 @@ package com.undina.deal.controller;
 
 
 import com.undina.deal.exception.ErrorResponse;
-import com.undina.deal.exception.RejectionException;
+import com.undina.deal.exception.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +24,8 @@ public class ErrorHandler {
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(RejectionException.class)
-    public ResponseEntity<ErrorResponse> rejectionException(final RejectionException e) {
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ErrorResponse> rejectionException(final NotFoundException e) {
         log.error("rejectionException " + e.getMessage());
         return ResponseEntity.internalServerError()
                 .body(new ErrorResponse(e.getMessage()));

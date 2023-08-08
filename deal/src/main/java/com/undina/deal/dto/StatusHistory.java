@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 public class StatusHistory {
     private ApplicationStatus status;
 

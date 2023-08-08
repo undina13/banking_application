@@ -23,9 +23,11 @@ public class Application {
     private Long applicationId;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "client_id")
     private Client client;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "credit_id")
     private Credit credit;
 
     @Column(nullable = false)

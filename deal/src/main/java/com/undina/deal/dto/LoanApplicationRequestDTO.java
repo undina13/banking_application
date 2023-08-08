@@ -2,6 +2,7 @@ package com.undina.deal.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Min;
@@ -13,41 +14,42 @@ import java.time.LocalDate;
 
 @AllArgsConstructor
 @Getter
+@NoArgsConstructor
 public class LoanApplicationRequestDTO {
     @Min(10000)
     @NotNull
-    private final BigDecimal amount;
+    private BigDecimal amount;
 
     @Min(6)
     @NotNull
-    private final Integer term;
+    private Integer term;
 
     @Pattern(regexp = "^[a-zA-Z]{2,30}$")
     @NotBlank
-    private final String firstName;
+    private String firstName;
 
     @Pattern(regexp = "^[a-zA-Z]{2,30}$")
     @NotBlank
-    private final String lastName;
+    private String lastName;
 
     @Pattern(regexp = "^[a-zA-Z]{2,30}$")
-    private final String middleName;
+    private String middleName;
 
     @Pattern(regexp = "^[\\w\\.]{2,50}@[\\w\\.]{2,20}$")
     @NotBlank
-    private final String email;
+    private String email;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull
-    private final LocalDate birthdate;
+    private LocalDate birthdate;
 
     @Pattern(regexp = "^[0-9]{4}$")
     @NotBlank
-    private final String passportSeries;
+    private String passportSeries;
 
     @Pattern(regexp = "^[0-9]{6}$")
     @NotBlank
-    private final String passportNumber;
+    private String passportNumber;
 
     @Override
     public String toString() {

@@ -1,6 +1,7 @@
 package com.undina.deal.service;
 
 import com.undina.deal.dto.*;
+import com.undina.deal.exception.NotFoundException;
 import com.undina.deal.model.Application;
 import com.undina.deal.model.Client;
 import com.undina.deal.repository.ApplicationRepository;
@@ -36,7 +37,7 @@ public class DealService {
         Application application = new Application();
         application.setClient(client);
         application.setCreationDate(LocalDate.now());
-        application = applicationService.updateStatus(application, ApplicationStatus.PREAPPROVAL, ChangeType.MANUAL);
+        application = applicationService.updateStatus(application, ApplicationStatus.PREAPPROVAL, ChangeType.AUTOMATIC);
         log.info("save application: {}", application);
         application = applicationRepository.save(application);
         List<LoanOfferDTO> loanOffers = myFeignClient.getOffers(loanApplication).getBody();
@@ -49,8 +50,17 @@ public class DealService {
     }
 
     public void applyOffer(LoanOfferDTO loanOffer) {
+        log.info("applyOffer: {}", loanOffer);
+        Application application = applicationRepository.findById(loanOffer.getApplicationId())
+                .orElseThrow(() -> new NotFoundException("application not found? id = {}" + loanOffer.getApplicationId()));
+        application = applicationService.updateStatus(application, ApplicationStatus.APPROVED, ChangeType.AUTOMATIC);
+        log.info("applyOffer application updated status: {}", application);
+        application.setAppliedOffer(loanOffer);
+        applicationRepository.save(application);
+        log.info("applyOffer result: {}", application);
     }
 
     public void calculateCredit(Long applicationId, FinishRegistrationRequestDTO finishRegistrationRequestDTO) {
+
     }
 }
