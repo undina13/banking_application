@@ -3,31 +3,35 @@ package com.undina.deal.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 @AllArgsConstructor
 @Getter
-public class EmploymentDTO {
+@NoArgsConstructor
+
+public class EmploymentDTO implements Serializable {
     @NotNull
-    private final EmploymentStatus employmentStatus;
+    private EmploymentStatus employmentStatus;
 
     @NotBlank
-    private final String employerINN;
+    private String employerINN;
 
     @NotNull
-    private final BigDecimal salary;
+    private BigDecimal salary;
 
     @NotNull
-    private final Position position;
+    private Position position;
 
     @NotNull
-    private final Integer workExperienceTotal;
+    private Integer workExperienceTotal;
 
     @NotNull
-    private final Integer workExperienceCurrent;
+    private Integer workExperienceCurrent;
 
     @Override
     public String toString() {

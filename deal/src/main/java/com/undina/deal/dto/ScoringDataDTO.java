@@ -76,16 +76,25 @@ public class ScoringDataDTO {
     @NotNull
     private final Boolean isSalaryClient;
 
+
     @Override
     public String toString() {
         return "ScoringDataDTO{" +
                 "amount=" + amount +
                 ", term=" + term +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", middleName='" + middleName + '\'' +
                 ", gender=" + gender +
                 ", birthdate=" + birthdate +
+                ", passportSeries='" + passportSeries + '\'' +
+                ", passportNumber='" + passportNumber + '\'' +
+                ", passportIssueDate=" + passportIssueDate +
+                ", passportIssueBranch='" + passportIssueBranch + '\'' +
                 ", maritalStatus=" + maritalStatus +
                 ", dependentAmount=" + dependentAmount +
                 ", employment=" + employment +
+                ", account='" + account + '\'' +
                 ", isInsuranceEnabled=" + isInsuranceEnabled +
                 ", isSalaryClient=" + isSalaryClient +
                 '}';

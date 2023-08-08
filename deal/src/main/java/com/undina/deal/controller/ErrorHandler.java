@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.validation.ConstraintViolationException;
-//TODO сделать исключения
 @RestControllerAdvice
 @Slf4j
 public class ErrorHandler {

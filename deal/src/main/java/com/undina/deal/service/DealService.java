@@ -8,6 +8,7 @@ import com.undina.deal.repository.ApplicationRepository;
 import com.undina.deal.repository.ClientRepository;
 import com.undina.deal.util.ClientMapper;
 import com.undina.deal.util.MyFeignClient;
+import com.undina.deal.util.ScoringDataMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DealService {
     private final ClientMapper clientMapper;
+
+    private final ScoringDataMapper scoringDataMapper;
 
     private final ClientRepository clientRepository;
 
@@ -61,6 +64,15 @@ public class DealService {
     }
 
     public void calculateCredit(Long applicationId, FinishRegistrationRequestDTO finishRegistrationRequestDTO) {
-
+        log.info("calculateCredit: applicationId - {}, {}", applicationId, finishRegistrationRequestDTO);
+        Application application = applicationRepository.findById(applicationId)
+                .orElseThrow(() -> new NotFoundException("application not found? id = {}" + applicationId));
+        Client client = application.getClient();
+        log.info("calculateCredit: client {}", client);
+        ScoringDataDTO scoringDataDTO = scoringDataMapper.toScoringDataDTO(finishRegistrationRequestDTO, client,
+                application.getAppliedOffer());
+        log.info("calculateCredit: scoringDataDTO  {}", scoringDataDTO);
+        CreditDTO creditDTO = myFeignClient.calculateCredit(scoringDataDTO).getBody();
+        log.info("calculateCredit:  ok,  {}", creditDTO);
     }
 }

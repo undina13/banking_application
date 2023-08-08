@@ -16,16 +16,16 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 public class ApplicationService {
-    public Application updateStatus(Application application, ApplicationStatus status, ChangeType changeType){
+    public Application updateStatus(Application application, ApplicationStatus status, ChangeType changeType) {
         log.info("updateStatus: {}, {}, {}", application, status, changeType);
         application.setStatus(status);
         List<StatusHistory> statusHistories = application.getStatusHistory();
-        if(statusHistories==null){
+        if (statusHistories == null) {
             statusHistories = new ArrayList<>();
         }
-        statusHistories.add(new StatusHistory(status, LocalDateTime.now(),changeType));
+        statusHistories.add(new StatusHistory(status, LocalDateTime.now(), changeType));
         application.setStatusHistory(statusHistories);
         log.info("updateStatus result: {}", application);
-        return  application;
+        return application;
     }
 }
