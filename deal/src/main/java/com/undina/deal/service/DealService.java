@@ -2,6 +2,8 @@ package com.undina.deal.service;
 
 import com.undina.deal.dto.*;
 import com.undina.deal.exception.NotFoundException;
+import com.undina.deal.exception.RejectionException;
+import com.undina.deal.exception.ValidationException;
 import com.undina.deal.model.Application;
 import com.undina.deal.model.Client;
 import com.undina.deal.repository.ApplicationRepository;
@@ -9,6 +11,7 @@ import com.undina.deal.repository.ClientRepository;
 import com.undina.deal.util.ClientMapper;
 import com.undina.deal.util.MyFeignClient;
 import com.undina.deal.util.ScoringDataMapper;
+import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -43,7 +46,12 @@ public class DealService {
         application = applicationService.updateStatus(application, ApplicationStatus.PREAPPROVAL, ChangeType.AUTOMATIC);
         log.info("save application: {}", application);
         application = applicationRepository.save(application);
-        List<LoanOfferDTO> loanOffers = myFeignClient.getOffers(loanApplication).getBody();
+        List<LoanOfferDTO> loanOffers;
+        try {
+            loanOffers = myFeignClient.getOffers(loanApplication).getBody();
+        } catch (FeignException e) {
+            throw new ValidationException(e.getMessage());
+        }
         if (loanOffers != null) {
             Application finalApplication = application;
             loanOffers.forEach(loanOfferDTO -> loanOfferDTO.setApplicationId(finalApplication.getApplicationId()));
@@ -72,7 +80,12 @@ public class DealService {
         ScoringDataDTO scoringDataDTO = scoringDataMapper.toScoringDataDTO(finishRegistrationRequestDTO, client,
                 application.getAppliedOffer());
         log.info("calculateCredit: scoringDataDTO  {}", scoringDataDTO);
-        CreditDTO creditDTO = myFeignClient.calculateCredit(scoringDataDTO).getBody();
+        CreditDTO creditDTO = null;
+        try {
+            creditDTO = myFeignClient.calculateCredit(scoringDataDTO).getBody();
+        } catch (FeignException e) {
+            throw new RejectionException(e.getMessage());
+        }
         log.info("calculateCredit:  ok,  {}", creditDTO);
     }
 }
