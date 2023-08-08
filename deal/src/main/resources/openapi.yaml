@@ -228,3 +228,4 @@ components:
         passportNumber:
           pattern: ^[0-9]{6}$
           type: string
+

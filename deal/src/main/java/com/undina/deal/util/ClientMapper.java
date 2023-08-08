@@ -1,12 +1,12 @@
 package com.undina.deal.util;
 
-import com.undina.deal.dto.LoanApplicationRequestDTO;
-import com.undina.deal.dto.Passport;
 import com.undina.deal.model.Client;
+import com.undina.deal.model.Passport;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
+import org.openapitools.model.LoanApplicationRequestDTO;
 
 @Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface ClientMapper {

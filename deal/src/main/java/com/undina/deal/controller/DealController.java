@@ -1,8 +1,8 @@
 package com.undina.deal.controller;
 
-import com.undina.deal.dto.FinishRegistrationRequestDTO;
-import com.undina.deal.dto.LoanApplicationRequestDTO;
-import com.undina.deal.dto.LoanOfferDTO;
+import org.openapitools.model.FinishRegistrationRequestDTO;
+import org.openapitools.model.LoanApplicationRequestDTO;
+import org.openapitools.model.LoanOfferDTO;
 import com.undina.deal.service.DealService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -23,7 +23,7 @@ import java.util.List;
 @RequestMapping("/deal")
 @RequiredArgsConstructor
 @Tag(name = "DealController", description = "Контроллер DealController")
-public class DealController {
+public class DealController{
     private final DealService dealService;
 
     @Operation(summary = "Создание application и client, получение 4 кредитных предложений")

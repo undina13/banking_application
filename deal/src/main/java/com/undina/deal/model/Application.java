@@ -1,10 +1,8 @@
 package com.undina.deal.model;
 
-import com.undina.deal.dto.ApplicationStatus;
-import com.undina.deal.dto.LoanOfferDTO;
-import com.undina.deal.dto.StatusHistory;
 import lombok.*;
 import org.hibernate.annotations.Type;
+import org.openapitools.model.LoanOfferDTO;
 
 import javax.persistence.*;
 import java.time.LocalDate;

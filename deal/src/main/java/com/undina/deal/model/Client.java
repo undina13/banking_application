@@ -1,14 +1,12 @@
 package com.undina.deal.model;
 
 
-import com.undina.deal.dto.Employment;
-import com.undina.deal.dto.Gender;
-import com.undina.deal.dto.MaritalStatus;
-import com.undina.deal.dto.Passport;
+
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import lombok.*;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
+import org.openapitools.model.EmploymentDTO;
 
 import javax.persistence.*;
 import java.time.LocalDate;

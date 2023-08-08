@@ -1,8 +1,8 @@
-package com.undina.deal.dto;
+package com.undina.deal.model;
 
 public enum EmploymentStatus {
     UNEMPLOYED,
     SELF_EMPLOYED,
-    BUSINESS_OWNER,
-    EMPLOYEE
+    EMPLOYED,
+    BUSINESS_OWNER
 }

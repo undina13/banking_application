@@ -1,9 +1,10 @@
 package com.undina.deal.service;
 
-import com.undina.deal.dto.ApplicationStatus;
-import com.undina.deal.dto.ChangeType;
-import com.undina.deal.dto.StatusHistory;
+
 import com.undina.deal.model.Application;
+import com.undina.deal.model.ApplicationStatus;
+import com.undina.deal.model.ChangeType;
+import com.undina.deal.model.StatusHistory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

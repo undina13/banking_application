@@ -1,4 +1,4 @@
-package com.undina.deal.dto;
+package com.undina.deal.model;
 
 import lombok.*;
 
@@ -25,3 +25,4 @@ public class Employment implements Serializable {
 
     private Integer workExperienceCurrent;
 }
+

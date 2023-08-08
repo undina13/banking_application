@@ -1,10 +1,9 @@
-package com.undina.deal.dto;
+package com.undina.deal.model;
 
 import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-
 @Getter
 @Setter
 @ToString

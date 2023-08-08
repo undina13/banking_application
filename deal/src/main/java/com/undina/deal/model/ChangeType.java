@@ -1,6 +1,8 @@
-package com.undina.deal.dto;
+package com.undina.deal.model;
 
 public enum ChangeType {
     AUTOMATIC,
+
     MANUAL
 }
+

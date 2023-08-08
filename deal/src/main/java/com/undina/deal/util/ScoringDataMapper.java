@@ -1,12 +1,12 @@
 package com.undina.deal.util;
 
-import com.undina.deal.dto.FinishRegistrationRequestDTO;
-import com.undina.deal.dto.LoanOfferDTO;
-import com.undina.deal.dto.ScoringDataDTO;
 import com.undina.deal.model.Client;
+import com.undina.deal.model.ScoringDataDTO;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.openapitools.model.FinishRegistrationRequestDTO;
+import org.openapitools.model.LoanOfferDTO;
 
 @Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface ScoringDataMapper {

@@ -1,4 +1,4 @@
-package com.undina.deal.dto;
+package com.undina.deal.model;
 
 import lombok.Data;
 

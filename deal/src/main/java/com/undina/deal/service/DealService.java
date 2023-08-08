@@ -1,11 +1,9 @@
 package com.undina.deal.service;
 
-import com.undina.deal.dto.*;
 import com.undina.deal.exception.NotFoundException;
 import com.undina.deal.exception.RejectionException;
 import com.undina.deal.exception.ValidationException;
-import com.undina.deal.model.Application;
-import com.undina.deal.model.Client;
+import com.undina.deal.model.*;
 import com.undina.deal.repository.ApplicationRepository;
 import com.undina.deal.repository.ClientRepository;
 import com.undina.deal.util.ClientMapper;
@@ -14,6 +12,9 @@ import com.undina.deal.util.ScoringDataMapper;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.openapitools.model.FinishRegistrationRequestDTO;
+import org.openapitools.model.LoanApplicationRequestDTO;
+import org.openapitools.model.LoanOfferDTO;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;

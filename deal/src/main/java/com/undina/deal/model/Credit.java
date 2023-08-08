@@ -1,6 +1,6 @@
 package com.undina.deal.model;
 
-import com.undina.deal.dto.PaymentScheduleElement;
+
 import lombok.*;
 import org.hibernate.annotations.Type;
 
