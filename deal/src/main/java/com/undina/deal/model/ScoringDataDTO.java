@@ -1,8 +1,9 @@
 package com.undina.deal.model;
 
-import org.openapitools.model.EmploymentDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
+import org.openapitools.model.EmploymentDTO;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.Valid;
@@ -15,6 +16,7 @@ import java.time.LocalDate;
 
 @AllArgsConstructor
 @Getter
+@Setter
 public class ScoringDataDTO {
     @Min(10000)
     @NotNull
