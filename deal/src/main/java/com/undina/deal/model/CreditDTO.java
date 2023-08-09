@@ -1,26 +1,30 @@
 package com.undina.deal.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class CreditDTO {
-    private final BigDecimal amount;
+    private  BigDecimal amount;
 
-    private final Integer term;
+    private  Integer term;
 
-    private final BigDecimal monthlyPayment;
+    private  BigDecimal monthlyPayment;
 
-    private final BigDecimal rate;
+    private  BigDecimal rate;
 
-    private final BigDecimal psk;
+    private  BigDecimal psk;
 
-    private final Boolean isInsuranceEnabled;
+    private  Boolean isInsuranceEnabled;
 
-    private final Boolean isSalaryClient;
+    private  Boolean isSalaryClient;
 
-    private final List<PaymentScheduleElement> paymentSchedule;
+    private  List<PaymentScheduleElement> paymentSchedule;
 }
 

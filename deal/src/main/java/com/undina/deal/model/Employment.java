@@ -7,7 +7,6 @@ import java.math.BigDecimal;
 
 @Getter
 @Setter
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class Employment implements Serializable {
@@ -24,5 +23,17 @@ public class Employment implements Serializable {
     private Integer workExperienceTotal;
 
     private Integer workExperienceCurrent;
+
+    @Override
+    public String toString() {
+        return "Employment{" +
+                "employmentId=" + employmentId +
+                ", status=" + status +
+                ", salary=" + salary +
+                ", position=" + position +
+                ", workExperienceTotal=" + workExperienceTotal +
+                ", workExperienceCurrent=" + workExperienceCurrent +
+                '}';
+    }
 }
 

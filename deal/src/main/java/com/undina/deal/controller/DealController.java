@@ -1,47 +1,35 @@
 package com.undina.deal.controller;
 
+import com.undina.deal.service.DealService;
+import com.undina.deal.util.ModelFormatter;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.openapitools.api.DealApi;
 import org.openapitools.model.FinishRegistrationRequestDTO;
 import org.openapitools.model.LoanApplicationRequestDTO;
 import org.openapitools.model.LoanOfferDTO;
-import com.undina.deal.service.DealService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/deal")
 @RequiredArgsConstructor
-@Tag(name = "DealController", description = "Контроллер DealController")
-public class DealController{
+public class DealController implements DealApi {
     private final DealService dealService;
 
-    @Operation(summary = "Создание application и client, получение 4 кредитных предложений")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",
-                    content = {@Content(mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = LoanOfferDTO.class)))}),
-            @ApiResponse(responseCode = "400", description = "Ошибка валидации",
-                    content = @Content)})
-    @PostMapping("/application")
+    @Override
     public ResponseEntity<List<LoanOfferDTO>> createApplication(@RequestBody LoanApplicationRequestDTO loanApplication) {
-        log.info("createApplication " + loanApplication);
+        log.info("createApplication  {}", ModelFormatter.toLogFormat(loanApplication));
         List<LoanOfferDTO> loanOfferDTOList = dealService.createApplication(loanApplication);
         log.info("createApplication result " + loanOfferDTOList);
         return ResponseEntity.ok(loanOfferDTOList);
     }
 
-    @PutMapping("/offer")
+    @Override
     public ResponseEntity<Void> applyLoanOffer(@RequestBody LoanOfferDTO loanOffer) {
         log.info("applyLoanOffer " + loanOffer);
         dealService.applyOffer(loanOffer);
@@ -49,16 +37,11 @@ public class DealController{
         return ResponseEntity.ok().build();
     }
 
-    @Operation(summary = "Завершение регистрации + полный подсчёт кредита")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",
-                    content = @Content),
-            @ApiResponse(responseCode = "500", description = "Отказано в кредите",
-                    content = @Content)})
-    @PutMapping(("/calculate/{applicationId}"))
+    @Override
     public ResponseEntity<Void> getCalculation(@PathVariable Long applicationId,
                                                @RequestBody FinishRegistrationRequestDTO finishRegistrationRequestDTO) {
-        log.info("getCalculation  applicationId = {}, scoringData = {}", applicationId, finishRegistrationRequestDTO);
+        log.info("getCalculation  applicationId = {}, finishRegistrationRequestDTO = {}", applicationId,
+                ModelFormatter.toLogFormat(finishRegistrationRequestDTO));
         dealService.calculateCredit(applicationId, finishRegistrationRequestDTO);
         log.info("getCalculation result OK");
         return ResponseEntity.ok().build();

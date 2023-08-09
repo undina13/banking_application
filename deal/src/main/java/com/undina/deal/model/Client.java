@@ -1,17 +1,15 @@
 package com.undina.deal.model;
 
 
-
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import lombok.*;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
-import org.openapitools.model.EmploymentDTO;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
-@ToString
+
 @Getter
 @Setter
 @Builder
@@ -56,4 +54,18 @@ public class Client {
 
     @Column(nullable = false)
     String account;
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "clientId=" + clientId +
+                ", date=" + date +
+                ", email='" + email + '\'' +
+                ", gender=" + gender +
+                ", maritalStatus=" + maritalStatus +
+                ", dependentAmount=" + dependentAmount +
+                ", employment=" + employment +
+                ", account='" + account + '\'' +
+                '}';
+    }
 }

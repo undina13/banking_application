@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
-  title: Conveyor
-  description: Conveyor application
+  title: Deal
+  description: Deal application
   contact:
     name: undina
     email: foxundina@gmail.com
@@ -17,6 +17,7 @@ paths:
     put:
       tags:
         - DealController
+      summary: Выбор одного из предложений. Request LoanOfferDTO
       operationId: applyLoanOffer
       requestBody:
         content:
@@ -34,11 +35,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
         '500':
-          description: Internal Server Error
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+          description: Ошибка
+          content: {}
   /deal/calculate/{applicationId}:
     put:
       tags:
@@ -202,6 +200,7 @@ components:
       properties:
         amount:
           minimum: 10000
+          exclusiveMinimum: false
           type: number
         term:
           minimum: 6
@@ -228,4 +227,3 @@ components:
         passportNumber:
           pattern: ^[0-9]{6}$
           type: string
-

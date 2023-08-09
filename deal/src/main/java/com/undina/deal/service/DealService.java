@@ -7,6 +7,7 @@ import com.undina.deal.model.*;
 import com.undina.deal.repository.ApplicationRepository;
 import com.undina.deal.repository.ClientRepository;
 import com.undina.deal.util.ClientMapper;
+import com.undina.deal.util.ModelFormatter;
 import com.undina.deal.util.MyFeignClient;
 import com.undina.deal.util.ScoringDataMapper;
 import feign.FeignException;
@@ -37,7 +38,7 @@ public class DealService {
     private final MyFeignClient myFeignClient;
 
     public List<LoanOfferDTO> createApplication(LoanApplicationRequestDTO loanApplication) {
-        log.info("createApplication: {}", loanApplication);
+        log.info("createApplication  {}", ModelFormatter.toLogFormat(loanApplication));
         Client client = clientMapper.toClient(loanApplication);
         client = clientRepository.save(client);
         log.info("savingClient: {}", client);
@@ -45,8 +46,8 @@ public class DealService {
         application.setClient(client);
         application.setCreationDate(LocalDate.now());
         application = applicationService.updateStatus(application, ApplicationStatus.PREAPPROVAL, ChangeType.AUTOMATIC);
-        log.info("save application: {}", application);
         application = applicationRepository.save(application);
+        log.info("save application: {}", application);
         List<LoanOfferDTO> loanOffers;
         try {
             loanOffers = myFeignClient.getOffers(loanApplication).getBody();
@@ -73,14 +74,15 @@ public class DealService {
     }
 
     public void calculateCredit(Long applicationId, FinishRegistrationRequestDTO finishRegistrationRequestDTO) {
-        log.info("calculateCredit: applicationId - {}, {}", applicationId, finishRegistrationRequestDTO);
+        log.info("calculateCredit applicationId = {}, finishRegistrationRequestDTO = {}", applicationId,
+                ModelFormatter.toLogFormat(finishRegistrationRequestDTO));
         Application application = applicationRepository.findById(applicationId)
                 .orElseThrow(() -> new NotFoundException("application not found? id = {}" + applicationId));
         Client client = application.getClient();
         log.info("calculateCredit: client {}", client);
         ScoringDataDTO scoringDataDTO = scoringDataMapper.toScoringDataDTO(finishRegistrationRequestDTO, client,
                 application.getAppliedOffer());
-        log.info("calculateCredit: scoringDataDTO  {}", scoringDataDTO);
+        log.info("calculateCredit: scoringDataDTO  {}", ModelFormatter.toLogFormat(scoringDataDTO));
         CreditDTO creditDTO = null;
         try {
             creditDTO = myFeignClient.calculateCredit(scoringDataDTO).getBody();

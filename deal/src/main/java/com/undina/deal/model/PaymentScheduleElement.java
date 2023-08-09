@@ -1,22 +1,26 @@
 package com.undina.deal.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class PaymentScheduleElement {
-    private final Integer number;
+    private Integer number;
 
-    private final LocalDate date;
+    private LocalDate date;
 
-    private final BigDecimal totalPayment;
+    private BigDecimal totalPayment;
 
-    private final BigDecimal interestPayment;
+    private BigDecimal interestPayment;
 
-    private final BigDecimal debtPayment;
+    private BigDecimal debtPayment;
 
-    private final BigDecimal remainingDebt;
+    private BigDecimal remainingDebt;
 }
 
