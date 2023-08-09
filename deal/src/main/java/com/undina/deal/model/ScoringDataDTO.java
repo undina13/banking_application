@@ -87,6 +87,7 @@ public class ScoringDataDTO {
                 ", birthdate=" + birthdate +
                 ", maritalStatus=" + maritalStatus +
                 ", dependentAmount=" + dependentAmount +
+                ", employment=" + employment +
                 ", account='" + account + '\'' +
                 ", isInsuranceEnabled=" + isInsuranceEnabled +
                 ", isSalaryClient=" + isSalaryClient +

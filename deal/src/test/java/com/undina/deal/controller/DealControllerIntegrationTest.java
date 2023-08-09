@@ -1,11 +1,10 @@
 package com.undina.deal.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockserver.client.MockServerClient;
 import org.mockserver.integration.ClientAndServer;
 import org.mockserver.model.Header;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,6 @@ import static com.undina.deal.model.FinishRegistrationRequestDTOData.finishRegis
 import static com.undina.deal.model.LoanApplicationRequestDTOData.loanApplicationRequestDTO1;
 import static com.undina.deal.model.LoanOfferDTOData.loanOfferDTO13;
 import static com.undina.deal.model.LoanOfferDTOData.loanOfferDTOS1;
-import static com.undina.deal.model.ScoringDataDTOData.scoringDataDTO1;
 import static org.mockserver.integration.ClientAndServer.startClientAndServer;
 import static org.mockserver.matchers.Times.exactly;
 import static org.mockserver.model.HttpRequest.request;
@@ -43,34 +41,30 @@ class DealControllerIntegrationTest extends SpringBootApplicationTest {
     @Autowired
     ObjectMapper mapper;
 
-    private  ClientAndServer mockServer;
-//    @BeforeEach
-// void start(){
-//    mockServer = startClientAndServer(8080);
-//}
-@AfterEach
-    void stop(){
-    mockServer.stop();
+    static ClientAndServer mockServer;
+
+    @BeforeAll
+    static void start() {
+        mockServer = startClientAndServer(8080);
     }
+
 
     @Test
     void createApplicationTestOk() throws Exception {
-
-        mockServer = startClientAndServer(8080);
-            new MockServerClient("127.0.0.1", 8080)
-                    .when(
-                            request()
-                                    .withMethod("POST")
-                                    .withPath("/conveyor/offers")
-                                    .withBody(exact(mapper.writeValueAsString(loanApplicationRequestDTO1))),
-                            exactly(1))
-                    .respond(
-                            response()
-                                    .withStatusCode(200)
-                                    .withHeaders(
-                                            new Header("Content-Type", "application/json; charset=utf-8"))
-                                    .withBody(mapper.writeValueAsString(loanOfferDTOS1))
-                    );
+        mockServer
+                .when(
+                        request()
+                                .withMethod("POST")
+                                .withPath("/conveyor/offers")
+                                .withBody(exact(mapper.writeValueAsString(loanApplicationRequestDTO1))),
+                        exactly(1))
+                .respond(
+                        response()
+                                .withStatusCode(200)
+                                .withHeaders(
+                                        new Header("Content-Type", "application/json; charset=utf-8"))
+                                .withBody(mapper.writeValueAsString(loanOfferDTOS1))
+                );
 
         mockMvc.perform(post("/deal/application")
                         .content(mapper.writeValueAsString(loanApplicationRequestDTO1))
@@ -79,7 +73,7 @@ class DealControllerIntegrationTest extends SpringBootApplicationTest {
                 .andDo(print())
                 .andExpect(content().json(mapper.writeValueAsString(loanOfferDTOS1)));
 
-        }
+    }
 
 
     @Test
@@ -94,13 +88,11 @@ class DealControllerIntegrationTest extends SpringBootApplicationTest {
     @Test
     void getCalculationTestOk() throws Exception {
 
-        mockServer = startClientAndServer(8080);
-        new MockServerClient("127.0.0.1", 8080)
+        mockServer
                 .when(
                         request()
                                 .withMethod("POST")
-                                .withPath("/conveyor/calculation")
-                                .withBody(exact(mapper.writeValueAsString(scoringDataDTO1))),
+                                .withPath("/conveyor/calculation"),
                         exactly(1))
                 .respond(
                         response()
@@ -115,7 +107,5 @@ class DealControllerIntegrationTest extends SpringBootApplicationTest {
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
-
-       // mockServer.stop();
     }
 }

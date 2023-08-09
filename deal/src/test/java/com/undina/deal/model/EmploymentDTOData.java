@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class EmploymentDTOData {
     public static EmploymentDTO employmentDTO = new EmploymentDTO()
-            .employmentStatus(EmploymentDTO.EmploymentStatusEnum.SELF_EMPLOYED)
+            .employmentStatus(EmploymentDTO.EmploymentStatusEnum.BUSINESS_OWNER)
             .employerINN("567676686767")
             .salary(BigDecimal.valueOf(50000))
             .position(EmploymentDTO.PositionEnum.MANAGER)
