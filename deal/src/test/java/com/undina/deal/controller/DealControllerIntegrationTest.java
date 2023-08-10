@@ -20,6 +20,7 @@ import static com.undina.deal.model.FinishRegistrationRequestDTOData.finishRegis
 import static com.undina.deal.model.LoanApplicationRequestDTOData.loanApplicationRequestDTO1;
 import static com.undina.deal.model.LoanOfferDTOData.loanOfferDTO13;
 import static com.undina.deal.model.LoanOfferDTOData.loanOfferDTOS1;
+import static com.undina.deal.model.ScoringDataDTOData.scoringDataDTO1;
 import static org.mockserver.integration.ClientAndServer.startClientAndServer;
 import static org.mockserver.matchers.Times.exactly;
 import static org.mockserver.model.HttpRequest.request;
@@ -92,7 +93,8 @@ class DealControllerIntegrationTest extends SpringBootApplicationTest {
                 .when(
                         request()
                                 .withMethod("POST")
-                                .withPath("/conveyor/calculation"),
+                                .withPath("/conveyor/calculation")
+                                .withBody(mapper.writeValueAsString(scoringDataDTO1)),
                         exactly(1))
                 .respond(
                         response()

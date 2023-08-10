@@ -15,21 +15,4 @@ public class EmploymentDTOData {
             .position(EmploymentDTO.PositionEnum.MANAGER)
             .workExperienceTotal(17)
             .workExperienceCurrent(5);
-
-
-    public static EmploymentDTO employmentDTO2 = new EmploymentDTO()
-            .employmentStatus(EmploymentDTO.EmploymentStatusEnum.UNEMPLOYED)
-            .employerINN("567676686767")
-            .salary(BigDecimal.valueOf(50000))
-            .position(EmploymentDTO.PositionEnum.MANAGER)
-            .workExperienceTotal(17)
-            .workExperienceCurrent(5);
-
-    public static EmploymentDTO employmentDTO3 = new EmploymentDTO()
-            .employmentStatus(EmploymentDTO.EmploymentStatusEnum.BUSINESS_OWNER)
-            .employerINN("567676686767")
-            .salary(BigDecimal.valueOf(80000))
-            .position(EmploymentDTO.PositionEnum.TOP_MANAGER)
-            .workExperienceTotal(100)
-            .workExperienceCurrent(50);
 }
