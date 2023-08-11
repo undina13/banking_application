@@ -1,15 +1,19 @@
 package com.undina.deal.service;
 
+import com.undina.deal.entity.Application;
+import com.undina.deal.entity.Client;
+import com.undina.deal.enums.ApplicationStatus;
+import com.undina.deal.enums.ChangeType;
 import com.undina.deal.exception.NotFoundException;
 import com.undina.deal.exception.RejectionException;
 import com.undina.deal.exception.ValidationException;
-import com.undina.deal.model.*;
+import com.undina.deal.dto.*;
 import com.undina.deal.repository.ApplicationRepository;
 import com.undina.deal.repository.ClientRepository;
-import com.undina.deal.util.ClientMapper;
+import com.undina.deal.mapper.ClientMapper;
 import com.undina.deal.util.ModelFormatter;
-import com.undina.deal.util.MyFeignClient;
-import com.undina.deal.util.ScoringDataMapper;
+import com.undina.deal.feign.MyFeignClient;
+import com.undina.deal.mapper.ScoringDataMapper;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

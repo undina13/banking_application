@@ -1,6 +1,6 @@
 package com.undina.deal.util;
 
-import com.undina.deal.model.ScoringDataDTO;
+import com.undina.deal.dto.ScoringDataDTO;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.openapitools.model.FinishRegistrationRequestDTO;

@@ -1,5 +1,7 @@
-package com.undina.deal.model;
+package com.undina.deal.dto;
 
+import com.undina.deal.enums.Gender;
+import com.undina.deal.enums.MaritalStatus;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -7,7 +9,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import static com.undina.deal.model.EmploymentDTOData.employmentDTO;
+import static com.undina.deal.dto.EmploymentDTOData.employmentDTO;
 
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

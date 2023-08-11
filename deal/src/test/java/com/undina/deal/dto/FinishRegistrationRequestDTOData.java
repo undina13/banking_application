@@ -1,4 +1,4 @@
-package com.undina.deal.model;
+package com.undina.deal.dto;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -7,7 +7,7 @@ import org.openapitools.model.FinishRegistrationRequestDTO;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import static com.undina.deal.model.EmploymentDTOData.employmentDTO;
+import static com.undina.deal.dto.EmploymentDTOData.employmentDTO;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class FinishRegistrationRequestDTOData {

@@ -1,11 +1,10 @@
-package com.undina.deal.util;
+package com.undina.deal.mapper;
 
-import com.undina.deal.model.Client;
-import com.undina.deal.model.Passport;
+import com.undina.deal.entity.Client;
+import com.undina.deal.entity.Passport;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
 import org.openapitools.model.LoanApplicationRequestDTO;
 
 @Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR)
@@ -19,9 +18,7 @@ public interface ClientMapper {
         return client;
     }
 
-    @Mappings({
-            @Mapping(target = "series", source = "passportSeries"),
-            @Mapping(target = "number", source = "passportNumber")
-    })
+    @Mapping(target = "series", source = "passportSeries")
+    @Mapping(target = "number", source = "passportNumber")
     Passport toPassword(LoanApplicationRequestDTO loanApplicationRequestDTO);
 }

@@ -1,4 +1,4 @@
-package com.undina.deal.model;
+package com.undina.deal.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

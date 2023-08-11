@@ -5,7 +5,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
 
     <changeSet id="create-table-credit" author="undina">
-        <validCheckSum>7:19f99d93fcb9909c7749b7fc2dce1417</validCheckSum>
+<!--        <validCheckSum>7:19f99d93fcb9909c7749b7fc2dce1417</validCheckSum>-->
         <createTable tableName="credit">
             <column name="credit_id" type="bigint" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true"/>

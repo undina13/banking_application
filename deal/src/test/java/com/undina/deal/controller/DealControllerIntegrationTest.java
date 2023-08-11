@@ -20,12 +20,12 @@ import org.testcontainers.containers.PostgreSQLContainer;
 
 import java.nio.charset.StandardCharsets;
 
-import static com.undina.deal.model.CreditDTOData.creditDTO;
-import static com.undina.deal.model.FinishRegistrationRequestDTOData.finishRegistrationRequest;
-import static com.undina.deal.model.LoanApplicationRequestDTOData.loanApplicationRequestDTO1;
-import static com.undina.deal.model.LoanOfferDTOData.loanOfferDTO13;
-import static com.undina.deal.model.LoanOfferDTOData.loanOfferDTOS1;
-import static com.undina.deal.model.ScoringDataDTOData.scoringDataDTO1;
+import static com.undina.deal.dto.CreditDTOData.creditDTO;
+import static com.undina.deal.dto.FinishRegistrationRequestDTOData.finishRegistrationRequest;
+import static com.undina.deal.dto.LoanApplicationRequestDTOData.loanApplicationRequestDTO1;
+import static com.undina.deal.dto.LoanOfferDTOData.loanOfferDTO13;
+import static com.undina.deal.dto.LoanOfferDTOData.loanOfferDTOS1;
+import static com.undina.deal.dto.ScoringDataDTOData.scoringDataDTO1;
 import static org.mockserver.integration.ClientAndServer.startClientAndServer;
 import static org.mockserver.matchers.Times.exactly;
 import static org.mockserver.model.HttpRequest.request;
@@ -68,7 +68,7 @@ public class DealControllerIntegrationTest {
                     "spring.liquibase.change-log=db/changelog/db.changelog-master-test.xml",
                     "spring.liquibase.user=user",
                     "spring.liquibase.password=password",
-                    "conveyor.url=http://localhost:8080/conveyor"
+                    "feign.conveyor.url=http://localhost:8080/conveyor"
 
             );
             values.applyTo(configurableApplicationContext);

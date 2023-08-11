@@ -1,5 +1,7 @@
-package com.undina.deal.model;
+package com.undina.deal.entity;
 
+import com.undina.deal.enums.EmploymentStatus;
+import com.undina.deal.enums.Position;
 import lombok.*;
 
 import java.io.Serializable;

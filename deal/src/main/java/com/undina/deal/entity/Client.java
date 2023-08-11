@@ -1,6 +1,8 @@
-package com.undina.deal.model;
+package com.undina.deal.entity;
 
 
+import com.undina.deal.enums.Gender;
+import com.undina.deal.enums.MaritalStatus;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import lombok.*;
 import org.hibernate.annotations.Type;

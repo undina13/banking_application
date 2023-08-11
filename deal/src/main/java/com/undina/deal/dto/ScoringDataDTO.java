@@ -1,5 +1,7 @@
-package com.undina.deal.model;
+package com.undina.deal.dto;
 
+import com.undina.deal.enums.Gender;
+import com.undina.deal.enums.MaritalStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

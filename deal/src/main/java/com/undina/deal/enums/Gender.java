@@ -1,4 +1,4 @@
-package com.undina.deal.model;
+package com.undina.deal.enums;
 
 public enum Gender {
     MALE,

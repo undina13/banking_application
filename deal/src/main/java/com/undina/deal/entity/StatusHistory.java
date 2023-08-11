@@ -1,5 +1,7 @@
-package com.undina.deal.model;
+package com.undina.deal.entity;
 
+import com.undina.deal.enums.ApplicationStatus;
+import com.undina.deal.enums.ChangeType;
 import lombok.*;
 
 import java.time.LocalDateTime;

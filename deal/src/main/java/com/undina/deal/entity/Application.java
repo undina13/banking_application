@@ -1,5 +1,6 @@
-package com.undina.deal.model;
+package com.undina.deal.entity;
 
+import com.undina.deal.enums.ApplicationStatus;
 import lombok.*;
 import org.hibernate.annotations.Type;
 import org.openapitools.model.LoanOfferDTO;

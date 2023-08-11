@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ErrorHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(ValidationException.class)
-    public ResponseEntity<ErrorResponse> validationException(ValidationException e) {
-        log.error("validationException " + e.getMessage());
+    public ResponseEntity<ErrorResponse> validationException(final ValidationException e) {
+        log.error("validationException - error: message = {}", e.getMessage());
         return ResponseEntity.badRequest()
                 .body(new ErrorResponse(e.getMessage()));
     }
@@ -27,7 +27,7 @@ public class ErrorHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(RejectionException.class)
     public ResponseEntity<ErrorResponse> rejectionException(final RejectionException e) {
-        log.error("rejectionException " + e.getMessage());
+        log.error("rejectionException - error: message = {}", e.getMessage());
         return ResponseEntity.internalServerError()
                 .body(new ErrorResponse(e.getMessage()));
     }
@@ -35,7 +35,7 @@ public class ErrorHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ErrorResponse> notFoundException(final NotFoundException e) {
-        log.error("notFoundException " + e.getMessage());
+        log.error("notFoundException - error: message = {}", e.getMessage());
         return ResponseEntity.internalServerError()
                 .body(new ErrorResponse(e.getMessage()));
     }

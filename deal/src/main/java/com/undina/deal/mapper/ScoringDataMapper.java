@@ -1,7 +1,7 @@
-package com.undina.deal.util;
+package com.undina.deal.mapper;
 
-import com.undina.deal.model.Client;
-import com.undina.deal.model.ScoringDataDTO;
+import com.undina.deal.entity.Client;
+import com.undina.deal.dto.ScoringDataDTO;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

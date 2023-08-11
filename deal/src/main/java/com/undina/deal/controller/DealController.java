@@ -23,9 +23,9 @@ public class DealController implements DealApi {
 
     @Override
     public ResponseEntity<List<LoanOfferDTO>> createApplication(@RequestBody LoanApplicationRequestDTO loanApplication) {
-        log.info("createApplication  {}", ModelFormatter.toLogFormat(loanApplication));
+        log.info("createApplication - start: {}", ModelFormatter.toLogFormat(loanApplication));
         List<LoanOfferDTO> loanOfferDTOList = dealService.createApplication(loanApplication);
-        log.info("createApplication result " + loanOfferDTOList);
+        log.info("createApplication - result: {}", loanOfferDTOList);
         return ResponseEntity.ok(loanOfferDTOList);
     }
 

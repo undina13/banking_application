@@ -1,8 +1,8 @@
-package com.undina.deal.util;
+package com.undina.deal.feign;
 
 
-import com.undina.deal.model.CreditDTO;
-import com.undina.deal.model.ScoringDataDTO;
+import com.undina.deal.dto.CreditDTO;
+import com.undina.deal.dto.ScoringDataDTO;
 import org.openapitools.model.LoanApplicationRequestDTO;
 import org.openapitools.model.LoanOfferDTO;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
-@FeignClient(url = "${conveyor.url}", name = "FEIGN-CLIENT")
+@FeignClient(url = "${feign.conveyor.url}", name = "FEIGN-CLIENT")
 public interface MyFeignClient {
     @PostMapping("/offers")
     ResponseEntity<List<LoanOfferDTO>> getOffers(@RequestBody LoanApplicationRequestDTO request);
