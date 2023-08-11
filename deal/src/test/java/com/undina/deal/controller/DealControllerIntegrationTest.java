@@ -13,7 +13,9 @@ import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.testcontainers.containers.PostgreSQLContainer;
@@ -31,6 +33,7 @@ import static org.mockserver.matchers.Times.exactly;
 import static org.mockserver.model.HttpRequest.request;
 import static org.mockserver.model.HttpResponse.response;
 import static org.mockserver.model.StringBody.exact;
+import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -76,6 +79,8 @@ public class DealControllerIntegrationTest {
     }
 
     @Test
+    @DirtiesContext
+    @Sql(value = "/insert_test_create_application.sql", executionPhase = BEFORE_TEST_METHOD)
     public void createApplicationTestOk() throws Exception {
         mockServer
                 .when(
@@ -111,6 +116,8 @@ public class DealControllerIntegrationTest {
     }
 
     @Test
+    @DirtiesContext
+    @Sql(value = "/insert_test_create_calculation.sql", executionPhase = BEFORE_TEST_METHOD)
     public void getCalculationTestOk() throws Exception {
         mockServer
                 .when(
