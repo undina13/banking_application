@@ -1,17 +1,22 @@
 package com.undina.deal.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.junit.ClassRule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockserver.integration.ClientAndServer;
 import org.mockserver.model.Header;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.util.TestPropertyValues;
+import org.springframework.context.ApplicationContextInitializer;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.testcontainers.containers.PostgreSQLContainer;
 
 import java.nio.charset.StandardCharsets;
 
@@ -32,26 +37,46 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
-@AutoConfigureMockMvc
-@ExtendWith(MockitoExtension.class)
-class DealControllerIntegrationTest extends SpringBootApplicationTest {
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ContextConfiguration(initializers = DealControllerIntegrationTest.Initializer.class)
+@AutoConfigureMockMvc(addFilters = false)
+public class DealControllerIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
 
     @Autowired
     ObjectMapper mapper;
 
-    static ClientAndServer mockServer;
+    static ClientAndServer mockServer = startClientAndServer(8080);
 
-    @BeforeAll
-    static void start() {
-        mockServer = startClientAndServer(8080);
+    @ClassRule
+    public static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:13.3")
+            .withPassword("password")
+            .withUsername("user");
+
+    public static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+
+        @Override
+        public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
+            TestPropertyValues values = TestPropertyValues.of(
+                    "spring.datasource.url=" + postgreSQLContainer.getJdbcUrl(),
+                    "spring.datasource.password=" + postgreSQLContainer.getPassword(),
+                    "spring.datasource.username=" + postgreSQLContainer.getUsername(),
+                    "spring.liquibase.enabled=true",
+                    "spring.liquibase.url=" + postgreSQLContainer.getJdbcUrl(),
+                    "spring.liquibase.change-log=db/changelog/db.changelog-master-test.xml",
+                    "spring.liquibase.user=user",
+                    "spring.liquibase.password=password",
+                    "conveyor.url=http://localhost:8080/conveyor"
+
+            );
+            values.applyTo(configurableApplicationContext);
+        }
     }
 
-
     @Test
-    void createApplicationTestOk() throws Exception {
+    public void createApplicationTestOk() throws Exception {
         mockServer
                 .when(
                         request()
@@ -76,9 +101,8 @@ class DealControllerIntegrationTest extends SpringBootApplicationTest {
 
     }
 
-
     @Test
-    void createApplyLoanOfferTestOk() throws Exception {
+    public void createApplyLoanOfferTestOk() throws Exception {
         mockMvc.perform(put("/deal/offer")
                         .content(mapper.writeValueAsString(loanOfferDTO13))
                         .characterEncoding(StandardCharsets.UTF_8)
@@ -87,8 +111,7 @@ class DealControllerIntegrationTest extends SpringBootApplicationTest {
     }
 
     @Test
-    void getCalculationTestOk() throws Exception {
-
+    public void getCalculationTestOk() throws Exception {
         mockServer
                 .when(
                         request()
@@ -110,4 +133,5 @@ class DealControllerIntegrationTest extends SpringBootApplicationTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
+
 }
