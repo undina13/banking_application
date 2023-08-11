@@ -1,5 +1,7 @@
 package com.undina.deal.service;
 
+import com.undina.deal.dto.CreditDTO;
+import com.undina.deal.dto.ScoringDataDTO;
 import com.undina.deal.entity.Application;
 import com.undina.deal.entity.Client;
 import com.undina.deal.entity.StatusHistory;
@@ -8,13 +10,12 @@ import com.undina.deal.enums.ChangeType;
 import com.undina.deal.exception.NotFoundException;
 import com.undina.deal.exception.RejectionException;
 import com.undina.deal.exception.ValidationException;
-import com.undina.deal.dto.*;
+import com.undina.deal.feign.MyFeignClient;
+import com.undina.deal.mapper.ClientMapper;
+import com.undina.deal.mapper.ScoringDataMapper;
 import com.undina.deal.repository.ApplicationRepository;
 import com.undina.deal.repository.ClientRepository;
-import com.undina.deal.mapper.ClientMapper;
 import com.undina.deal.util.ModelFormatter;
-import com.undina.deal.feign.MyFeignClient;
-import com.undina.deal.mapper.ScoringDataMapper;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +24,6 @@ import org.openapitools.model.LoanApplicationRequestDTO;
 import org.openapitools.model.LoanOfferDTO;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +51,7 @@ public class DealService {
         log.info("savingClient: {}", client);
         Application application = new Application();
         application.setClient(client);
-        application.setCreationDate(LocalDate.now());
+        application.setCreationDate(LocalDateTime.now());
         application = updateStatus(application, ApplicationStatus.PREAPPROVAL, ChangeType.AUTOMATIC);
         application = applicationRepository.save(application);
         log.info("save application: {}", application);

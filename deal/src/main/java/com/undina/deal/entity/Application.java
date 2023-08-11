@@ -6,7 +6,7 @@ import org.hibernate.annotations.Type;
 import org.openapitools.model.LoanOfferDTO;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @ToString
@@ -34,14 +34,14 @@ public class Application {
     private ApplicationStatus status;
 
     @Column(name = "creation_date", nullable = false)
-    private LocalDate creationDate;
+    private LocalDateTime creationDate;
 
     @Column(name = "applied_offer")
     @Type(type = "jsonb")
     private LoanOfferDTO appliedOffer;
 
     @Column(name = "sign_date")
-    private LocalDate signDate;
+    private LocalDateTime signDate;
 
     @Column(name = "ses_code")
     private String sesCode;
