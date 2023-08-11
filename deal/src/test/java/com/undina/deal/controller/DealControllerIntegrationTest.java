@@ -65,7 +65,7 @@ public class DealControllerIntegrationTest {
                     "spring.datasource.username=" + postgreSQLContainer.getUsername(),
                     "spring.liquibase.enabled=true",
                     "spring.liquibase.url=" + postgreSQLContainer.getJdbcUrl(),
-                    "spring.liquibase.change-log=db/changelog/db.changelog-master-test.xml",
+                    //"spring.liquibase.change-log=db/changelog/db.changelog-master-test.xml",
                     "spring.liquibase.user=user",
                     "spring.liquibase.password=password",
                     "feign.conveyor.url=http://localhost:8080/conveyor"

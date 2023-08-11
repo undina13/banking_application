@@ -40,7 +40,7 @@ public class DealService {
     private final MyFeignClient myFeignClient;
 
     public List<LoanOfferDTO> createApplication(LoanApplicationRequestDTO loanApplication) {
-        log.info("createApplication - start: {}", ModelFormatter.toLogFormat(loanApplication));
+        log.info("createApplication: {}", ModelFormatter.toLogFormat(loanApplication));
         Client client = clientMapper.toClient(loanApplication);
         client = clientRepository.save(client);
         log.info("savingClient: {}", client);
@@ -56,23 +56,23 @@ public class DealService {
             Application finalApplication = application;
             loanOffers.forEach(loanOfferDTO -> loanOfferDTO.setApplicationId(finalApplication.getApplicationId()));
         }
-        log.info("createApplication - result: {}", loanOffers);
+        log.info("createApplication: {}", loanOffers);
         return loanOffers;
     }
 
     public void applyOffer(LoanOfferDTO loanOffer) {
-        log.info("applyOffer - start: {}", loanOffer);
+        log.info("applyOffer: {}", loanOffer);
         Application application = applicationRepository.findById(loanOffer.getApplicationId())
                 .orElseThrow(() -> new NotFoundException("application not found? id = {}" + loanOffer.getApplicationId()));
         application = updateStatus(application, ApplicationStatus.APPROVED, ChangeType.AUTOMATIC);
         log.info("applyOffer application updated status: {}", application);
         application.setAppliedOffer(loanOffer);
         applicationRepository.save(application);
-        log.info("applyOffer - result: {}", application);
+        log.info("applyOffer: {}", application);
     }
 
     public void calculateCredit(Long applicationId, FinishRegistrationRequestDTO finishRegistrationRequestDTO) {
-        log.info("calculateCredit - start: applicationId = {}, finishRegistrationRequestDTO = {}", applicationId,
+        log.info("calculateCredit: applicationId = {}, finishRegistrationRequestDTO = {}", applicationId,
                 ModelFormatter.toLogFormat(finishRegistrationRequestDTO));
         Application application = applicationRepository.findById(applicationId)
                 .orElseThrow(() -> new NotFoundException("application not found? id = {}" + applicationId));
@@ -82,7 +82,7 @@ public class DealService {
                 application.getAppliedOffer());
         log.info("calculateCredit: scoringDataDTO  {}", ModelFormatter.toLogFormat(scoringDataDTO));
         CreditDTO creditDTO = myFeignClient.calculateCredit(scoringDataDTO).getBody();
-        log.info("calculateCredit - result  ok,  {}", creditDTO);
+        log.info("calculateCredit:  ok,  {}", creditDTO);
     }
 
     private Application updateStatus(Application application, ApplicationStatus status, ChangeType changeType) {
