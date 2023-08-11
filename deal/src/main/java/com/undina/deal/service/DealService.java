@@ -2,6 +2,7 @@ package com.undina.deal.service;
 
 import com.undina.deal.entity.Application;
 import com.undina.deal.entity.Client;
+import com.undina.deal.entity.StatusHistory;
 import com.undina.deal.enums.ApplicationStatus;
 import com.undina.deal.enums.ChangeType;
 import com.undina.deal.exception.NotFoundException;
@@ -23,6 +24,8 @@ import org.openapitools.model.LoanOfferDTO;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -37,19 +40,19 @@ public class DealService {
 
     private final ApplicationRepository applicationRepository;
 
-    private final ApplicationService applicationService;
+   // private final ApplicationService applicationService;
 
     private final MyFeignClient myFeignClient;
 
     public List<LoanOfferDTO> createApplication(LoanApplicationRequestDTO loanApplication) {
-        log.info("createApplication  {}", ModelFormatter.toLogFormat(loanApplication));
+        log.info("createApplication - start: {}", ModelFormatter.toLogFormat(loanApplication));
         Client client = clientMapper.toClient(loanApplication);
         client = clientRepository.save(client);
         log.info("savingClient: {}", client);
         Application application = new Application();
         application.setClient(client);
         application.setCreationDate(LocalDate.now());
-        application = applicationService.updateStatus(application, ApplicationStatus.PREAPPROVAL, ChangeType.AUTOMATIC);
+        application = updateStatus(application, ApplicationStatus.PREAPPROVAL, ChangeType.AUTOMATIC);
         application = applicationRepository.save(application);
         log.info("save application: {}", application);
         List<LoanOfferDTO> loanOffers;
@@ -62,23 +65,23 @@ public class DealService {
             Application finalApplication = application;
             loanOffers.forEach(loanOfferDTO -> loanOfferDTO.setApplicationId(finalApplication.getApplicationId()));
         }
-        log.info("createApplication result: {}", loanOffers);
+        log.info("createApplication - result: {}", loanOffers);
         return loanOffers;
     }
 
     public void applyOffer(LoanOfferDTO loanOffer) {
-        log.info("applyOffer: {}", loanOffer);
+        log.info("applyOffer - start: {}", loanOffer);
         Application application = applicationRepository.findById(loanOffer.getApplicationId())
                 .orElseThrow(() -> new NotFoundException("application not found? id = {}" + loanOffer.getApplicationId()));
-        application = applicationService.updateStatus(application, ApplicationStatus.APPROVED, ChangeType.AUTOMATIC);
+        application = updateStatus(application, ApplicationStatus.APPROVED, ChangeType.AUTOMATIC);
         log.info("applyOffer application updated status: {}", application);
         application.setAppliedOffer(loanOffer);
         applicationRepository.save(application);
-        log.info("applyOffer result: {}", application);
+        log.info("applyOffer - result: {}", application);
     }
 
     public void calculateCredit(Long applicationId, FinishRegistrationRequestDTO finishRegistrationRequestDTO) {
-        log.info("calculateCredit applicationId = {}, finishRegistrationRequestDTO = {}", applicationId,
+        log.info("calculateCredit - start: applicationId = {}, finishRegistrationRequestDTO = {}", applicationId,
                 ModelFormatter.toLogFormat(finishRegistrationRequestDTO));
         Application application = applicationRepository.findById(applicationId)
                 .orElseThrow(() -> new NotFoundException("application not found? id = {}" + applicationId));
@@ -93,6 +96,19 @@ public class DealService {
         } catch (FeignException e) {
             throw new RejectionException(e.getMessage());
         }
-        log.info("calculateCredit:  ok,  {}", creditDTO);
+        log.info("calculateCredit - result  ok,  {}", creditDTO);
+    }
+
+    private Application updateStatus(Application application, ApplicationStatus status, ChangeType changeType) {
+      //  log.info("updateStatus - start: {}, {}, {}", application, status, changeType);
+        application.setStatus(status);
+        List<StatusHistory> statusHistories = application.getStatusHistory();
+        if (statusHistories == null) {
+            statusHistories = new ArrayList<>();
+        }
+        statusHistories.add(new StatusHistory(status, LocalDateTime.now(), changeType));
+        application.setStatusHistory(statusHistories);
+      //  log.info("updateStatus - result: {}", application);
+        return application;
     }
 }

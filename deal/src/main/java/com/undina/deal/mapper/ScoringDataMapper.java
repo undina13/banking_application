@@ -12,7 +12,6 @@ import org.openapitools.model.LoanOfferDTO;
 public interface ScoringDataMapper {
     @Mapping(target = "amount", source = "loanOfferDTO.totalAmount")
     @Mapping(target = "term", source = "loanOfferDTO.term")
-
     @Mapping(target = "gender", source = "finishRegistrationRequestDTO.gender")
     @Mapping(target = "birthdate", source = "client.date")
     @Mapping(target = "passportSeries", source = "client.passport.series")

@@ -31,19 +31,19 @@ public class DealController implements DealApi {
 
     @Override
     public ResponseEntity<Void> applyLoanOffer(@RequestBody LoanOfferDTO loanOffer) {
-        log.info("applyLoanOffer " + loanOffer);
+        log.info("applyLoanOffer  - start: {}", loanOffer);
         dealService.applyOffer(loanOffer);
-        log.info("applyLoanOffer result OK");
+        log.info("applyLoanOffer - result: OK");
         return ResponseEntity.ok().build();
     }
 
     @Override
     public ResponseEntity<Void> getCalculation(@PathVariable Long applicationId,
                                                @RequestBody FinishRegistrationRequestDTO finishRegistrationRequestDTO) {
-        log.info("getCalculation  applicationId = {}, finishRegistrationRequestDTO = {}", applicationId,
+        log.info("getCalculation - start: applicationId = {}, finishRegistrationRequestDTO = {}", applicationId,
                 ModelFormatter.toLogFormat(finishRegistrationRequestDTO));
         dealService.calculateCredit(applicationId, finishRegistrationRequestDTO);
-        log.info("getCalculation result OK");
+        log.info("getCalculation - result: OK");
         return ResponseEntity.ok().build();
     }
 }

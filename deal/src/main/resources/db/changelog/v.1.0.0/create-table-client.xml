@@ -5,7 +5,6 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
 
     <changeSet id="create-table-client" author="undina">
-<!--        <validCheckSum>7:19f99d93fcb9909c7749b7fc2dce1417</validCheckSum>-->
         <createTable tableName="client">
             <column name="client_id" type="bigint" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true"/>
@@ -29,8 +28,6 @@
             <column name="passport" type="jsonb"/>
             <column name="employment" type="jsonb"/>
             <column name="account" type="VARCHAR(50)"/>
-<!--            <column name="application_id" type="BIGINT"/>-->
-<!--            <column name="credit_id" type="BIGINT"/>-->
         </createTable>
     </changeSet>
 
