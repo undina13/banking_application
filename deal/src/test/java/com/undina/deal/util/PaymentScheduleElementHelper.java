@@ -1,5 +1,6 @@
-package com.undina.deal.dto;
+package com.undina.deal.util;
 
+import com.undina.deal.dto.PaymentScheduleElement;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -8,7 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class PaymentScheduleElementData {
+public class PaymentScheduleElementHelper {
     public static PaymentScheduleElement paymentScheduleElement1 = PaymentScheduleElement.builder()
             .number(1)
             .date(LocalDate.now().plusMonths(1))

@@ -1,5 +1,6 @@
-package com.undina.deal.dto;
+package com.undina.deal.util;
 
+import com.undina.deal.dto.ScoringDataDTO;
 import com.undina.deal.enums.Gender;
 import com.undina.deal.enums.MaritalStatus;
 import lombok.AccessLevel;
@@ -9,11 +10,11 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import static com.undina.deal.dto.EmploymentDTOData.employmentDTO;
+import static com.undina.deal.util.EmploymentDTOHelper.employmentDTO;
 
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ScoringDataDTOData {
+public class ScoringDataDTOHelper {
     public static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     public static ScoringDataDTO scoringDataDTO1 = new ScoringDataDTO(BigDecimal.valueOf(10120).setScale(1),
             12, "Sidor", "Sidorov", "Petrovich", Gender.MALE,

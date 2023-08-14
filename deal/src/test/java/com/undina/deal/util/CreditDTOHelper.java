@@ -1,14 +1,15 @@
-package com.undina.deal.dto;
+package com.undina.deal.util;
 
+import com.undina.deal.dto.CreditDTO;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
-import static com.undina.deal.dto.PaymentScheduleElementData.paymentScheduleElements;
+import static com.undina.deal.util.PaymentScheduleElementHelper.paymentScheduleElements;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class CreditDTOData {
+public class CreditDTOHelper {
     public static CreditDTO creditDTO = CreditDTO.builder()
             .amount(BigDecimal.valueOf(10000))
             .term(6)

@@ -1,34 +1,19 @@
 package com.undina.deal.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.ClassRule;
+import com.undina.deal.AbstractTest;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockserver.integration.ClientAndServer;
 import org.mockserver.model.Header;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.util.TestPropertyValues;
-import org.springframework.context.ApplicationContextInitializer;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.http.MediaType;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.testcontainers.containers.PostgreSQLContainer;
 
 import java.nio.charset.StandardCharsets;
 
-import static com.undina.deal.dto.CreditDTOData.creditDTO;
-import static com.undina.deal.dto.FinishRegistrationRequestDTOData.finishRegistrationRequest;
-import static com.undina.deal.dto.LoanApplicationRequestDTOData.loanApplicationRequestDTO1;
-import static com.undina.deal.dto.LoanOfferDTOData.loanOfferDTO13;
-import static com.undina.deal.dto.LoanOfferDTOData.loanOfferDTOS1;
-import static com.undina.deal.dto.ScoringDataDTOData.scoringDataDTO1;
-import static org.mockserver.integration.ClientAndServer.startClientAndServer;
+import static com.undina.deal.util.CreditDTOHelper.creditDTO;
+import static com.undina.deal.util.FinishRegistrationRequestDTOHelper.finishRegistrationRequest;
+import static com.undina.deal.util.LoanApplicationRequestDTOHelper.loanApplicationRequestDTO1;
+import static com.undina.deal.util.LoanOfferDTOHelper.loanOfferDTO13;
+import static com.undina.deal.util.LoanOfferDTOHelper.loanOfferDTOS1;
+import static com.undina.deal.util.ScoringDataDTOHelper.scoringDataDTO1;
 import static org.mockserver.matchers.Times.exactly;
 import static org.mockserver.model.HttpRequest.request;
 import static org.mockserver.model.HttpResponse.response;
@@ -40,49 +25,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ContextConfiguration(initializers = DealControllerIntegrationTest.Initializer.class)
-@AutoConfigureMockMvc(addFilters = false)
-public class DealControllerIntegrationTest {
-    @Autowired
-    private MockMvc mockMvc;
-
-    @Autowired
-    ObjectMapper mapper;
-
-    static ClientAndServer mockServer = startClientAndServer(8080);
-
-    @ClassRule
-    public static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:13.3")
-            .withPassword("password")
-            .withUsername("user");
-
-    public static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
-
-        @Override
-        public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
-            TestPropertyValues values = TestPropertyValues.of(
-                    "spring.datasource.url=" + postgreSQLContainer.getJdbcUrl(),
-                    "spring.datasource.password=" + postgreSQLContainer.getPassword(),
-                    "spring.datasource.username=" + postgreSQLContainer.getUsername(),
-                    "spring.liquibase.enabled=true",
-                    "spring.liquibase.url=" + postgreSQLContainer.getJdbcUrl(),
-                    //"spring.liquibase.change-log=db/changelog/db.changelog-master-test.xml",
-                    "spring.liquibase.user=user",
-                    "spring.liquibase.password=password",
-                    "feign.conveyor.url=http://localhost:8080/conveyor"
-
-            );
-            values.applyTo(configurableApplicationContext);
-        }
-    }
+public class DealControllerIntegrationTest extends AbstractTest {
 
     @Test
-    @DirtiesContext
     @Sql(value = "/insert_test_create_application.sql", executionPhase = BEFORE_TEST_METHOD)
     public void createApplicationTestOk() throws Exception {
-        mockServer
+        mockServerClient
                 .when(
                         request()
                                 .withMethod("POST")
@@ -116,10 +64,9 @@ public class DealControllerIntegrationTest {
     }
 
     @Test
-    @DirtiesContext
     @Sql(value = "/insert_test_create_calculation.sql", executionPhase = BEFORE_TEST_METHOD)
     public void getCalculationTestOk() throws Exception {
-        mockServer
+        mockServerClient
                 .when(
                         request()
                                 .withMethod("POST")

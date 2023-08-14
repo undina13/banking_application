@@ -1,4 +1,4 @@
-package com.undina.deal.dto;
+package com.undina.deal.util;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -7,7 +7,7 @@ import org.openapitools.model.EmploymentDTO;
 import java.math.BigDecimal;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class EmploymentDTOData {
+public class EmploymentDTOHelper {
     public static EmploymentDTO employmentDTO = new EmploymentDTO()
             .employmentStatus(EmploymentDTO.EmploymentStatusEnum.BUSINESS_OWNER)
             .employerINN("567676686767")

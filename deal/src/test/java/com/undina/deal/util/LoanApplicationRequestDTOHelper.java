@@ -1,4 +1,4 @@
-package com.undina.deal.dto;
+package com.undina.deal.util;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class LoanApplicationRequestDTOData {
+public class LoanApplicationRequestDTOHelper {
     public static LoanApplicationRequestDTO loanApplicationRequestDTO1 = new LoanApplicationRequestDTO()
             .amount(BigDecimal.valueOf(10000))
             .term(12)

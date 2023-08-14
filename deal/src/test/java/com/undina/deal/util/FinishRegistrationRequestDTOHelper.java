@@ -1,4 +1,4 @@
-package com.undina.deal.dto;
+package com.undina.deal.util;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -7,10 +7,10 @@ import org.openapitools.model.FinishRegistrationRequestDTO;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import static com.undina.deal.dto.EmploymentDTOData.employmentDTO;
+import static com.undina.deal.util.EmploymentDTOHelper.employmentDTO;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class FinishRegistrationRequestDTOData {
+public class FinishRegistrationRequestDTOHelper {
     public static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     public static FinishRegistrationRequestDTO finishRegistrationRequest = new FinishRegistrationRequestDTO()
             .gender(FinishRegistrationRequestDTO.GenderEnum.MALE)
