@@ -67,6 +67,4 @@ public class PaymentScheduleElementHelper {
     public static List<PaymentScheduleElement> paymentScheduleElements = List.of(paymentScheduleElement1,
             paymentScheduleElement2, paymentScheduleElement3, paymentScheduleElement4, paymentScheduleElement5,
             paymentScheduleElement6);
-
-
 }
