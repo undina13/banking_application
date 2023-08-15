@@ -1,7 +1,7 @@
 package com.undina.deal.controller;
 
 import com.undina.deal.AbstractTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockserver.model.Header;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class DealControllerIntegrationTest extends AbstractTest {
 
     @Test
-    @Sql(value = "/insert_test_create_application.sql", executionPhase = BEFORE_TEST_METHOD)
+    @Sql(scripts = "/insert_test_create_application.sql", executionPhase = BEFORE_TEST_METHOD)
     public void createApplicationTestOk() throws Exception {
         mockServerClient
                 .when(
@@ -64,7 +64,7 @@ public class DealControllerIntegrationTest extends AbstractTest {
     }
 
     @Test
-    @Sql(value = "/insert_test_create_calculation.sql", executionPhase = BEFORE_TEST_METHOD)
+    @Sql(scripts = "/insert_test_create_calculation.sql", executionPhase = BEFORE_TEST_METHOD)
     public void getCalculationTestOk() throws Exception {
         mockServerClient
                 .when(
@@ -87,5 +87,4 @@ public class DealControllerIntegrationTest extends AbstractTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
-
 }
