@@ -1,7 +1,7 @@
 package com.undina.deal.mapper;
 
 import com.undina.deal.entity.Client;
-import com.undina.deal.dto.ScoringDataDTO;
+import org.openapitools.model.ScoringDataDTO;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

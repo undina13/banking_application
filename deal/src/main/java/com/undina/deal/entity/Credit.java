@@ -1,7 +1,7 @@
 package com.undina.deal.entity;
 
 
-import com.undina.deal.dto.PaymentScheduleElement;
+import org.openapitools.model.PaymentScheduleElementDTO;
 import lombok.*;
 import org.hibernate.annotations.Type;
 
@@ -39,7 +39,7 @@ public class Credit {
 
     @Type(type = "jsonb")
     @Column(name = "payment_schedule", nullable = false)
-    private List<PaymentScheduleElement> paymentSchedule;
+    private List<PaymentScheduleElementDTO> paymentSchedule;
 
     @Column(nullable = false)
     private Boolean isInsuranceEnabled;

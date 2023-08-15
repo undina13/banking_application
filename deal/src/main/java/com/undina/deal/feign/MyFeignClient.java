@@ -1,8 +1,8 @@
 package com.undina.deal.feign;
 
 
-import com.undina.deal.dto.CreditDTO;
-import com.undina.deal.dto.ScoringDataDTO;
+import org.openapitools.model.CreditDTO;
+import org.openapitools.model.ScoringDataDTO;
 import org.openapitools.model.LoanApplicationRequestDTO;
 import org.openapitools.model.LoanOfferDTO;
 import org.springframework.cloud.openfeign.FeignClient;

@@ -1,7 +1,5 @@
 package com.undina.deal.service;
 
-import com.undina.deal.dto.CreditDTO;
-import com.undina.deal.dto.ScoringDataDTO;
 import com.undina.deal.entity.Application;
 import com.undina.deal.entity.Client;
 import com.undina.deal.entity.StatusHistory;
@@ -16,9 +14,7 @@ import com.undina.deal.repository.ClientRepository;
 import com.undina.deal.util.ModelFormatter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.openapitools.model.FinishRegistrationRequestDTO;
-import org.openapitools.model.LoanApplicationRequestDTO;
-import org.openapitools.model.LoanOfferDTO;
+import org.openapitools.model.*;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

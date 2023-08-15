@@ -1,10 +1,10 @@
 package com.undina.deal.util;
 
-import com.undina.deal.dto.ScoringDataDTO;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.openapitools.model.FinishRegistrationRequestDTO;
 import org.openapitools.model.LoanApplicationRequestDTO;
+import org.openapitools.model.ScoringDataDTO;
 
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
