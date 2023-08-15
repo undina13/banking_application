@@ -36,14 +36,14 @@ public class DealService {
     private final ConveyorFeignClient conveyorFeignClient;
 
     public List<LoanOfferDTO> createApplication(LoanApplicationRequestDTO loanApplication) {
-        log.info("createApplication: {}", ModelFormatter.toLogFormat(loanApplication));
+        log.info("createApplication - start: {}", ModelFormatter.toLogFormat(loanApplication));
         Client client = clientMapper.toClient(loanApplication);
         client = clientRepository.save(client);
         log.info("savingClient: {}", client);
         Application application = new Application();
         application.setClient(client);
         application.setCreationDate(LocalDateTime.now());
-        application = updateStatus(application, ApplicationStatus.PREAPPROVAL, ChangeType.AUTOMATIC);
+        updateStatus(application, ApplicationStatus.PREAPPROVAL);
         application = applicationRepository.save(application);
         log.info("save application: {}", application);
         List<LoanOfferDTO> loanOffers;
@@ -52,43 +52,43 @@ public class DealService {
             Application finalApplication = application;
             loanOffers.forEach(loanOfferDTO -> loanOfferDTO.setApplicationId(finalApplication.getApplicationId()));
         }
-        log.info("createApplication: {}", loanOffers);
+        log.info("createApplication - result: {}", loanOffers);
         return loanOffers;
     }
 
     public void applyOffer(LoanOfferDTO loanOffer) {
-        log.info("applyOffer: {}", loanOffer);
+        log.info("applyOffer - start: {}", loanOffer);
         Application application = applicationRepository.findById(loanOffer.getApplicationId())
-                .orElseThrow(() -> new NotFoundException("application not found? id = {}" + loanOffer.getApplicationId()));
-        application = updateStatus(application, ApplicationStatus.APPROVED, ChangeType.AUTOMATIC);
+                .orElseThrow(() -> new NotFoundException("Application with id = {} not found"
+                        + loanOffer.getApplicationId()));
+        updateStatus(application, ApplicationStatus.APPROVED);
         log.info("applyOffer application updated status: {}", application);
         application.setAppliedOffer(loanOffer);
         applicationRepository.save(application);
-        log.info("applyOffer: {}", application);
+        log.info("applyOffer - result: {}", application);
     }
 
     public void calculateCredit(Long applicationId, FinishRegistrationRequestDTO finishRegistrationRequestDTO) {
-        log.info("calculateCredit: applicationId = {}, finishRegistrationRequestDTO = {}", applicationId,
+        log.info("calculateCredit - start: applicationId = {}, finishRegistrationRequestDTO = {}", applicationId,
                 ModelFormatter.toLogFormat(finishRegistrationRequestDTO));
         Application application = applicationRepository.findById(applicationId)
-                .orElseThrow(() -> new NotFoundException("application not found? id = {}" + applicationId));
+                .orElseThrow(() -> new NotFoundException("Application with id = {} not found" + applicationId));
         Client client = application.getClient();
         log.info("calculateCredit: client {}", client);
         ScoringDataDTO scoringDataDTO = scoringDataMapper.toScoringDataDTO(finishRegistrationRequestDTO, client,
                 application.getAppliedOffer());
         log.info("calculateCredit: scoringDataDTO  {}", ModelFormatter.toLogFormat(scoringDataDTO));
         CreditDTO creditDTO = conveyorFeignClient.calculateCredit(scoringDataDTO).getBody();
-        log.info("calculateCredit:  ok,  {}", creditDTO);
+        log.info("calculateCredit - result:  ok,  {}", creditDTO);
     }
 
-    private Application updateStatus(Application application, ApplicationStatus status, ChangeType changeType) {
+    private void updateStatus(Application application, ApplicationStatus status) {
         application.setStatus(status);
         List<StatusHistory> statusHistories = application.getStatusHistory();
         if (statusHistories == null) {
             statusHistories = new ArrayList<>();
         }
-        statusHistories.add(new StatusHistory(status, LocalDateTime.now(), changeType));
+        statusHistories.add(new StatusHistory(status, LocalDateTime.now(), ChangeType.AUTOMATIC));
         application.setStatusHistory(statusHistories);
-        return application;
     }
 }
