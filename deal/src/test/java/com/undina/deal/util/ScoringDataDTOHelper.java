@@ -15,7 +15,7 @@ import static com.undina.deal.util.EmploymentDTOHelper.employmentDTO;
 public class ScoringDataDTOHelper {
     public static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     public static ScoringDataDTO scoringDataDTO1 = new ScoringDataDTO()
-            .amount(BigDecimal.valueOf(10120, 1))
+            .amount(BigDecimal.valueOf(10120).setScale(1))
             .term(12)
             .firstName("Sidor")
             .lastName("Sidorov")
