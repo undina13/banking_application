@@ -6,7 +6,7 @@ import com.undina.deal.entity.StatusHistory;
 import com.undina.deal.enums.ApplicationStatus;
 import com.undina.deal.enums.ChangeType;
 import com.undina.deal.exception.NotFoundException;
-import com.undina.deal.feign.MyFeignClient;
+import com.undina.deal.feign.ConveyorFeignClient;
 import com.undina.deal.mapper.ClientMapper;
 import com.undina.deal.mapper.ScoringDataMapper;
 import com.undina.deal.repository.ApplicationRepository;
@@ -33,7 +33,7 @@ public class DealService {
 
     private final ApplicationRepository applicationRepository;
 
-    private final MyFeignClient myFeignClient;
+    private final ConveyorFeignClient conveyorFeignClient;
 
     public List<LoanOfferDTO> createApplication(LoanApplicationRequestDTO loanApplication) {
         log.info("createApplication: {}", ModelFormatter.toLogFormat(loanApplication));
@@ -47,7 +47,7 @@ public class DealService {
         application = applicationRepository.save(application);
         log.info("save application: {}", application);
         List<LoanOfferDTO> loanOffers;
-        loanOffers = myFeignClient.getOffers(loanApplication).getBody();
+        loanOffers = conveyorFeignClient.getOffers(loanApplication).getBody();
         if (loanOffers != null) {
             Application finalApplication = application;
             loanOffers.forEach(loanOfferDTO -> loanOfferDTO.setApplicationId(finalApplication.getApplicationId()));
@@ -77,7 +77,7 @@ public class DealService {
         ScoringDataDTO scoringDataDTO = scoringDataMapper.toScoringDataDTO(finishRegistrationRequestDTO, client,
                 application.getAppliedOffer());
         log.info("calculateCredit: scoringDataDTO  {}", ModelFormatter.toLogFormat(scoringDataDTO));
-        CreditDTO creditDTO = myFeignClient.calculateCredit(scoringDataDTO).getBody();
+        CreditDTO creditDTO = conveyorFeignClient.calculateCredit(scoringDataDTO).getBody();
         log.info("calculateCredit:  ok,  {}", creditDTO);
     }
 

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 
 @FeignClient(url = "${feign.conveyor.url}", name = "FEIGN-CLIENT")
-public interface MyFeignClient {
+public interface ConveyorFeignClient {
     @PostMapping("/offers")
     ResponseEntity<List<LoanOfferDTO>> getOffers(@RequestBody LoanApplicationRequestDTO request);
 
