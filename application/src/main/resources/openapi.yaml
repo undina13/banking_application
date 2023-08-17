@@ -53,15 +53,11 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ScoringDataDTO'
+              $ref: '#/components/schemas/LoanOfferDTO'
         required: true
       responses:
         '200':
           description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CreditDTO'
         '400':
           description: Ошибка валидации
           content: {}
