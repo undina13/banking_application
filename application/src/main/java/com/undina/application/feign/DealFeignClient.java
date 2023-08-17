@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
-@FeignClient(url = "${feign.deal.url}", name = "FEIGN-CLIENT")
+@FeignClient(url = "${feign.deal.url}", name = "DEAL-FEIGN-CLIENT")
 public interface DealFeignClient {
     @PostMapping("/application")
     ResponseEntity<List<LoanOfferDTO>> getOffers(@RequestBody LoanApplicationRequestDTO request);

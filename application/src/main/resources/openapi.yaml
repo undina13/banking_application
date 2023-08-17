@@ -260,8 +260,8 @@ components:
         paymentSchedule:
           type: array
           items:
-            $ref: '#/components/schemas/PaymentScheduleElement'
-    PaymentScheduleElement:
+            $ref: '#/components/schemas/PaymentScheduleElementDTO'
+    PaymentScheduleElementDTO:
       type: object
       properties:
         number:

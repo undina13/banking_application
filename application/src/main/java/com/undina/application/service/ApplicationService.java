@@ -14,7 +14,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 public class ApplicationService {
-    DealFeignClient dealFeignClient;
+  private final DealFeignClient dealFeignClient;
 
     public List<LoanOfferDTO> getLoanOffers(LoanApplicationRequestDTO loanApplicationRequestDTO) {
         log.info("getLoanOffers - start: {}", ModelFormatter.toLogFormat(loanApplicationRequestDTO));
