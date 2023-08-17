@@ -1,0 +1,24 @@
+feign:
+  conveyor:
+    url: http://localhost:8080/conveyor
+server:
+  port: 8081
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    password: password
+    url: jdbc:postgresql://localhost:5432/deal
+    username: user
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+  liquibase:
+    change-log: db/changelog/db.changelog-master.xml
+    driver-class-name: org.postgresql.Driver
+    password: password
+    url: jdbc:postgresql://localhost:5432/deal
+    user: user

@@ -12,8 +12,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import static com.undina.conveyor.model.CreditDTOData.creditDTO;
-import static com.undina.conveyor.model.LoanApplicationRequestDTOData.loanApplicationRequestDTO1;
-import static com.undina.conveyor.model.LoanApplicationRequestDTOData.loanApplicationRequestDTOTooYoung;
+import static com.undina.conveyor.model.LoanApplicationRequestDTOData.*;
 import static com.undina.conveyor.model.LoanOfferDTOData.*;
 import static com.undina.conveyor.model.ScoringDataDTOData.scoringDataDTO1;
 import static com.undina.conveyor.model.ScoringDataDTOData.scoringDataDTOUnemployed;
@@ -44,6 +43,15 @@ class ConveyorControllerIntegrationTest {
 
     @Test
     void getLoanOffersTestBadRequest() throws Exception {
+        mockMvc.perform(post("/conveyor/offers")
+                        .content(mapper.writeValueAsString(loanApplicationRequestDTOSmallAmount))
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void getLoanOffersTestBadRequestCustomAnnotationTooYoung() throws Exception {
         mockMvc.perform(post("/conveyor/offers")
                         .content(mapper.writeValueAsString(loanApplicationRequestDTOTooYoung))
                         .characterEncoding(StandardCharsets.UTF_8)

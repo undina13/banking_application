@@ -1,11 +1,15 @@
 package com.undina.conveyor.service;
 
 import com.undina.conveyor.exception.RejectionException;
-import com.undina.conveyor.model.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.openapitools.model.CreditDTO;
+import org.openapitools.model.EmploymentDTO;
+import org.openapitools.model.PaymentScheduleElement;
+import org.openapitools.model.ScoringDataDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import util.ModelFormatter;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -25,7 +29,7 @@ public class CreditService {
     private static final BigDecimal MONTH_IN_YEAR = BigDecimal.valueOf(12);
 
     public CreditDTO getCalculation(ScoringDataDTO scoringDataDTO) {
-        log.info("getCalculation - scoringDataDTO: {}", scoringDataDTO);
+        log.info("getCalculation  {}", ModelFormatter.toLogFormat(scoringDataDTO));
         Integer age = Period.between(scoringDataDTO.getBirthdate(), LocalDate.now()).getYears();
         checkScoringData(scoringDataDTO, age);
         BigDecimal personalRate = getPersonalRate(scoringDataDTO, age);
@@ -42,7 +46,7 @@ public class CreditService {
         BigDecimal psk = calculatePsk(monthlyPayment, totalAmount, scoringDataDTO.getTerm());
         List<PaymentScheduleElement> paymentScheduleElements = calculatePaymentScheduleElement(scoringDataDTO.getTerm(),
                 monthlyPayment, rate);
-        CreditDTO creditDTO = CreditDTO.builder()
+        CreditDTO creditDTO = new CreditDTO()
                 .amount(scoringDataDTO.getAmount())
                 .term(scoringDataDTO.getTerm())
                 .monthlyPayment(monthlyPayment)
@@ -50,15 +54,15 @@ public class CreditService {
                 .psk(psk)
                 .isInsuranceEnabled(scoringDataDTO.getIsInsuranceEnabled())
                 .isSalaryClient(scoringDataDTO.getIsSalaryClient())
-                .paymentSchedule(paymentScheduleElements)
-                .build();
+                .paymentSchedule(paymentScheduleElements);
+
         log.info("getCalculation result: " + creditDTO);
         return creditDTO;
     }
 
     private void checkScoringData(ScoringDataDTO scoringDataDTO, Integer age) {
         EmploymentDTO employment = scoringDataDTO.getEmployment();
-        if (employment.getEmploymentStatus().equals(EmploymentStatus.UNEMPLOYED)
+        if (employment.getEmploymentStatus().equals(EmploymentDTO.EmploymentStatusEnum.UNEMPLOYED)
                 || scoringDataDTO.getAmount().compareTo(employment.getSalary().multiply(BigDecimal.valueOf(20))) > 0
                 || age > 60 || age < 20
                 || employment.getWorkExperienceTotal() < 12
@@ -69,34 +73,34 @@ public class CreditService {
 
     private BigDecimal getPersonalRate(ScoringDataDTO scoringDataDTO, Integer age) {
         BigDecimal rate = baseRate;
-        if (scoringDataDTO.getEmployment().getEmploymentStatus().equals(EmploymentStatus.SELF_EMPLOYED)) {
+        if (scoringDataDTO.getEmployment().getEmploymentStatus().equals(EmploymentDTO.EmploymentStatusEnum.SELF_EMPLOYED)) {
             rate = rate.add(BigDecimal.valueOf(1));
         }
-        if (scoringDataDTO.getEmployment().getEmploymentStatus().equals(EmploymentStatus.BUSINESS_OWNER)) {
+        if (scoringDataDTO.getEmployment().getEmploymentStatus().equals(EmploymentDTO.EmploymentStatusEnum.BUSINESS_OWNER)) {
             rate = rate.add(BigDecimal.valueOf(3));
         }
-        if (scoringDataDTO.getEmployment().getPosition().equals(Position.MIDDLE_MANAGER)) {
+        if (scoringDataDTO.getEmployment().getPosition().equals(EmploymentDTO.PositionEnum.MIDDLE_MANAGER)) {
             rate = rate.subtract(BigDecimal.valueOf(2));
         }
-        if (scoringDataDTO.getEmployment().getPosition().equals(Position.TOP_MANAGER)) {
+        if (scoringDataDTO.getEmployment().getPosition().equals(EmploymentDTO.PositionEnum.TOP_MANAGER)) {
             rate = rate.subtract(BigDecimal.valueOf(4));
         }
-        if (scoringDataDTO.getMaritalStatus().equals(MaritalStatus.MARRIED)) {
+        if (scoringDataDTO.getMaritalStatus().equals(ScoringDataDTO.MaritalStatusEnum.MARRIED)) {
             rate = rate.subtract(BigDecimal.valueOf(3));
         }
-        if (scoringDataDTO.getMaritalStatus().equals(MaritalStatus.DIVORCED)) {
+        if (scoringDataDTO.getMaritalStatus().equals(ScoringDataDTO.MaritalStatusEnum.DIVORCED)) {
             rate = rate.add(BigDecimal.valueOf(1));
         }
         if (scoringDataDTO.getDependentAmount() > 1) {
             rate = rate.add(BigDecimal.valueOf(1));
         }
-        if (scoringDataDTO.getGender().equals(Gender.FEMALE) && age >= 35 && age < 60) {
+        if (scoringDataDTO.getGender().equals(ScoringDataDTO.GenderEnum.FEMALE) && age >= 35 && age < 60) {
             rate = rate.subtract(BigDecimal.valueOf(3));
         }
-        if (scoringDataDTO.getGender().equals(Gender.MALE) && age >= 30 && age < 55) {
+        if (scoringDataDTO.getGender().equals(ScoringDataDTO.GenderEnum.MALE) && age >= 30 && age < 55) {
             rate = rate.subtract(BigDecimal.valueOf(3));
         }
-        if (scoringDataDTO.getGender().equals(Gender.NON_BINARY)) {
+        if (scoringDataDTO.getGender().equals(ScoringDataDTO.GenderEnum.NON_BINARY)) {
             rate = rate.add(BigDecimal.valueOf(3));
         }
         return rate;
@@ -125,14 +129,13 @@ public class CreditService {
             interestPayment = getInterestPayment(remainingDebt, rate);
             debtPayment = monthlyPayment.subtract(interestPayment).setScale(2, RoundingMode.HALF_DOWN);
             remainingDebt = remainingDebt.subtract(monthlyPayment);
-            paymentScheduleElements.add(PaymentScheduleElement.builder()
+            paymentScheduleElements.add(new PaymentScheduleElement()
                     .number(i)
                     .date(date)
                     .totalPayment(monthlyPayment)
                     .interestPayment(interestPayment)
                     .debtPayment(debtPayment)
-                    .remainingDebt(remainingDebt)
-                    .build());
+                    .remainingDebt(remainingDebt));
         }
         return paymentScheduleElements;
     }
