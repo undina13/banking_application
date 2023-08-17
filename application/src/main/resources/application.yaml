@@ -1,0 +1,5 @@
+feign:
+  deal:
+    url: http://localhost:8081/deal
+server:
+  port: 8082
