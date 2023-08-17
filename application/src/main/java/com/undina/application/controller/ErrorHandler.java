@@ -1,7 +1,7 @@
 package com.undina.application.controller;
 
 import com.undina.application.exception.ErrorResponse;
-import com.undina.application.exception.RejectionException;
+import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,9 +23,9 @@ public class ErrorHandler {
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(RejectionException.class)
-    public ResponseEntity<ErrorResponse> rejectionException(final RejectionException e) {
-        log.error("rejectionException " + e.getMessage());
+    @ExceptionHandler(FeignException.class)
+    public ResponseEntity<ErrorResponse> feignException(final FeignException e) {
+        log.error("feignException - error: message = {}", e.getMessage());
         return ResponseEntity.internalServerError()
                 .body(new ErrorResponse(e.getMessage()));
     }
