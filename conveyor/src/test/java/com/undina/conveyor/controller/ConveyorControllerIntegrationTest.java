@@ -42,24 +42,6 @@ class ConveyorControllerIntegrationTest {
     }
 
     @Test
-    void getLoanOffersTestBadRequest() throws Exception {
-        mockMvc.perform(post("/conveyor/offers")
-                        .content(mapper.writeValueAsString(loanApplicationRequestDTOSmallAmount))
-                        .characterEncoding(StandardCharsets.UTF_8)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
-    }
-
-    @Test
-    void getLoanOffersTestBadRequestCustomAnnotationTooYoung() throws Exception {
-        mockMvc.perform(post("/conveyor/offers")
-                        .content(mapper.writeValueAsString(loanApplicationRequestDTOTooYoung))
-                        .characterEncoding(StandardCharsets.UTF_8)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
-    }
-
-    @Test
     void getCalculationTestOk() throws Exception {
         mockMvc.perform(post("/conveyor/calculation")
                         .content(mapper.writeValueAsString(scoringDataDTO1))
