@@ -84,7 +84,7 @@ public class ApplicationControllerIntegrationTest {
         mockServerClient
                 .when(
                         request()
-                                .withMethod("POST")
+                                .withMethod("PUT")
                                 .withPath("/deal/offer")
                                 .withBody(exact(mapper.writeValueAsString(loanOfferDTO13))),
                         exactly(1))
@@ -104,7 +104,7 @@ public class ApplicationControllerIntegrationTest {
         mockServerClient
                 .when(
                         request()
-                                .withMethod("POST")
+                                .withMethod("PUT")
                                 .withPath("/deal/offer")
                                 .withBody(exact(mapper.writeValueAsString(loanOfferDTO13))),
                         exactly(1))

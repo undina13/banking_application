@@ -41,7 +41,7 @@ paths:
           description: Internal Server Error
 
   /application/offer:
-    post:
+    put:
       tags:
         - ApplicationController
       summary: 'Скоринг данных, высчитывание ставки(rate), полной стоимости кредита(psk), размер ежемесячного платежа(monthlyPayment), график ежемесячных платежей '
