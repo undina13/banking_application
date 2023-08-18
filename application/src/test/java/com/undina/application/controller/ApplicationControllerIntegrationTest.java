@@ -13,7 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.nio.charset.StandardCharsets;
 
-import static com.undina.application.util.LoanApplicationRequestDTOHelper.loanApplicationRequestDTO1;
+import static com.undina.application.util.LoanApplicationRequestDTOHelper.*;
 import static com.undina.application.util.LoanOfferDTOHelper.loanOfferDTO13;
 import static com.undina.application.util.LoanOfferDTOHelper.loanOfferDTOS1;
 import static org.mockserver.integration.ClientAndServer.startClientAndServer;
@@ -62,6 +62,24 @@ public class ApplicationControllerIntegrationTest {
     }
 
     @Test
+    public void createApplicationTestTooYoung() throws Exception {
+        mockMvc.perform(post("/application")
+                        .content(mapper.writeValueAsString(loanApplicationRequestTooYong))
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void createApplicationTestSmallAmount() throws Exception {
+        mockMvc.perform(post("/application")
+                        .content(mapper.writeValueAsString(loanApplicationRequestSmallAmount))
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
     public void createApplyLoanOfferTestOk() throws Exception {
         mockServerClient
                 .when(
@@ -79,6 +97,26 @@ public class ApplicationControllerIntegrationTest {
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    public void createApplyLoanOfferTestException() throws Exception {
+        mockServerClient
+                .when(
+                        request()
+                                .withMethod("POST")
+                                .withPath("/deal/offer")
+                                .withBody(exact(mapper.writeValueAsString(loanOfferDTO13))),
+                        exactly(1))
+                .respond(
+                        response()
+                                .withStatusCode(404)
+                );
+        mockMvc.perform(post("/application/offer")
+                        .content(mapper.writeValueAsString(loanOfferDTO13))
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isInternalServerError());
     }
 
 }
