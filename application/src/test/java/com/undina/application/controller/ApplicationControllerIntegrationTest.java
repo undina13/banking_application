@@ -119,5 +119,4 @@ public class ApplicationControllerIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isInternalServerError());
     }
-
 }
