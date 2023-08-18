@@ -26,6 +26,6 @@ public class ErrorHandler {
     public ResponseEntity<ErrorResponse> feignException(final FeignException e) {
         log.error("feignException - error: message = {}", e.getMessage());
         return ResponseEntity.internalServerError()
-                .body(new ErrorResponse(e.getMessage()));
+                .body(new ErrorResponse("feignException - error: message = " + e.getMessage()));
     }
 }
