@@ -22,6 +22,7 @@ import static org.mockserver.model.HttpRequest.request;
 import static org.mockserver.model.HttpResponse.response;
 import static org.mockserver.model.StringBody.exact;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -92,7 +93,7 @@ public class ApplicationControllerIntegrationTest {
                         response()
                                 .withStatusCode(200)
                 );
-        mockMvc.perform(post("/application/offer")
+        mockMvc.perform(put("/application/offer")
                         .content(mapper.writeValueAsString(loanOfferDTO13))
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON))
@@ -112,7 +113,7 @@ public class ApplicationControllerIntegrationTest {
                         response()
                                 .withStatusCode(404)
                 );
-        mockMvc.perform(post("/application/offer")
+        mockMvc.perform(put("/application/offer")
                         .content(mapper.writeValueAsString(loanOfferDTO13))
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON))
