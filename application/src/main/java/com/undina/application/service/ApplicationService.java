@@ -18,14 +18,14 @@ public class ApplicationService {
 
     public List<LoanOfferDTO> getLoanOffers(LoanApplicationRequestDTO loanApplicationRequestDTO) {
         log.info("getLoanOffers - start: {}", ModelFormatter.toLogFormat(loanApplicationRequestDTO));
-        List<LoanOfferDTO> loanOfferDTOS = dealFeignClient.getOffers(loanApplicationRequestDTO).getBody();
-        log.info("getLoanOffers - result: {}", loanOfferDTOS);
-        return loanOfferDTOS;
+        List<LoanOfferDTO> loanOfferDTOs = dealFeignClient.getOffers(loanApplicationRequestDTO).getBody();
+        log.info("getLoanOffers - result: {}", loanOfferDTOs);
+        return loanOfferDTOs;
     }
 
     public void getCalculation(LoanOfferDTO loanOfferDTO) {
         log.info("getCalculation - start: {}", loanOfferDTO);
         dealFeignClient.applyLoanOffer(loanOfferDTO);
-        log.info("getCalculation result: Ok");
+        log.info("getCalculation - end");
     }
 }

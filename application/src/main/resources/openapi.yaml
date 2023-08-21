@@ -8,7 +8,7 @@ info:
   version: 1.0.0
 servers:
   - url: http://localhost:8082
-    description: Generated server url
+    description: Application server
 tags:
   - name: ApplicationController
     description: Контроллер ApplicationController
@@ -35,7 +35,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/LoanOfferDTO'
         '400':
-          description: Ошибка валидации
+          description: Validation error
           content: {}
         '500':
           description: Internal Server Error
@@ -56,10 +56,10 @@ paths:
         '200':
           description: OK
         '400':
-          description: Ошибка валидации
+          description: Validation error
           content: {}
         '500':
-          description: Отказано в кредите
+          description: Credit denied
           content: {}
 components:
   schemas:

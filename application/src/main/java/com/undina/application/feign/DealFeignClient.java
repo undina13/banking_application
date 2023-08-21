@@ -1,6 +1,5 @@
 package com.undina.application.feign;
 
-
 import org.openapitools.model.LoanApplicationRequestDTO;
 import org.openapitools.model.LoanOfferDTO;
 import org.springframework.cloud.openfeign.FeignClient;

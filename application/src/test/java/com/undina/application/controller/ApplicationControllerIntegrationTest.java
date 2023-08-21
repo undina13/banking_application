@@ -1,22 +1,15 @@
 package com.undina.application.controller;
 
-
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.undina.application.AbstractTest;
 import org.junit.jupiter.api.Test;
-import org.mockserver.client.MockServerClient;
 import org.mockserver.model.Header;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
 
 import java.nio.charset.StandardCharsets;
 
 import static com.undina.application.util.LoanApplicationRequestDTOHelper.*;
 import static com.undina.application.util.LoanOfferDTOHelper.loanOfferDTO13;
 import static com.undina.application.util.LoanOfferDTOHelper.loanOfferDTOS1;
-import static org.mockserver.integration.ClientAndServer.startClientAndServer;
 import static org.mockserver.matchers.Times.exactly;
 import static org.mockserver.model.HttpRequest.request;
 import static org.mockserver.model.HttpResponse.response;
@@ -27,18 +20,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
-@AutoConfigureMockMvc
-public class ApplicationControllerIntegrationTest {
-    @Autowired
-    protected MockMvc mockMvc;
-
-    @Autowired
-    protected ObjectMapper mapper;
-    protected static MockServerClient mockServerClient = startClientAndServer(8081);
-
+class ApplicationControllerIntegrationTest extends AbstractTest {
     @Test
-    public void createApplicationTestOk() throws Exception {
+    void createApplicationTestOk() throws Exception {
         mockServerClient
                 .when(
                         request()
@@ -63,7 +47,7 @@ public class ApplicationControllerIntegrationTest {
     }
 
     @Test
-    public void createApplicationTestTooYoung() throws Exception {
+    void createApplicationTestTooYoung() throws Exception {
         mockMvc.perform(post("/application")
                         .content(mapper.writeValueAsString(loanApplicationRequestTooYong))
                         .characterEncoding(StandardCharsets.UTF_8)
@@ -72,7 +56,7 @@ public class ApplicationControllerIntegrationTest {
     }
 
     @Test
-    public void createApplicationTestSmallAmount() throws Exception {
+    void createApplicationTestSmallAmount() throws Exception {
         mockMvc.perform(post("/application")
                         .content(mapper.writeValueAsString(loanApplicationRequestSmallAmount))
                         .characterEncoding(StandardCharsets.UTF_8)
@@ -81,7 +65,7 @@ public class ApplicationControllerIntegrationTest {
     }
 
     @Test
-    public void createApplyLoanOfferTestOk() throws Exception {
+    void createApplyLoanOfferTestOk() throws Exception {
         mockServerClient
                 .when(
                         request()
@@ -101,7 +85,7 @@ public class ApplicationControllerIntegrationTest {
     }
 
     @Test
-    public void createApplyLoanOfferTestException() throws Exception {
+    void createApplyLoanOfferTestException() throws Exception {
         mockServerClient
                 .when(
                         request()

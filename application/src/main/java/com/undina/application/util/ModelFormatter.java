@@ -11,7 +11,7 @@ public class ModelFormatter {
         return String.format("LoanApplicationRequestDTO : amount - %s, email - %s, term - %d , birthdate - %s",
                 loanApplicationRequestDTO.getAmount(),
                 loanApplicationRequestDTO.getEmail(),
-                loanApplicationRequestDTO.getTerm(), loanApplicationRequestDTO.getBirthdate());
-
+                loanApplicationRequestDTO.getTerm(),
+                loanApplicationRequestDTO.getBirthdate());
     }
 }

@@ -27,13 +27,12 @@ public class ApplicationController implements ApplicationApi {
                 .body(loanOfferDTOS);
     }
 
-
     @Override
     public ResponseEntity<Void> getCalculation(LoanOfferDTO loanOfferDTO) {
         log.info("getCalculation - start: {}", loanOfferDTO);
         applicationService.getCalculation(loanOfferDTO);
-        log.info("getCalculation - result: ok");
-        return ResponseEntity.ok().build();
-
+        log.info("getCalculation - end");
+        return ResponseEntity.ok()
+                .build();
     }
 }
