@@ -1,0 +1,127 @@
+openapi: 3.0.1
+info:
+  title: Application
+  description: Application
+  contact:
+    name: undina
+    email: foxundina@gmail.com
+  version: 1.0.0
+servers:
+  - url: http://localhost:8082
+    description: Application server
+tags:
+  - name: ApplicationController
+    description: Контроллер ApplicationController
+paths:
+  /application:
+    post:
+      tags:
+        - ApplicationController
+      summary: Прескоринг данных и получениеи 4 кредитных предложения
+      operationId: getLoanOffers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoanApplicationRequestDTO'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LoanOfferDTO'
+        '400':
+          description: Validation error
+          content: {}
+        '500':
+          description: Internal Server Error
+
+  /application/offer:
+    put:
+      tags:
+        - ApplicationController
+      summary: 'Скоринг данных, высчитывание ставки(rate), полной стоимости кредита(psk), размер ежемесячного платежа(monthlyPayment), график ежемесячных платежей '
+      operationId: getCalculation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoanOfferDTO'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Validation error
+          content: {}
+        '500':
+          description: Credit denied
+          content: {}
+components:
+  schemas:
+    LoanApplicationRequestDTO:
+      required:
+        - amount
+        - birthdate
+        - email
+        - firstName
+        - lastName
+        - passportNumber
+        - passportSeries
+        - term
+      type: object
+      properties:
+        amount:
+          minimum: 10000
+          type: number
+        term:
+          minimum: 6
+          type: integer
+          format: int32
+        firstName:
+          pattern: ^[a-zA-Z]{2,30}$
+          type: string
+        lastName:
+          pattern: ^[a-zA-Z]{2,30}$
+          type: string
+        middleName:
+          pattern: ^[a-zA-Z]{2,30}$
+          type: string
+        email:
+          pattern: ^[\w\.]{2,50}@[\w\.]{2,20}$
+          type: string
+        birthdate:
+          type: string
+          format: date
+          x-constraints: '@ValidateDate'
+        passportSeries:
+          pattern: ^[0-9]{4}$
+          type: string
+        passportNumber:
+          pattern: ^[0-9]{6}$
+          type: string
+    LoanOfferDTO:
+      type: object
+      properties:
+        applicationId:
+          type: integer
+          format: int64
+        requestedAmount:
+          type: number
+        totalAmount:
+          type: number
+        term:
+          type: integer
+          format: int32
+        monthlyPayment:
+          type: number
+        rate:
+          type: number
+        isInsuranceEnabled:
+          type: boolean
+        isSalaryClient:
+          type: boolean

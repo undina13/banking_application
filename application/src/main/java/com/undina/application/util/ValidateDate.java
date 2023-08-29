@@ -1,4 +1,4 @@
-package util;
+package com.undina.application.util;
 
 import javax.validation.Constraint;
 import javax.validation.constraints.Past;

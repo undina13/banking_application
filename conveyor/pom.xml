@@ -134,9 +134,6 @@
                                 <delegatePattern>true</delegatePattern>
                                     <interfaceOnly>true</interfaceOnly>
                             </configOptions>
-                            <templateDirectory>
-                                ${project.basedir}/src/main/resources/templates
-                            </templateDirectory>
                         </configuration>
                     </execution>
                 </executions>
