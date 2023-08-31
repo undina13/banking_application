@@ -339,3 +339,31 @@ components:
           type: boolean
         isSalaryClient:
           type: boolean
+    EmailMessage:
+        required:
+          - address
+          - theme
+          - applicationId
+        type: object
+        properties:
+          address:
+            pattern: ^[\w\.]{2,50}@[\w\.]{2,20}$
+            type: string
+          theme:
+            type: string
+            enum:
+              - FINISH_REGISTRATION
+              - CREATE_DOCUMENTS
+              - SEND_DOCUMENTS
+              - SEND_SES
+              - CREDIT_ISSUED
+              - APPLICATION_DENIED
+          applicationId:
+            type: integer
+            format: int64
+
+
+
+
+
+
