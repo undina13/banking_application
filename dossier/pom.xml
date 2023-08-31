@@ -20,6 +20,7 @@
         <springdoc.version>1.7.0</springdoc.version>
         <org.openapitools.version>6.6.0</org.openapitools.version>
         <jackson-databind-nullable.version>0.2.6</jackson-databind-nullable.version>
+        <spring-kafka.version>3.0.8</spring-kafka.version>
     </properties>
 
     <dependencies>
@@ -56,6 +57,16 @@
             <artifactId>openapi-generator-maven-plugin</artifactId>
             <version>${org.openapitools.version}</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+            <version>${spring-kafka.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka-test</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

@@ -9,6 +9,12 @@ spring:
     password: password
     url: jdbc:postgresql://localhost:5432/deal
     username: user
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
   jpa:
     hibernate:
       ddl-auto: validate
@@ -22,3 +28,7 @@ spring:
     password: password
     url: jdbc:postgresql://localhost:5432/deal
     user: user
+
+
+
+
