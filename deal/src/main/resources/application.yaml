@@ -14,7 +14,6 @@ spring:
       bootstrap-servers: localhost:9092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
-
   jpa:
     hibernate:
       ddl-auto: validate
@@ -28,6 +27,13 @@ spring:
     password: password
     url: jdbc:postgresql://localhost:5432/deal
     user: user
+topic:
+  finish-registration: finish-registration
+  create-documents: create-documents
+  send-documents: send-documents
+  send-ses: send-ses
+  credit-issued: credit-issued
+  application-denied: application-denied
 
 
 

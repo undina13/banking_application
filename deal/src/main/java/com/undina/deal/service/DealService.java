@@ -35,6 +35,8 @@ public class DealService {
 
     private final ConveyorFeignClient conveyorFeignClient;
 
+    private final KafkaService kafkaService;
+
     public List<LoanOfferDTO> createApplication(LoanApplicationRequestDTO loanApplication) {
         log.info("createApplication - start: {}", ModelFormatter.toLogFormat(loanApplication));
         Client client = clientMapper.toClient(loanApplication);
@@ -65,6 +67,11 @@ public class DealService {
         log.info("applyOffer application updated status: {}", application);
         application.setAppliedOffer(loanOffer);
         applicationRepository.save(application);
+        EmailMessage emailMessage = new EmailMessage()
+                .address(application.getClient().getEmail())
+                .theme(EmailMessage.ThemeEnum.FINISH_REGISTRATION)
+                .applicationId(application.getApplicationId());
+        kafkaService.writeMessage(emailMessage);
         log.info("applyOffer - result: {}", application);
     }
 
