@@ -31,7 +31,7 @@
         <com.vladmihalcea.version>2.21.1</com.vladmihalcea.version>
         <org.testcontainers.version>1.18.3</org.testcontainers.version>
         <org.mock-server.version>5.15.0</org.mock-server.version>
-        <spring-kafka.version>3.0.8</spring-kafka.version>
+        <spring-kafka.version>2.9.12</spring-kafka.version>
     </properties>
 
     <dependencies>

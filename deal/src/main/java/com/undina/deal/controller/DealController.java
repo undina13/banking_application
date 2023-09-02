@@ -46,4 +46,25 @@ public class DealController implements DealApi {
         log.info("getCalculation - result: OK");
         return ResponseEntity.ok().build();
     }
+
+    @Override
+    public ResponseEntity<Void> sendDocuments(Long applicationId) {
+        log.info("sendDocuments - start: applicationId = {}", applicationId);
+        log.info("sendDocuments - result: OK");
+        return ResponseEntity.ok().build();
+    }
+
+    @Override
+    public ResponseEntity<Void> signDocuments(Long applicationId) {
+        log.info("signDocuments - start: applicationId = {}", applicationId);
+        log.info("signDocuments - result: OK");
+        return ResponseEntity.ok().build();
+    }
+
+    @Override
+    public ResponseEntity<Void> codeDocuments(Long applicationId) {
+        log.info("codeDocuments - start: applicationId = {}", applicationId);
+        log.info("codeDocuments - result: OK");
+        return ResponseEntity.ok().build();
+    }
 }
