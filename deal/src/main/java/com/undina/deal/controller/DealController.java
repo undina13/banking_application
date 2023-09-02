@@ -50,6 +50,7 @@ public class DealController implements DealApi {
     @Override
     public ResponseEntity<Void> sendDocuments(Long applicationId) {
         log.info("sendDocuments - start: applicationId = {}", applicationId);
+        dealService.sendDocuments(applicationId);
         log.info("sendDocuments - result: OK");
         return ResponseEntity.ok().build();
     }
@@ -57,6 +58,7 @@ public class DealController implements DealApi {
     @Override
     public ResponseEntity<Void> signDocuments(Long applicationId) {
         log.info("signDocuments - start: applicationId = {}", applicationId);
+        dealService.signDocuments(applicationId);
         log.info("signDocuments - result: OK");
         return ResponseEntity.ok().build();
     }
@@ -64,6 +66,7 @@ public class DealController implements DealApi {
     @Override
     public ResponseEntity<Void> codeDocuments(Long applicationId) {
         log.info("codeDocuments - start: applicationId = {}", applicationId);
+        dealService.codeDocuments(applicationId);
         log.info("codeDocuments - result: OK");
         return ResponseEntity.ok().build();
     }

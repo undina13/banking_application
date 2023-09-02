@@ -410,6 +410,7 @@ components:
           - address
           - theme
           - applicationId
+          - text
         type: object
         properties:
           address:
@@ -427,6 +428,8 @@ components:
           applicationId:
             type: integer
             format: int64
+          text:
+            type: string
 
 
 

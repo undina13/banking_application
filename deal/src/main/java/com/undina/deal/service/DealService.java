@@ -89,6 +89,48 @@ public class DealService {
         log.info("calculateCredit - result:  ok,  {}", creditDTO);
     }
 
+    public void sendDocuments(Long applicationId){
+        log.info("sendDocuments - start: applicationId = {}", applicationId);
+        Application application = applicationRepository.findById(applicationId)
+                .orElseThrow(() -> new NotFoundException("Application with id = {} not found" + applicationId));
+        EmailMessage emailMessage = new EmailMessage()
+                .address(application.getClient().getEmail())
+                .theme(EmailMessage.ThemeEnum.SEND_DOCUMENTS)
+                .applicationId(application.getApplicationId())
+                .text(application.getAppliedOffer().toString());
+        kafkaService.writeMessage(emailMessage);
+        log.info("sendDocuments - result: OK");
+    }
+
+    public void signDocuments(Long applicationId){
+        log.info("signDocuments - start: applicationId = {}", applicationId);
+        Application application = applicationRepository.findById(applicationId)
+                .orElseThrow(() -> new NotFoundException("Application with id = {} not found" + applicationId));
+        EmailMessage emailMessage = new EmailMessage()
+                .address(application.getClient().getEmail())
+                .theme(EmailMessage.ThemeEnum.SEND_SES)
+                .applicationId(application.getApplicationId())
+                .text(application.getAppliedOffer().toString());
+        kafkaService.writeMessage(emailMessage);
+        log.info("signDocuments - result: OK");
+    }
+
+    public void codeDocuments(Long applicationId){
+        log.info("codeDocuments - start: applicationId = {}", applicationId);
+        Application application = applicationRepository.findById(applicationId)
+                .orElseThrow(() -> new NotFoundException("Application with id = {} not found" + applicationId));
+        application.setSesCode("ses");
+        application.setStatus(ApplicationStatus.DOCUMENT_SIGNED);
+        applicationRepository.save(application);
+        EmailMessage emailMessage = new EmailMessage()
+                .address(application.getClient().getEmail())
+                .theme(EmailMessage.ThemeEnum.CREDIT_ISSUED)
+                .applicationId(application.getApplicationId())
+                .text("Кредит выдан");
+        kafkaService.writeMessage(emailMessage);
+        log.info("codeDocuments - result: OK");
+    }
+
     private void updateStatus(Application application, ApplicationStatus status) {
         application.setStatus(status);
         List<StatusHistory> statusHistories = application.getStatusHistory();
