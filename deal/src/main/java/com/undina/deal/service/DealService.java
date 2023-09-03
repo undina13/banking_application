@@ -54,6 +54,12 @@ public class DealService {
             Application finalApplication = application;
             loanOffers.forEach(loanOfferDTO -> loanOfferDTO.setApplicationId(finalApplication.getApplicationId()));
         }
+        EmailMessage emailMessage = new EmailMessage()
+                .address(application.getClient().getEmail())
+                .theme(EmailMessage.ThemeEnum.FINISH_REGISTRATION)
+                .applicationId(application.getApplicationId())
+                .text(loanOffers.toString());
+        kafkaService.writeMessage(emailMessage);
         log.info("createApplication - result: {}", loanOffers);
         return loanOffers;
     }
@@ -69,7 +75,7 @@ public class DealService {
         applicationRepository.save(application);
         EmailMessage emailMessage = new EmailMessage()
                 .address(application.getClient().getEmail())
-                .theme(EmailMessage.ThemeEnum.FINISH_REGISTRATION)
+                .theme(EmailMessage.ThemeEnum.CREATE_DOCUMENTS)
                 .applicationId(application.getApplicationId());
         kafkaService.writeMessage(emailMessage);
         log.info("applyOffer - result: {}", application);
