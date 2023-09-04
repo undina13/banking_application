@@ -15,16 +15,17 @@ public class EmailSender {
     @Value("${spring.mail.username}")
     private String username;
     private final JavaMailSender javaMailSender;
+
     public void sendMessage(EmailMessage emailMessage) {
         SimpleMailMessage message = new SimpleMailMessage();
-        log.info("create");
+        log.info("sendMessage- start: {}", emailMessage);
         message.setFrom(username);
         message.setTo(emailMessage.getAddress());
         message.setSubject(emailMessage.getTheme().toString());
         message.setText(emailMessage.getText());
-        log.info("start sending");
+        log.info("sendMessage - start sending: {}", message);
         javaMailSender.send(message);
-        log.info("end");
+        log.info("sendMessage - end");
     }
 
 }

@@ -12,7 +12,6 @@ spring:
           starttls:
             enable: true
     username: suponevairi@yandex.ru
-
   kafka:
     consumer:
       bootstrap-servers: /localhost:9092
@@ -27,7 +26,6 @@ topic:
   send-ses: send-ses
   credit-issued: credit-issued
   application-denied: application-denied
-
 server:
   port: 8086
 

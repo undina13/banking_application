@@ -42,7 +42,7 @@ public class KafkaService {
         String topic = getTopic(emailMessage);
         String message = "";
         try {
-         message =  objectMapper.writeValueAsString(emailMessage);
+            message = objectMapper.writeValueAsString(emailMessage);
         } catch (JsonProcessingException e) {
             throw new JsonException("wrong emailMessage to json");
         }

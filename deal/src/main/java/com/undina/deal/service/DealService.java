@@ -59,7 +59,7 @@ public class DealService {
                 .theme(EmailMessage.ThemeEnum.FINISH_REGISTRATION)
                 .applicationId(application.getApplicationId())
                 .text(loanOffers.toString());
-        log.info("EMAILMESSAGE {}", emailMessage);
+        log.info("createApplication send emailMessage {}", emailMessage);
         kafkaService.writeMessage(emailMessage);
         log.info("createApplication - result: {}", loanOffers);
         return loanOffers;
@@ -78,7 +78,7 @@ public class DealService {
                 .address(application.getClient().getEmail())
                 .theme(EmailMessage.ThemeEnum.CREATE_DOCUMENTS)
                 .applicationId(application.getApplicationId())
-                .text("some text");
+                .text("apply offer");
         kafkaService.writeMessage(emailMessage);
         log.info("applyOffer - result: {}", application);
     }
@@ -97,7 +97,7 @@ public class DealService {
         log.info("calculateCredit - result:  ok,  {}", creditDTO);
     }
 
-    public void sendDocuments(Long applicationId){
+    public void sendDocuments(Long applicationId) {
         log.info("sendDocuments - start: applicationId = {}", applicationId);
         Application application = applicationRepository.findById(applicationId)
                 .orElseThrow(() -> new NotFoundException("Application with id = {} not found" + applicationId));
@@ -110,7 +110,7 @@ public class DealService {
         log.info("sendDocuments - result: OK");
     }
 
-    public void signDocuments(Long applicationId){
+    public void signDocuments(Long applicationId) {
         log.info("signDocuments - start: applicationId = {}", applicationId);
         Application application = applicationRepository.findById(applicationId)
                 .orElseThrow(() -> new NotFoundException("Application with id = {} not found" + applicationId));
@@ -123,7 +123,7 @@ public class DealService {
         log.info("signDocuments - result: OK");
     }
 
-    public void codeDocuments(Long applicationId){
+    public void codeDocuments(Long applicationId) {
         log.info("codeDocuments - start: applicationId = {}", applicationId);
         Application application = applicationRepository.findById(applicationId)
                 .orElseThrow(() -> new NotFoundException("Application with id = {} not found" + applicationId));
