@@ -1,0 +1,39 @@
+openapi: 3.0.0
+info:
+  title: Dossier
+  description: Dossier
+  contact:
+    name: undina
+    email: foxundina@gmail.com
+  version: 1.0.0
+servers:
+  - url: http://localhost:8088
+    description: Dossier server
+paths: {}
+components:
+  schemas:
+    EmailMessage:
+      required:
+        - address
+        - theme
+        - applicationId
+        - text
+      type: object
+      properties:
+        address:
+          pattern: ^[\w\.]{2,50}@[\w\.]{2,20}$
+          type: string
+        theme:
+          type: string
+          enum:
+            - FINISH_REGISTRATION
+            - CREATE_DOCUMENTS
+            - SEND_DOCUMENTS
+            - SEND_SES
+            - CREDIT_ISSUED
+            - APPLICATION_DENIED
+        applicationId:
+          type: integer
+          format: int64
+        text:
+          type: string

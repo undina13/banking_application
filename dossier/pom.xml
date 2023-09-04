@@ -20,7 +20,7 @@
         <springdoc.version>1.7.0</springdoc.version>
         <org.openapitools.version>6.6.0</org.openapitools.version>
         <jackson-databind-nullable.version>0.2.6</jackson-databind-nullable.version>
-        <spring-kafka.version>3.0.8</spring-kafka.version>
+        <spring-kafka.version>2.9.12</spring-kafka.version>
     </properties>
 
     <dependencies>
@@ -75,6 +75,27 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>${org.openapitools.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.basedir}/src/main/resources/openapi.yaml</inputSpec>
+                            <generatorName>spring</generatorName>
+                            <configOptions>
+                                <sourceFolder>src/gen/java/main</sourceFolder>
+                                <delegatePattern>true</delegatePattern>
+                                <interfaceOnly>true</interfaceOnly>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

@@ -59,6 +59,7 @@ public class DealService {
                 .theme(EmailMessage.ThemeEnum.FINISH_REGISTRATION)
                 .applicationId(application.getApplicationId())
                 .text(loanOffers.toString());
+        log.info("EMAILMESSAGE {}", emailMessage);
         kafkaService.writeMessage(emailMessage);
         log.info("createApplication - result: {}", loanOffers);
         return loanOffers;
@@ -76,7 +77,8 @@ public class DealService {
         EmailMessage emailMessage = new EmailMessage()
                 .address(application.getClient().getEmail())
                 .theme(EmailMessage.ThemeEnum.CREATE_DOCUMENTS)
-                .applicationId(application.getApplicationId());
+                .applicationId(application.getApplicationId())
+                .text("some text");
         kafkaService.writeMessage(emailMessage);
         log.info("applyOffer - result: {}", application);
     }

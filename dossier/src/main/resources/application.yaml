@@ -1,0 +1,35 @@
+spring:
+  mail:
+    host: smtp.yandex.ru
+    password: xiuyhadrnzfqwkja
+    port: 465
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            enable: true
+          starttls:
+            enable: true
+    username: suponevairi@yandex.ru
+
+  kafka:
+    consumer:
+      bootstrap-servers: /localhost:9092
+      group-id: dossier
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+topic:
+  finish-registration: finish-registration
+  create-documents: create-documents
+  send-documents: send-documents
+  send-ses: send-ses
+  credit-issued: credit-issued
+  application-denied: application-denied
+
+server:
+  port: 8086
+
+
+
