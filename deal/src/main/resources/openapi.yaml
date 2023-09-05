@@ -98,10 +98,11 @@ paths:
             '*/*':
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+
   /deal/document/{applicationId}/sign:
     post:
       tags:
-        - DealController
+        - DocumentController
       summary: Запрос на подписание документов
       operationId: signDocuments
       parameters:
@@ -123,7 +124,7 @@ paths:
   /deal/document/{applicationId}/code:
     post:
       tags:
-        - DealController
+        - DocumentController
       summary: Подписание документов
       operationId: codeDocuments
       parameters:
@@ -133,6 +134,14 @@ paths:
           schema:
             type: integer
             format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: integer
+
+
+
       responses:
         '200':
           description: OK
@@ -145,7 +154,7 @@ paths:
   /deal/document/{applicationId}/send:
     post:
       tags:
-        - DealController
+        - DocumentController
       summary: Запрос на отправку документов
       operationId: sendDocuments
       parameters:
