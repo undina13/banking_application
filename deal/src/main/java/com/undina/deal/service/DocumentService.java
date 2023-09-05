@@ -15,18 +15,16 @@ import org.springframework.stereotype.Service;
 public class DocumentService {
     private final ApplicationRepository applicationRepository;
 
-    private final KafkaService kafkaService;
+    private final KafkaProducerService kafkaProducerService;
 
     public void sendDocuments(Long applicationId) {
         log.info("sendDocuments - start: applicationId = {}", applicationId);
         Application application = applicationRepository.findById(applicationId)
                 .orElseThrow(() -> new NotFoundException("Application with id = {} not found" + applicationId));
-        EmailMessage emailMessage = new EmailMessage()
-                .address(application.getClient().getEmail())
-                .theme(EmailMessage.ThemeEnum.SEND_DOCUMENTS)
-                .applicationId(application.getApplicationId())
-                .text(application.getAppliedOffer().toString());
-        kafkaService.writeMessage(emailMessage);
+        EmailMessage emailMessage = new EmailMessage(application.getClient().getEmail(),
+                EmailMessage.ThemeEnum.SEND_DOCUMENTS, application.getApplicationId(),
+                application.getAppliedOffer().toString());
+        kafkaProducerService.writeMessage(emailMessage);
         log.info("sendDocuments - result: OK");
     }
 
@@ -34,12 +32,9 @@ public class DocumentService {
         log.info("signDocuments - start: applicationId = {}", applicationId);
         Application application = applicationRepository.findById(applicationId)
                 .orElseThrow(() -> new NotFoundException("Application with id = {} not found" + applicationId));
-        EmailMessage emailMessage = new EmailMessage()
-                .address(application.getClient().getEmail())
-                .theme(EmailMessage.ThemeEnum.SEND_SES)
-                .applicationId(application.getApplicationId())
-                .text(application.getAppliedOffer().toString());
-        kafkaService.writeMessage(emailMessage);
+        EmailMessage emailMessage = new EmailMessage(application.getClient().getEmail(), EmailMessage.ThemeEnum.SEND_SES,
+                application.getApplicationId(), application.getAppliedOffer().toString());
+        kafkaProducerService.writeMessage(emailMessage);
         log.info("signDocuments - result: OK");
     }
 
@@ -50,12 +45,9 @@ public class DocumentService {
         application.setSesCode(sesCode.toString());
         application.setStatus(ApplicationStatus.DOCUMENT_SIGNED);
         applicationRepository.save(application);
-        EmailMessage emailMessage = new EmailMessage()
-                .address(application.getClient().getEmail())
-                .theme(EmailMessage.ThemeEnum.CREDIT_ISSUED)
-                .applicationId(application.getApplicationId())
-                .text("Кредит выдан");
-        kafkaService.writeMessage(emailMessage);
+        EmailMessage emailMessage = new EmailMessage(application.getClient().getEmail(),
+                EmailMessage.ThemeEnum.CREDIT_ISSUED, application.getApplicationId(), "Кредит выдан");
+        kafkaProducerService.writeMessage(emailMessage);
         log.info("codeDocuments - result: OK");
     }
 

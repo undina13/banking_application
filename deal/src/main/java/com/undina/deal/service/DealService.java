@@ -35,7 +35,7 @@ public class DealService {
 
     private final ConveyorFeignClient conveyorFeignClient;
 
-    private final KafkaService kafkaService;
+    private final KafkaProducerService kafkaProducerService;
 
     public List<LoanOfferDTO> createApplication(LoanApplicationRequestDTO loanApplication) {
         log.info("createApplication - start: {}", ModelFormatter.toLogFormat(loanApplication));
@@ -54,13 +54,11 @@ public class DealService {
             Application finalApplication = application;
             loanOffers.forEach(loanOfferDTO -> loanOfferDTO.setApplicationId(finalApplication.getApplicationId()));
         }
-        EmailMessage emailMessage = new EmailMessage()
-                .address(application.getClient().getEmail())
-                .theme(EmailMessage.ThemeEnum.FINISH_REGISTRATION)
-                .applicationId(application.getApplicationId())
-                .text(loanOffers.toString());
+        EmailMessage emailMessage = new EmailMessage(application.getClient().getEmail(),
+                EmailMessage.ThemeEnum.FINISH_REGISTRATION, application.getApplicationId(),
+                loanOffers.toString());
         log.info("createApplication send emailMessage {}", emailMessage);
-        kafkaService.writeMessage(emailMessage);
+        kafkaProducerService.writeMessage(emailMessage);
         log.info("createApplication - result: {}", loanOffers);
         return loanOffers;
     }
@@ -74,12 +72,9 @@ public class DealService {
         log.info("applyOffer application updated status: {}", application);
         application.setAppliedOffer(loanOffer);
         applicationRepository.save(application);
-        EmailMessage emailMessage = new EmailMessage()
-                .address(application.getClient().getEmail())
-                .theme(EmailMessage.ThemeEnum.CREATE_DOCUMENTS)
-                .applicationId(application.getApplicationId())
-                .text("apply offer");
-        kafkaService.writeMessage(emailMessage);
+        EmailMessage emailMessage = new EmailMessage(application.getClient().getEmail(),
+                EmailMessage.ThemeEnum.CREATE_DOCUMENTS, application.getApplicationId(), "apply offer");
+        kafkaProducerService.writeMessage(emailMessage);
         log.info("applyOffer - result: {}", application);
     }
 

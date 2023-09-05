@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class KafkaService {
+public class KafkaProducerService {
     private final KafkaTemplate<String, String> kafkaTemplate;
 
     private final ObjectMapper objectMapper;
