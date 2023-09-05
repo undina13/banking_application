@@ -23,11 +23,13 @@ class EmailSenderTest {
 
     @Mock
     JavaMailSender javaMailSender;
+
     @BeforeEach
     void before() {
         ReflectionTestUtils.setField(emailSender, "username", "username@mail.ru");
 
     }
+
     @Test
     void sendMail() {
         SimpleMailMessage message = new SimpleMailMessage();
@@ -36,7 +38,7 @@ class EmailSenderTest {
         message.setSubject(Theme.APPLICATION_DENIED.toString());
         message.setText("some text");
 
-        emailSender.sendMessage(new EmailMessage("undina13@bk.ru",  Theme.APPLICATION_DENIED,
+        emailSender.sendMessage(new EmailMessage("undina13@bk.ru", Theme.APPLICATION_DENIED,
                 132L, "some text"));
         verify(javaMailSender, times(1)).send(message);
     }

@@ -68,7 +68,7 @@ class KafkaIntegrationTest extends AbstractKafkaTest {
 
     @Test
     void applicationDeniedTest() throws JsonProcessingException {
-        EmailMessage emailMessage = new EmailMessage("undina13@bk.ru",  Theme.APPLICATION_DENIED,
+        EmailMessage emailMessage = new EmailMessage("undina13@bk.ru", Theme.APPLICATION_DENIED,
                 132L, "some text");
         kafkaTemplate.send("applicationDenied", objectMapper.writeValueAsString(emailMessage));
         KafkaConsumerService kafkaConsumerService = new KafkaConsumerService( emailSender);
