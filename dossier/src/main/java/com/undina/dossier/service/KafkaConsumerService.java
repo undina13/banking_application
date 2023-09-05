@@ -51,9 +51,9 @@ public class KafkaConsumerService {
     }
 
     @KafkaListener(topics = "${topic.application-denied}", groupId = "dossier")
-    public void getApplicationDeniedMessage(EmailMessage message) {
-        log.info("getApplicationDeniedMessage - start: {}", message);
-        sendMessage(message);
+    public void getApplicationDeniedMessage(ConsumerRecord<String, EmailMessage> record) {
+        log.info("getApplicationDeniedMessage - start: {}", record.value());
+        sendMessage(record.value());
         log.info("getApplicationDeniedMessage - end");
     }
 
