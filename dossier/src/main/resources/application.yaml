@@ -1,4 +1,8 @@
 spring:
+  json:
+      value:
+        default:
+          type: com.undina.dossier.model.EmailMessage
   mail:
     host: smtp.yandex.ru
     password: xiuyhadrnzfqwkja
@@ -17,6 +21,18 @@ spring:
       bootstrap-servers: /localhost:9092
       group-id: dossier
       auto-offset-reset: earliest
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      properties:
+        spring:
+          json:
+            value:
+              default:
+                type: com.undina.dossier.model.EmailMessage
+          deserializer:
+            value:
+              delegate:
+                class: org.springframework.kafka.support.serializer.JsonDeserializer
+
 
 topic:
   finish-registration: finish-registration
