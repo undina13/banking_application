@@ -1,12 +1,16 @@
 package com.undina.deal.controller;
 
 import com.undina.deal.AbstractTest;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.junit.jupiter.api.Test;
 import org.mockserver.model.Header;
+import org.openapitools.model.EmailMessage;
 import org.springframework.http.MediaType;
+import org.springframework.kafka.test.utils.KafkaTestUtils;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Collections;
 
 import static com.undina.deal.util.CreditDTOHelper.creditDTO;
 import static com.undina.deal.util.FinishRegistrationRequestDTOHelper.finishRegistrationRequest;
@@ -14,6 +18,8 @@ import static com.undina.deal.util.LoanApplicationRequestDTOHelper.loanApplicati
 import static com.undina.deal.util.LoanOfferDTOHelper.loanOfferDTO13;
 import static com.undina.deal.util.LoanOfferDTOHelper.loanOfferDTOS1;
 import static com.undina.deal.util.ScoringDataDTOHelper.scoringDataDTO1;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockserver.matchers.Times.exactly;
 import static org.mockserver.model.HttpRequest.request;
 import static org.mockserver.model.HttpResponse.response;
@@ -52,6 +58,14 @@ public class DealControllerIntegrationTest extends AbstractTest {
                 .andDo(print())
                 .andExpect(content().json(mapper.writeValueAsString(loanOfferDTOS1)));
 
+
+        consumer.subscribe(Collections.singletonList("finish-registration"));
+        ConsumerRecord<String, String> singleRecord = KafkaTestUtils.getSingleRecord(consumer, "finish-registration");
+        assertThat(singleRecord).isNotNull();
+        EmailMessage emailMessage = mapper.readValue(singleRecord.value(), EmailMessage.class);
+        assertEquals("ivanov@mail.ru", emailMessage.getAddress());
+        assertEquals(emailMessage.getTheme().toString(), "FINISH_REGISTRATION");
+        consumer.unsubscribe();
     }
 
     @Test

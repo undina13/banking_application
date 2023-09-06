@@ -7,6 +7,7 @@ import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import lombok.*;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
+import org.openapitools.model.EmploymentDTO;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -52,7 +53,7 @@ public class Client {
     private Passport passport;
 
     @Type(type = "jsonb")
-    private Employment employment;
+    private EmploymentDTO employment;
 
     @Column(nullable = false)
     String account;

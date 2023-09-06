@@ -21,6 +21,7 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
+import java.util.List;
 import java.util.Map;
 
 import static org.mockserver.integration.ClientAndServer.startClientAndServer;
@@ -28,7 +29,7 @@ import static org.mockserver.integration.ClientAndServer.startClientAndServer;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc(addFilters = false)
 @Testcontainers
-public abstract class AbstractTest {
+public abstract class AbstractKafkaTest {
 
     @Autowired
     protected MockMvc mockMvc;
@@ -67,12 +68,18 @@ public abstract class AbstractTest {
         registry.add("feign.conveyor.url", () -> "localhost:" + mockServerClient.getPort() + "/conveyor");
 
         registry.add("spring.kafka.producer.bootstrap-servers", kafka::getBootstrapServers);
+        //registry.add("spring.kafka.consumer.properties.session.timeout.ms",() ->  200);
+
     }
 
     protected Consumer<String, String> configureConsumer() {
         Map<String, Object> consumerProps = KafkaTestUtils.consumerProps(kafkaServer, "dossier", "true");
         consumerProps.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
-        return new DefaultKafkaConsumerFactory<String, String>(consumerProps)
+      //  consumer.subscribe(List.of("finish-registration","create-documents","send-documents","send-ses","credit-issued","application-denied"));
+        Consumer<String, String> consumer1 = new DefaultKafkaConsumerFactory<String, String>(consumerProps)
                 .createConsumer();
+        consumer1.subscribe(List.of("finish-registration","create-documents","send-documents","send-ses","credit-issued","application-denied"));
+
+        return consumer1;
     }
 }

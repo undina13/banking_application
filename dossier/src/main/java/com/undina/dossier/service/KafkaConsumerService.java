@@ -1,10 +1,10 @@
 package com.undina.dossier.service;
 
 import com.undina.dossier.emailsender.EmailSender;
-import com.undina.dossier.model.EmailMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.openapitools.model.EmailMessage;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 

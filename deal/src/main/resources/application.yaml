@@ -12,15 +12,31 @@ spring:
   kafka:
     producer:
       bootstrap-servers: localhost:9092
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+#    consumer:
+#      bootstrap-servers: /localhost:9092
+#      group-id: dossier
+#      auto-offset-reset: earliest
+#      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+#      properties:
+#        spring:
+#          json:
+#            value:
+#              default:
+#                type: org.openapitools.model.EmailMessage
+#          deserializer:
+#            value:
+#              delegate:
+#                class: org.springframework.kafka.support.serializer.JsonDeserializer
 #      key-serializer: org.apache.kafka.common.serialization.StringSerializer
 #      value-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-      properties:
-        spring:
-          json:
-            value:
-              default:
-                type: org.openapitools.model.EmailMessage
+
+#      properties:
+#        spring:
+#          json:
+#            value:
+#              default:
+#                type: org.openapitools.model.EmailMessage
 #          serializer:
 #            value:
 #              delegate:

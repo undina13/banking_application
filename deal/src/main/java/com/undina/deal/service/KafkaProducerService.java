@@ -1,8 +1,6 @@
 package com.undina.deal.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.undina.deal.exception.JsonException;
 import com.undina.deal.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,12 +38,6 @@ public class KafkaProducerService {
     public void writeMessage(EmailMessage emailMessage) {
         log.info("writeMessage - start: {}", emailMessage);
         String topic = getTopic(emailMessage);
-        String message = "";
-        try {
-            message = objectMapper.writeValueAsString(emailMessage);
-        } catch (JsonProcessingException e) {
-            throw new JsonException("wrong emailMessage to json");
-        }
         kafkaTemplate.send(topic, emailMessage);
         log.info("writeMessage - end");
     }

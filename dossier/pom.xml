@@ -18,6 +18,9 @@
         <java.version>11</java.version>
         <lombok.version>1.18.28</lombok.version>
         <spring-kafka.version>2.9.12</spring-kafka.version>
+
+        <org.openapitools.version>6.6.0</org.openapitools.version>
+        <jackson-databind-nullable.version>0.2.6</jackson-databind-nullable.version>
     </properties>
 
     <dependencies>
@@ -60,6 +63,18 @@
             <artifactId>junit-jupiter</artifactId>
             <version>1.18.3</version>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openapitools</groupId>
+            <artifactId>jackson-databind-nullable</artifactId>
+            <version>${jackson-databind-nullable.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openapitools</groupId>
+            <artifactId>openapi-generator-maven-plugin</artifactId>
+            <version>${org.openapitools.version}</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
