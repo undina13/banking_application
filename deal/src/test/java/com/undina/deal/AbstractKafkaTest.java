@@ -40,7 +40,7 @@ public abstract class AbstractKafkaTest {
     @Autowired
     protected KafkaTemplate<String, EmailMessage> kafkaTemplate;
     protected String kafkaServer = kafka.getBootstrapServers();
-    protected Consumer<String, String> consumer = configureConsumer();
+
     @Container
     public static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:14")
             .withDatabaseName("test-db")
@@ -48,7 +48,7 @@ public abstract class AbstractKafkaTest {
             .withPassword("test-password");
 
     @Container
-    static final KafkaContainer kafka = new KafkaContainer(
+    public static KafkaContainer kafka = new KafkaContainer(
             DockerImageName.parse("confluentinc/cp-kafka:7.3.3"))
             .withEnv("KAFKA_CREATE_TOPICS", "finish-registration,create-documents,send-documents,send-ses,credit-issued,application-denied");
 
@@ -68,17 +68,17 @@ public abstract class AbstractKafkaTest {
         registry.add("feign.conveyor.url", () -> "localhost:" + mockServerClient.getPort() + "/conveyor");
 
         registry.add("spring.kafka.producer.bootstrap-servers", kafka::getBootstrapServers);
-        //registry.add("spring.kafka.consumer.properties.session.timeout.ms",() ->  200);
 
     }
 
     protected Consumer<String, String> configureConsumer() {
         Map<String, Object> consumerProps = KafkaTestUtils.consumerProps(kafkaServer, "dossier", "true");
         consumerProps.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
-      //  consumer.subscribe(List.of("finish-registration","create-documents","send-documents","send-ses","credit-issued","application-denied"));
+        consumerProps.put("offsets.topic.replication.factor", "3");
+        consumerProps.put("default.replication.factor", "3");
         Consumer<String, String> consumer1 = new DefaultKafkaConsumerFactory<String, String>(consumerProps)
                 .createConsumer();
-        consumer1.subscribe(List.of("finish-registration","create-documents","send-documents","send-ses","credit-issued","application-denied"));
+        consumer1.subscribe(List.of("finish-registration", "create-documents", "send-documents", "send-ses", "credit-issued", "application-denied"));
 
         return consumer1;
     }
