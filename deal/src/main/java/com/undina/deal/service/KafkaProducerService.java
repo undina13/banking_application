@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @RequiredArgsConstructor
 public class KafkaProducerService {
-    private final KafkaTemplate<String, String> kafkaTemplate;
+    private final KafkaTemplate<String, EmailMessage> kafkaTemplate;
 
     private final ObjectMapper objectMapper;
 
@@ -46,7 +46,7 @@ public class KafkaProducerService {
         } catch (JsonProcessingException e) {
             throw new JsonException("wrong emailMessage to json");
         }
-        kafkaTemplate.send(topic, message);
+        kafkaTemplate.send(topic, emailMessage);
         log.info("writeMessage - end");
     }
 

@@ -12,8 +12,19 @@ spring:
   kafka:
     producer:
       bootstrap-servers: localhost:9092
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+#      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+#      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring:
+          json:
+            value:
+              default:
+                type: org.openapitools.model.EmailMessage
+#          serializer:
+#            value:
+#              delegate:
+#                class: org.springframework.kafka.support.serializer.JsonSerializer
   jpa:
     hibernate:
       ddl-auto: validate

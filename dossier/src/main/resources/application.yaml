@@ -27,7 +27,7 @@ spring:
           json:
             value:
               default:
-                type: com.undina.dossier.model.EmailMessage
+                type: org.openapitools.model.EmailMessage
           deserializer:
             value:
               delegate:
