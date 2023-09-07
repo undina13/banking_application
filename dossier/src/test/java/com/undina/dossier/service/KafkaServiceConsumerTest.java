@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-class KafkaServiceTest extends AbstractKafkaTest {
+class KafkaServiceConsumerTest extends AbstractKafkaConsumerTest {
     @Test
     void finishRegistrationTest() {
         EmailMessage emailMessage = new EmailMessage("undina13@bk.ru", Theme.FINISH_REGISTRATION,

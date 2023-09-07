@@ -19,7 +19,7 @@ import java.util.concurrent.ExecutionException;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-class KafkaIntegrationTest extends AbstractKafkaIntegrationTest {
+class KafkaConsumerIntegrationTest extends AbstractKafkaConsumerIntegrationTest {
     @Test
     void creditIssuesTest() throws ExecutionException, InterruptedException, JsonProcessingException {
         EmailMessage emailMessage = new EmailMessage("undina13@bk.ru", Theme.CREDIT_ISSUED,

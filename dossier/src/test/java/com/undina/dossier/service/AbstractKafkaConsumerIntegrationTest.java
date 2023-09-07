@@ -21,7 +21,7 @@ import org.testcontainers.utility.DockerImageName;
 @AutoConfigureMockMvc(addFilters = false)
 @ExtendWith(MockitoExtension.class)
 @Testcontainers
-public class AbstractKafkaIntegrationTest {
+public class AbstractKafkaConsumerIntegrationTest {
     @Container
     static final KafkaContainer kafka = new KafkaContainer(
             DockerImageName.parse("confluentinc/cp-kafka:7.3.3"))
