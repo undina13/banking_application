@@ -27,12 +27,11 @@ spring:
           json:
             value:
               default:
-                type: org.openapitools.model.EmailMessage
+                type: com.undina.dossier.model.EmailMessage
           deserializer:
             value:
               delegate:
                 class: org.springframework.kafka.support.serializer.JsonDeserializer
-
 
 topic:
   finish-registration: finish-registration

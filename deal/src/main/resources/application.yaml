@@ -13,7 +13,13 @@ spring:
     producer:
       bootstrap-servers: localhost:9092
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-#    consumer:
+      properties:
+              spring:
+                json:
+                  add:
+                    type:
+                      headers: false
+  #    consumer:
 #      bootstrap-servers: /localhost:9092
 #      group-id: dossier
 #      auto-offset-reset: earliest

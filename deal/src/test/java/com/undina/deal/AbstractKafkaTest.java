@@ -74,12 +74,9 @@ public abstract class AbstractKafkaTest {
     protected Consumer<String, String> configureConsumer() {
         Map<String, Object> consumerProps = KafkaTestUtils.consumerProps(kafkaServer, "dossier", "true");
         consumerProps.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
-        consumerProps.put("offsets.topic.replication.factor", "3");
-        consumerProps.put("default.replication.factor", "3");
         Consumer<String, String> consumer1 = new DefaultKafkaConsumerFactory<String, String>(consumerProps)
                 .createConsumer();
         consumer1.subscribe(List.of("finish-registration", "create-documents", "send-documents", "send-ses", "credit-issued", "application-denied"));
-
         return consumer1;
     }
 }
