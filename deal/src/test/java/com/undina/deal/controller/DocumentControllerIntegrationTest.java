@@ -30,6 +30,6 @@ public class DocumentControllerIntegrationTest extends AbstractKafkaTest {
         assertThat(singleRecord).isNotNull();
         EmailMessage emailMessage = mapper.readValue(singleRecord.value(), EmailMessage.class);
         assertEquals("sidorov@mail.ru", emailMessage.getAddress());
-        assertEquals(emailMessage.getTheme().toString(), "SEND_DOCUMENTS");
+        assertEquals("SEND_DOCUMENTS", emailMessage.getTheme().toString());
     }
 }

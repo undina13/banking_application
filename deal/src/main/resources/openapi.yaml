@@ -98,7 +98,6 @@ paths:
             '*/*':
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-
   /deal/document/{applicationId}/sign:
     post:
       tags:
@@ -139,9 +138,6 @@ paths:
           application/json:
             schema:
               type: integer
-
-
-
       responses:
         '200':
           description: OK

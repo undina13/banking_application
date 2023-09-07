@@ -4,12 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.mockserver.client.MockServerClient;
-import org.openapitools.model.EmailMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.test.utils.KafkaTestUtils;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
@@ -37,10 +35,6 @@ public abstract class AbstractKafkaTest {
     @Autowired
     protected ObjectMapper mapper;
 
-    @Autowired
-    protected KafkaTemplate<String, EmailMessage> kafkaTemplate;
-    protected String kafkaServer = kafka.getBootstrapServers();
-
     @Container
     public static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:14")
             .withDatabaseName("test-db")
@@ -56,7 +50,7 @@ public abstract class AbstractKafkaTest {
     protected static MockServerClient mockServerClient = startClientAndServer(TestSocketUtils.findAvailableTcpPort());
 
     @DynamicPropertySource
-    static void postgresqlProperties(DynamicPropertyRegistry registry) {
+    static void registryProperties(DynamicPropertyRegistry registry) {
         registry.add("spring.datasource.url", postgreSQLContainer::getJdbcUrl);
         registry.add("spring.datasource.username", postgreSQLContainer::getUsername);
         registry.add("spring.datasource.password", postgreSQLContainer::getPassword);
@@ -72,7 +66,7 @@ public abstract class AbstractKafkaTest {
     }
 
     protected Consumer<String, String> configureConsumer() {
-        Map<String, Object> consumerProps = KafkaTestUtils.consumerProps(kafkaServer, "dossier", "true");
+        Map<String, Object> consumerProps = KafkaTestUtils.consumerProps(kafka.getBootstrapServers(), "dossier", "true");
         consumerProps.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         Consumer<String, String> consumer1 = new DefaultKafkaConsumerFactory<String, String>(consumerProps)
                 .createConsumer();

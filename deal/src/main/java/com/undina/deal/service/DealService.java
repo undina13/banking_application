@@ -48,16 +48,15 @@ public class DealService {
         updateStatus(application, ApplicationStatus.PREAPPROVAL);
         application = applicationRepository.save(application);
         log.info("save application: {}", application);
-        List<LoanOfferDTO> loanOffers;
-        loanOffers = conveyorFeignClient.getOffers(loanApplication).getBody();
-        if (loanOffers != null) {
-            Application finalApplication = application;
-            loanOffers.forEach(loanOfferDTO -> loanOfferDTO.setApplicationId(finalApplication.getApplicationId()));
+        List<LoanOfferDTO> loanOffers = conveyorFeignClient.getOffers(loanApplication).getBody();
+        if (loanOffers == null) {
+            throw new NotFoundException("loanOffers == null");
         }
+        Application finalApplication = application;
+        loanOffers.forEach(loanOfferDTO -> loanOfferDTO.setApplicationId(finalApplication.getApplicationId()));
         EmailMessage emailMessage = new EmailMessage(application.getClient().getEmail(),
                 EmailMessage.ThemeEnum.FINISH_REGISTRATION, application.getApplicationId(),
                 loanOffers.toString());
-        log.info("createApplication send emailMessage {}", emailMessage);
         kafkaProducerService.writeMessage(emailMessage);
         log.info("createApplication - result: {}", loanOffers);
         return loanOffers;
@@ -73,7 +72,8 @@ public class DealService {
         application.setAppliedOffer(loanOffer);
         applicationRepository.save(application);
         EmailMessage emailMessage = new EmailMessage(application.getClient().getEmail(),
-                EmailMessage.ThemeEnum.CREATE_DOCUMENTS, application.getApplicationId(), "apply offer");
+                EmailMessage.ThemeEnum.CREATE_DOCUMENTS, application.getApplicationId(),
+                "Кредитное предложение принято");
         kafkaProducerService.writeMessage(emailMessage);
         log.info("applyOffer - result: {}", application);
     }

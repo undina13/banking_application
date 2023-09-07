@@ -2,7 +2,6 @@ package com.undina.deal.controller;
 
 
 import com.undina.deal.exception.ErrorResponse;
-import com.undina.deal.exception.JsonException;
 import com.undina.deal.exception.NotFoundException;
 import com.undina.deal.exception.RejectionException;
 import feign.FeignException;
@@ -47,14 +46,6 @@ public class ErrorHandler {
     @ExceptionHandler(FeignException.class)
     public ResponseEntity<ErrorResponse> feignException(final FeignException e) {
         log.error("feignException - error: message = {}", e.getMessage());
-        return ResponseEntity.internalServerError()
-                .body(new ErrorResponse(e.getMessage()));
-    }
-
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(JsonException.class)
-    public ResponseEntity<ErrorResponse> jsonException(final JsonException e) {
-        log.error("jsonException - error: message = {}", e.getMessage());
         return ResponseEntity.internalServerError()
                 .body(new ErrorResponse(e.getMessage()));
     }

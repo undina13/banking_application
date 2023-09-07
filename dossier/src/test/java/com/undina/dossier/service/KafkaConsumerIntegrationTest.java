@@ -1,6 +1,8 @@
 package com.undina.dossier.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.undina.dossier.AbstractKafkaConsumerIntegrationTest;
+import com.undina.dossier.emailsender.EmailSender;
 import com.undina.dossier.model.EmailMessage;
 import com.undina.dossier.model.Theme;
 import org.apache.kafka.clients.admin.AdminClient;
@@ -10,6 +12,9 @@ import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.testcontainers.shaded.com.google.common.collect.ImmutableMap;
 
@@ -19,7 +24,11 @@ import java.util.concurrent.ExecutionException;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+@ExtendWith(MockitoExtension.class)
 class KafkaConsumerIntegrationTest extends AbstractKafkaConsumerIntegrationTest {
+    @Mock
+    EmailSender emailSender;
+
     @Test
     void creditIssuesTest() throws ExecutionException, InterruptedException, JsonProcessingException {
         EmailMessage emailMessage = new EmailMessage("undina13@bk.ru", Theme.CREDIT_ISSUED,
