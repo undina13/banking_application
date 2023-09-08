@@ -435,9 +435,3 @@ components:
             format: int64
           text:
             type: string
-
-
-
-
-
-

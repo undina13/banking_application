@@ -56,11 +56,4 @@ public abstract class AbstractTest {
 
         registry.add("spring.kafka.producer.bootstrap-servers", kafka::getBootstrapServers);
     }
-
-//    protected Consumer<String, String> configureConsumer() {
-//        Map<String, Object> consumerProps = KafkaTestUtils.consumerProps(kafkaServer, "dossier", "true");
-//        consumerProps.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
-//        return new DefaultKafkaConsumerFactory<String, String>(consumerProps)
-//                .createConsumer();
-//    }
 }

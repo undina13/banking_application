@@ -16,37 +16,37 @@ public class KafkaConsumerService {
     private final EmailSender emailSender;
 
     @KafkaListener(topics = "${topic.finish-registration}", groupId = "dossier")
-    public void getFinishRegistrationMessage(ConsumerRecord<String, EmailMessage> record) {
-        log.info("getFinishRegistrationMessage - start: {}", record.value());
-        sendMessage(record.value());
+    public void getFinishRegistrationMessage(ConsumerRecord<String, EmailMessage> consumerRecord) {
+        log.info("getFinishRegistrationMessage - start: {}", consumerRecord.value());
+        sendMessage(consumerRecord.value());
         log.info("getFinishRegistrationMessage - end");
     }
 
     @KafkaListener(topics = "${topic.create-documents}", groupId = "dossier")
-    public void getCreateDocumentsMessage(ConsumerRecord<String, EmailMessage> record) {
-        log.info("getCreateDocumentsMessage - start: {}", record.value());
-        sendMessage(record.value());
+    public void getCreateDocumentsMessage(ConsumerRecord<String, EmailMessage> consumerRecord) {
+        log.info("getCreateDocumentsMessage - start: {}", consumerRecord.value());
+        sendMessage(consumerRecord.value());
         log.info("getCreateDocumentsMessage - end");
     }
 
     @KafkaListener(topics = "${topic.send-documents}", groupId = "dossier")
-    public void getSendDocumentsMessage(ConsumerRecord<String, EmailMessage> record) {
-        log.info("getSendDocumentsMessage - start: {}", record.value());
-        sendMessage(record.value());
+    public void getSendDocumentsMessage(ConsumerRecord<String, EmailMessage> consumerRecord) {
+        log.info("getSendDocumentsMessage - start: {}", consumerRecord.value());
+        sendMessage(consumerRecord.value());
         log.info("getSendDocumentsMessage - end");
     }
 
     @KafkaListener(topics = "${topic.send-ses}", groupId = "dossier")
-    public void getSendSesMessage(ConsumerRecord<String, EmailMessage> record) {
-        log.info("getSendSesMessage - start: {}", record.value());
-        sendMessage(record.value());
+    public void getSendSesMessage(ConsumerRecord<String, EmailMessage> consumerRecord) {
+        log.info("getSendSesMessage - start: {}", consumerRecord.value());
+        sendMessage(consumerRecord.value());
         log.info("getSendSesMessage - end");
     }
 
     @KafkaListener(topics = "${topic.credit-issued}", groupId = "dossier")
-    public void getCreditIssuesMessage(ConsumerRecord<String, EmailMessage> record) {
-        log.info("getCreditIssuesMessage - start: {}", record.value());
-        sendMessage(record.value());
+    public void getCreditIssuesMessage(ConsumerRecord<String, EmailMessage> consumerRecord) {
+        log.info("getCreditIssuesMessage - start: {}", consumerRecord.value());
+        sendMessage(consumerRecord.value());
         log.info("getCreditIssuesMessage - end");
     }
 

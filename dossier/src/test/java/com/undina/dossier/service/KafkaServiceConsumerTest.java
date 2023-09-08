@@ -1,18 +1,19 @@
 package com.undina.dossier.service;
 
 
-import com.undina.dossier.AbstractKafkaConsumerTest;
 import com.undina.dossier.emailsender.EmailSender;
 import com.undina.dossier.model.EmailMessage;
 import com.undina.dossier.model.Theme;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-
-class KafkaServiceConsumerTest extends AbstractKafkaConsumerTest {
+@ExtendWith(MockitoExtension.class)
+class KafkaServiceConsumerTest  {
     @Mock
     public EmailSender emailSender;
 

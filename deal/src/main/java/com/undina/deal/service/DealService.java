@@ -50,10 +50,11 @@ public class DealService {
         log.info("save application: {}", application);
         List<LoanOfferDTO> loanOffers = conveyorFeignClient.getOffers(loanApplication).getBody();
         if (loanOffers == null) {
-            throw new NotFoundException("loanOffers == null");
+            throw new NotFoundException("The response body is null");
         }
-        Application finalApplication = application;
-        loanOffers.forEach(loanOfferDTO -> loanOfferDTO.setApplicationId(finalApplication.getApplicationId()));
+        for (LoanOfferDTO loanOfferDTO : loanOffers) {
+            loanOfferDTO.setApplicationId(application.getApplicationId());
+        }
         EmailMessage emailMessage = new EmailMessage(application.getClient().getEmail(),
                 EmailMessage.ThemeEnum.FINISH_REGISTRATION, application.getApplicationId(),
                 loanOffers.toString());
