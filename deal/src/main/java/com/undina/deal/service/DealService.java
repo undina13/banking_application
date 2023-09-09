@@ -5,6 +5,7 @@ import com.undina.deal.entity.Client;
 import com.undina.deal.entity.StatusHistory;
 import com.undina.deal.enums.ApplicationStatus;
 import com.undina.deal.enums.ChangeType;
+import com.undina.deal.exception.FeignDealException;
 import com.undina.deal.exception.NotFoundException;
 import com.undina.deal.feign.ConveyorFeignClient;
 import com.undina.deal.mapper.ClientMapper;
@@ -50,7 +51,7 @@ public class DealService {
         log.info("save application: {}", application);
         List<LoanOfferDTO> loanOffers = conveyorFeignClient.getOffers(loanApplication).getBody();
         if (loanOffers == null) {
-            throw new NotFoundException("The response body is null");
+            throw new FeignDealException("The response body is null");
         }
         for (LoanOfferDTO loanOfferDTO : loanOffers) {
             loanOfferDTO.setApplicationId(application.getApplicationId());

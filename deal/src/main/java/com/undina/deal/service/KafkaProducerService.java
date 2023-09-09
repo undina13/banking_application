@@ -1,6 +1,5 @@
 package com.undina.deal.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.undina.deal.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,8 +13,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class KafkaProducerService {
     private final KafkaTemplate<String, EmailMessage> kafkaTemplate;
-
-    private final ObjectMapper objectMapper;
 
     @Value("${topic.finish-registration}")
     private String finishRegistration;
