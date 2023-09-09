@@ -1,6 +1,7 @@
 package com.undina.deal.entity;
 
 
+import com.undina.deal.enums.CreditStatus;
 import org.openapitools.model.PaymentScheduleElementDTO;
 import lombok.*;
 import org.hibernate.annotations.Type;
@@ -47,4 +48,7 @@ public class Credit {
     @Column(nullable = false)
     private Boolean isSalaryClient;
 
+    @Column(name = "credit_status")
+    @Enumerated(EnumType.STRING)
+    private CreditStatus creditStatus;
 }
