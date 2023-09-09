@@ -18,8 +18,8 @@ public class EmailSender {
     private final JavaMailSender javaMailSender;
 
     public void sendMessage(EmailMessage emailMessage) {
-        SimpleMailMessage message = new SimpleMailMessage();
         log.info("sendMessage- start: {}", emailMessage);
+        SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(username);
         message.setTo(emailMessage.getAddress());
         message.setSubject(emailMessage.getTheme().toString());

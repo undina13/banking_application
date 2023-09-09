@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
-class DossierApplicationTests extends AbstractIntegrationTest {
+class DossierApplicationTests extends AbstractTest {
 
     @Test
     void contextLoads() {
