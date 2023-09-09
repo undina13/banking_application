@@ -1,0 +1,47 @@
+spring:
+  json:
+      value:
+        default:
+          type: com.undina.dossier.model.EmailMessage
+  mail:
+    host: smtp.yandex.ru
+    password: xiuyhadrnzfqwkja
+    port: 465
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            enable: true
+          starttls:
+            enable: true
+    username: suponevairi@yandex.ru
+  kafka:
+    consumer:
+      bootstrap-servers: /localhost:9092
+      group-id: dossier
+      auto-offset-reset: earliest
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      properties:
+        spring:
+          json:
+            value:
+              default:
+                type: com.undina.dossier.model.EmailMessage
+          deserializer:
+            value:
+              delegate:
+                class: org.springframework.kafka.support.serializer.JsonDeserializer
+
+topic:
+  finish-registration: finish-registration
+  create-documents: create-documents
+  send-documents: send-documents
+  send-ses: send-ses
+  credit-issued: credit-issued
+  application-denied: application-denied
+server:
+  port: 8086
+
+
+

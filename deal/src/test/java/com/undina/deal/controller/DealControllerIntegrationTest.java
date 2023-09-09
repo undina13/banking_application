@@ -25,11 +25,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class DealControllerIntegrationTest extends AbstractTest {
+class DealControllerIntegrationTest extends AbstractTest {
 
     @Test
     @Sql(scripts = "/insert_test_create_application.sql", executionPhase = BEFORE_TEST_METHOD)
-    public void createApplicationTestOk() throws Exception {
+    void createApplicationTestOk() throws Exception {
         mockServerClient
                 .when(
                         request()
@@ -51,11 +51,10 @@ public class DealControllerIntegrationTest extends AbstractTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(content().json(mapper.writeValueAsString(loanOfferDTOS1)));
-
     }
 
     @Test
-    public void createApplyLoanOfferTestOk() throws Exception {
+    void createApplyLoanOfferTestOk() throws Exception {
         mockMvc.perform(put("/deal/offer")
                         .content(mapper.writeValueAsString(loanOfferDTO13))
                         .characterEncoding(StandardCharsets.UTF_8)
@@ -65,7 +64,7 @@ public class DealControllerIntegrationTest extends AbstractTest {
 
     @Test
     @Sql(scripts = "/insert_test_create_calculation.sql", executionPhase = BEFORE_TEST_METHOD)
-    public void getCalculationTestOk() throws Exception {
+    void getCalculationTestOk() throws Exception {
         mockServerClient
                 .when(
                         request()

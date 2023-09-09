@@ -9,6 +9,16 @@ spring:
     password: password
     url: jdbc:postgresql://localhost:5432/deal
     username: user
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+              spring:
+                json:
+                  add:
+                    type:
+                      headers: false
   jpa:
     hibernate:
       ddl-auto: validate
@@ -22,3 +32,14 @@ spring:
     password: password
     url: jdbc:postgresql://localhost:5432/deal
     user: user
+topic:
+  finish-registration: finish-registration
+  create-documents: create-documents
+  send-documents: send-documents
+  send-ses: send-ses
+  credit-issued: credit-issued
+  application-denied: application-denied
+
+
+
+

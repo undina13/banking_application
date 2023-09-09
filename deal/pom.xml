@@ -31,6 +31,7 @@
         <com.vladmihalcea.version>2.21.1</com.vladmihalcea.version>
         <org.testcontainers.version>1.18.3</org.testcontainers.version>
         <org.mock-server.version>5.15.0</org.mock-server.version>
+        <spring-kafka.version>2.9.12</spring-kafka.version>
     </properties>
 
     <dependencies>
@@ -117,6 +118,12 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>kafka</artifactId>
+            <version>${org.testcontainers.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.mock-server</groupId>
             <artifactId>mockserver-netty</artifactId>
             <version>${org.mock-server.version}</version>
@@ -137,6 +144,16 @@
                 </exclusion>
             </exclusions>
             <version>${org.mock-server.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+            <version>${spring-kafka.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka-test</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
         <dependencyManagement>
@@ -199,6 +216,7 @@
                                 <sourceFolder>src/gen/java/main</sourceFolder>
                                 <delegatePattern>true</delegatePattern>
                                 <interfaceOnly>true</interfaceOnly>
+                                <useTags>true</useTags>
                             </configOptions>
                         </configuration>
                     </execution>

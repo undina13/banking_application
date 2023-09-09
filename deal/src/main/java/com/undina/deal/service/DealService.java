@@ -5,6 +5,7 @@ import com.undina.deal.entity.Client;
 import com.undina.deal.entity.StatusHistory;
 import com.undina.deal.enums.ApplicationStatus;
 import com.undina.deal.enums.ChangeType;
+import com.undina.deal.exception.FeignDealException;
 import com.undina.deal.exception.NotFoundException;
 import com.undina.deal.feign.ConveyorFeignClient;
 import com.undina.deal.mapper.ClientMapper;
@@ -35,6 +36,8 @@ public class DealService {
 
     private final ConveyorFeignClient conveyorFeignClient;
 
+    private final KafkaProducerService kafkaProducerService;
+
     public List<LoanOfferDTO> createApplication(LoanApplicationRequestDTO loanApplication) {
         log.info("createApplication - start: {}", ModelFormatter.toLogFormat(loanApplication));
         Client client = clientMapper.toClient(loanApplication);
@@ -46,12 +49,17 @@ public class DealService {
         updateStatus(application, ApplicationStatus.PREAPPROVAL);
         application = applicationRepository.save(application);
         log.info("save application: {}", application);
-        List<LoanOfferDTO> loanOffers;
-        loanOffers = conveyorFeignClient.getOffers(loanApplication).getBody();
-        if (loanOffers != null) {
-            Application finalApplication = application;
-            loanOffers.forEach(loanOfferDTO -> loanOfferDTO.setApplicationId(finalApplication.getApplicationId()));
+        List<LoanOfferDTO> loanOffers = conveyorFeignClient.getOffers(loanApplication).getBody();
+        if (loanOffers == null) {
+            throw new FeignDealException("The response body is null");
         }
+        for (LoanOfferDTO loanOfferDTO : loanOffers) {
+            loanOfferDTO.setApplicationId(application.getApplicationId());
+        }
+        EmailMessage emailMessage = new EmailMessage(application.getClient().getEmail(),
+                EmailMessage.ThemeEnum.FINISH_REGISTRATION, application.getApplicationId(),
+                loanOffers.toString());
+        kafkaProducerService.writeMessage(emailMessage);
         log.info("createApplication - result: {}", loanOffers);
         return loanOffers;
     }
@@ -65,6 +73,10 @@ public class DealService {
         log.info("applyOffer application updated status: {}", application);
         application.setAppliedOffer(loanOffer);
         applicationRepository.save(application);
+        EmailMessage emailMessage = new EmailMessage(application.getClient().getEmail(),
+                EmailMessage.ThemeEnum.CREATE_DOCUMENTS, application.getApplicationId(),
+                "Кредитное предложение принято");
+        kafkaProducerService.writeMessage(emailMessage);
         log.info("applyOffer - result: {}", application);
     }
 

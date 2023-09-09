@@ -4,7 +4,7 @@ import com.undina.deal.service.DealService;
 import com.undina.deal.util.ModelFormatter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.openapitools.api.DealApi;
+import org.openapitools.api.DealControllerApi;
 import org.openapitools.model.FinishRegistrationRequestDTO;
 import org.openapitools.model.LoanApplicationRequestDTO;
 import org.openapitools.model.LoanOfferDTO;
@@ -18,7 +18,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-public class DealController implements DealApi {
+public class DealController implements DealControllerApi {
     private final DealService dealService;
 
     @Override

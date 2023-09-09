@@ -98,6 +98,77 @@ paths:
             '*/*':
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+  /deal/document/{applicationId}/sign:
+    post:
+      tags:
+        - DocumentController
+      summary: Запрос на подписание документов
+      operationId: signDocuments
+      parameters:
+        - name: applicationId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /deal/document/{applicationId}/code:
+    post:
+      tags:
+        - DocumentController
+      summary: Подписание документов
+      operationId: codeDocuments
+      parameters:
+        - name: applicationId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: integer
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /deal/document/{applicationId}/send:
+    post:
+      tags:
+        - DocumentController
+      summary: Запрос на отправку документов
+      operationId: sendDocuments
+      parameters:
+        - name: applicationId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
     ErrorResponse:
@@ -339,3 +410,28 @@ components:
           type: boolean
         isSalaryClient:
           type: boolean
+    EmailMessage:
+        required:
+          - address
+          - theme
+          - applicationId
+          - text
+        type: object
+        properties:
+          address:
+            pattern: ^[\w\.]{2,50}@[\w\.]{2,20}$
+            type: string
+          theme:
+            type: string
+            enum:
+              - FINISH_REGISTRATION
+              - CREATE_DOCUMENTS
+              - SEND_DOCUMENTS
+              - SEND_SES
+              - CREDIT_ISSUED
+              - APPLICATION_DENIED
+          applicationId:
+            type: integer
+            format: int64
+          text:
+            type: string
