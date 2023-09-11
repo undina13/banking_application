@@ -120,6 +120,7 @@ public class DealService {
                         EmailMessage.ThemeEnum.APPLICATION_DENIED, application.getApplicationId(),
                         "Вам отказано в кредите");
                 kafkaProducerService.writeMessage(emailMessage);
+                throw new FeignDealException(e.getMessage());
             }
             throw new FeignDealException(e.getMessage());
         }

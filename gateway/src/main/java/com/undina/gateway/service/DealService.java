@@ -1,5 +1,6 @@
 package com.undina.gateway.service;
 
+import com.undina.gateway.exception.FeignGatewayException;
 import com.undina.gateway.feign.DealFeignClient;
 import com.undina.gateway.util.ModelFormatter;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,15 @@ public class DealService {
     public void calculateCredit(Long applicationId, FinishRegistrationRequestDTO finishRegistrationRequestDTO) {
         log.info("getCalculation - start: applicationId = {}, finishRegistrationRequestDTO = {}", applicationId,
                 ModelFormatter.toLogFormat(finishRegistrationRequestDTO));
+        try {
+            dealFeignClient.getCalculation(applicationId, finishRegistrationRequestDTO);
+        } catch (Exception e) {
+            log.info("calculateCredit - exception:    {}", e.getMessage());
+            if (e.getMessage().contains("Вам отказано в кредите")) {
+                throw new FeignGatewayException("Вам отказано в кредите");
+            }
+            throw new FeignGatewayException(e.getMessage());
+        }
         dealFeignClient.getCalculation(applicationId, finishRegistrationRequestDTO);
         log.info("getCalculation - end");
     }
