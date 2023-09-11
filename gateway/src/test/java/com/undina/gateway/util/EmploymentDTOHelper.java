@@ -8,11 +8,11 @@ import java.math.BigDecimal;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class EmploymentDTOHelper {
-    public static EmploymentDTO employmentDTO = new EmploymentDTO()
-            .employmentStatus(EmploymentDTO.EmploymentStatusEnum.BUSINESS_OWNER)
-            .employerINN("567676686767")
-            .salary(BigDecimal.valueOf(50000))
-            .position(EmploymentDTO.PositionEnum.MANAGER)
-            .workExperienceTotal(17)
-            .workExperienceCurrent(5);
+    public static EmploymentDTO employmentDTO = new EmploymentDTO(
+            EmploymentDTO.EmploymentStatusEnum.BUSINESS_OWNER,
+            "567676686767",
+            BigDecimal.valueOf(50000),
+            EmploymentDTO.PositionEnum.MANAGER,
+            17,
+            5);
 }
