@@ -12,9 +12,10 @@ jwt:
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
+    username: postgres
     password: password
-    url: jdbc:postgresql://localhost:5432/gateway
-    username: user
+    url: jdbc:postgresql://localhost:5433/postgres
+
   jpa:
     hibernate:
       ddl-auto: validate
@@ -25,8 +26,9 @@ spring:
   liquibase:
     change-log: db/changelog/db.changelog-master.xml
     driver-class-name: org.postgresql.Driver
+    user: postgres
     password: password
-    url: jdbc:postgresql://localhost:5432/gateway
-    user: user
+    url: jdbc:postgresql://localhost:5433/postgres
+
 
 

@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 @RequiredArgsConstructor
 public class UserController {
 
-    static final String REST_URL = "/users";
+    static final String REST_URL = "";
     private final UserService userService;
 
 

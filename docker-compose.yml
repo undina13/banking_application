@@ -1,5 +1,16 @@
 version: "3.9"
 services:
+  gateway:
+    build: ./gateway
+    container_name: gateway
+    ports:
+      - "8089:8089"
+    depends_on:
+      - postgres1
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres1:5433/gateway
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
   postgres:
     image: postgres:13.3
     environment:
@@ -12,11 +23,15 @@ services:
   postgres1:
     image: postgres:13.3
     environment:
-      POSTGRES_DB: "gateway"
-      POSTGRES_USER: "user"
+      DATABASE_URL: "jdbc:postgresql://localhost:5433/postgres"
+      POSTGRES_DB: "postgres"
+      POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "password"
+    expose:
+        - "5433"
     ports:
-      - "5432:5432"
+      - "5433:5433"
+
 
   zookeeper1:
     image: wurstmeister/zookeeper
