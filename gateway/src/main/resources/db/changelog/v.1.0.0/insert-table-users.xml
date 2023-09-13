@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+    <changeSet id="insert-table-users" author="undina">
+        <insert tableName="users">
+            <column name="id" value="771b20f5-a883-437a-bd49-9c2e7867f492"/>
+            <column name="email" value="user@mail.ru"/>
+            <column name="password" value="$2a$10$/bwkeaAL.y1wZTRh0LsN5.cGOjHVKcJKWcUvJfbOE2vrO.uiEa9HW"/>
+            <column name="role" value="ROLE_USER"/>
+        </insert>
+        <insert tableName="users">
+            <column name="id" value="971b20f5-a883-437a-bd49-9c2e7867f492"/>
+            <column name="email" value="admin@mail.ru"/>
+            <column name="password" value="$2a$10$/bwkeaAL.y1wZTRh0LsN5.cGOjHVKcJKWcUvJfbOE2vrO.uiEa9HW"/>
+            <column name="role" value="ROLE_ADMIN"/>
+        </insert>
+
+    </changeSet>
+
+</databaseChangeLog>

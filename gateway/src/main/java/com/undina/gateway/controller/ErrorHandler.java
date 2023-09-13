@@ -21,4 +21,12 @@ public class ErrorHandler {
         return ResponseEntity.internalServerError()
                 .body(new ErrorResponse(e.getMessage()));
     }
+
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(SecurityException.class)
+    public ResponseEntity<ErrorResponse> securityException(final SecurityException e) {
+        log.error("feignException - error: message = {}", e.getMessage());
+        return ResponseEntity.internalServerError()
+                .body(new ErrorResponse(e.getMessage()));
+    }
 }

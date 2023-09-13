@@ -5,5 +5,28 @@ feign:
      url: http://localhost:8082/application
 server:
   port: 8089
+jwt:
+  header: Authorization
+  secret: CHANGE_ME
+  expiration: 604800
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    password: password
+    url: jdbc:postgresql://localhost:5432/gateway
+    username: user
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+  liquibase:
+    change-log: db/changelog/db.changelog-master.xml
+    driver-class-name: org.postgresql.Driver
+    password: password
+    url: jdbc:postgresql://localhost:5432/gateway
+    user: user
 
 
