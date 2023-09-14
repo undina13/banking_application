@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 public class AdminController implements GatewayAdminControllerApi {
-    private  final AdminService adminService;
+    private final AdminService adminService;
 
     @Override
     public ResponseEntity<List<ApplicationDTO>> getAllApplications() {

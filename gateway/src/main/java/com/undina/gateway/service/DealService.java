@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @RequiredArgsConstructor
 public class DealService {
+
     private final DealFeignClient dealFeignClient;
 
     public void codeDocuments(Long applicationId, Integer sesCode) {

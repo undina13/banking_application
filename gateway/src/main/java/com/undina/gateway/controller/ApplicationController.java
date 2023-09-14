@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 public class ApplicationController implements GatewayApplicationControllerApi {
+
     private final ApplicationService applicationService;
 
     @Override

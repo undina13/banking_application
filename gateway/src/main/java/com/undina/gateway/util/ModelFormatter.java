@@ -17,8 +17,6 @@ public class ModelFormatter {
 
     }
 
-
-
     public static String toLogFormat(FinishRegistrationRequestDTO finishRegistrationRequest) {
         return String.format("FinishRegistrationRequestDTO : gender=%s , maritalStatus=%s, dependentAmount=%d " +
                         "employmentStatus=%s,salary=%s, position=%s, workExperienceTotal=%d, workExperienceCurrent=%d" +
