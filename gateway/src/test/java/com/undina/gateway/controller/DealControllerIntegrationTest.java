@@ -4,6 +4,7 @@ package com.undina.gateway.controller;
 import com.undina.gateway.AbstractTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithUserDetails;
 
 import java.nio.charset.StandardCharsets;
 
@@ -13,7 +14,7 @@ import static org.mockserver.model.HttpResponse.response;
 import static org.mockserver.model.StringBody.exact;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
+@WithUserDetails(value = "user@mail.ru")
 class DealControllerIntegrationTest extends AbstractTest {
     @Test
     void sendDocumentsTestOk() throws Exception {

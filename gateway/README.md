@@ -12,3 +12,6 @@
 
 /gateway/login - залогиниться
 /gateway/signup - зарегистрироваться
+
+user: login - user@mail.ru password - password
+admin: login - admin@mail.ru password - password
