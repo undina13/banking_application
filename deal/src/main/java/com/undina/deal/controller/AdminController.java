@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 public class AdminController implements AdminControllerApi {
-    private  final AdminService adminService;
+    private final AdminService adminService;
 
     @Override
     public ResponseEntity<List<ApplicationDTO>> getAllApplications() {
@@ -31,5 +31,4 @@ public class AdminController implements AdminControllerApi {
         log.info("getApplication - result: applicationDTO = {}", applicationDTO);
         return ResponseEntity.ok(applicationDTO);
     }
-
 }

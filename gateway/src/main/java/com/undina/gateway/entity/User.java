@@ -35,12 +35,11 @@ public class User {
     private String password;
 
 
-   @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     @Column(name = "role")
     private UserRole role;
 
     public User(String email, String password) {
         this(null, email, password, UserRole.ROLE_USER);
     }
-
 }

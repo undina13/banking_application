@@ -14,10 +14,7 @@ public class ModelFormatter {
                 loanApplicationRequestDTO.getAmount(),
                 loanApplicationRequestDTO.getEmail(),
                 loanApplicationRequestDTO.getTerm(), loanApplicationRequestDTO.getBirthdate());
-
     }
-
-
 
     public static String toLogFormat(FinishRegistrationRequestDTO finishRegistrationRequest) {
         return String.format("FinishRegistrationRequestDTO : gender=%s , maritalStatus=%s, dependentAmount=%d " +

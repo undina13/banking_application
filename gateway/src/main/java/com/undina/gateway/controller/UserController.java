@@ -1,56 +1,37 @@
 package com.undina.gateway.controller;
 
 
-import com.undina.gateway.entity.LoginRequest;
 import com.undina.gateway.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
+import org.openapitools.api.GatewayUserControllerApi;
+import org.openapitools.model.JWTToken;
+import org.openapitools.model.LoginRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.Errors;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
 @Slf4j
-@RequestMapping(value = UserController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-@Validated
 @RequiredArgsConstructor
-public class UserController {
+public class UserController implements GatewayUserControllerApi {
 
-    static final String REST_URL = "";
     private final UserService userService;
 
-
-
-    @PostMapping("/login")
-    public ResponseEntity<?> authenticateUser(HttpServletRequest request, @RequestBody LoginRequest loginRequest, Errors errors) {
-        log.info("authenticate {}", loginRequest);
-        if (errors.hasErrors()) {
-            log.info("Validation error with request: " + request.getRequestURI());
-          //  return ResponseEntity.badRequest().body(ValidationErrorBuilder.fromBindingErrors(errors));
-        }
-        return ResponseEntity.ok(userService.login(loginRequest));
+    @Override
+    public ResponseEntity<JWTToken> authenticateUser(@RequestBody LoginRequest loginRequest) {
+        log.info("authenticateUser - start: LoginRequest = {}", loginRequest);
+        JWTToken jwtToken = userService.login(loginRequest);
+        log.info("authenticateUser - result: jwtToken = {}", jwtToken);
+        return ResponseEntity.ok(jwtToken);
     }
 
-
-    @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(HttpServletRequest request, @RequestBody  LoginRequest loginRequest, Errors errors) {
-        log.info("register {}", loginRequest);
-        if (errors.hasErrors()) {
-            log.info("Validation error with request: " + request.getRequestURI());
-      //      return ResponseEntity.unprocessableEntity().body(ValidationErrorBuilder.fromBindingErrors(errors));
-        }
-        return new ResponseEntity<>(userService.signup(loginRequest), HttpStatus.CREATED);
+    @Override
+    public ResponseEntity<JWTToken> registerUser(@RequestBody LoginRequest loginRequest) {
+        log.info("registerUser - start: LoginRequest = {}", loginRequest);
+        JWTToken jwtToken = userService.signup(loginRequest);
+        log.info("registerUser - result: jwtToken = {}", jwtToken);
+        return ResponseEntity.ok(jwtToken);
     }
-
-    @GetMapping("/me")
-    public ResponseEntity<?> me() {
-        return ResponseEntity.ok(userService.me());
-    }
-
 }

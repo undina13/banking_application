@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 public class DealController implements GatewayDealControllerApi {
+
     private final DealService dealService;
 
     @Override

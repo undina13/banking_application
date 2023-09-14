@@ -18,12 +18,8 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JWTFilter extends OncePerRequestFilter {
     private final JWTUtil jwtUtil;
-    private final UserDetailsServiceImpl userDetailsService;
 
-//    public JWTFilter(JWTUtil jwtUtil, UserDetailsService userDetailsService) {
-//        this.jwtUtil = jwtUtil;
-//        this.userDetailsService = userDetailsService;
-//    }
+    private final UserDetailsServiceImpl userDetailsService;
 
     @Override
     protected void doFilterInternal(

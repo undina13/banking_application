@@ -12,8 +12,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 public class AdminService {
-   private final DealFeignClient dealFeignClient;
-
+    private final DealFeignClient dealFeignClient;
 
     public List<ApplicationDTO> getApplications() {
         log.info("getApplications - start");

@@ -9,3 +9,6 @@
 
 /gateway/admin/application/{applicationId} - получить заявку по id
 /gateway/admin/application - получить все заявки
+
+/gateway/login - залогиниться
+/gateway/signup - зарегистрироваться

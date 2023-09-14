@@ -33,9 +33,7 @@ public class WebSecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/login").permitAll()
-                .antMatchers(HttpMethod.POST, "/users/signup", "/users/login").permitAll()
-                .antMatchers("/api-docs/**", "/swagger-ui/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/signup", "/login").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
@@ -46,7 +44,5 @@ public class WebSecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
-
-
 }
 

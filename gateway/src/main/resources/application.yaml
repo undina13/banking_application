@@ -6,16 +6,15 @@ feign:
 server:
   port: 8089
 jwt:
-  header: Authorization
+#  header: Authorization
   secret: CHANGE_ME
-  expiration: 604800
+#  expiration: 604800
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
     username: postgres
     password: password
     url: jdbc:postgresql://localhost:5433/postgres
-
   jpa:
     hibernate:
       ddl-auto: validate
