@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @FeignClient(url = "${feign.application.url}", name = "APPLICATION-FEIGN-CLIENT")
 public interface ApplicationFeignClient {
-    @PostMapping()
+    @PostMapping
     ResponseEntity<Void> createApplication(@RequestBody LoanApplicationRequestDTO loanApplicationRequestDTO);
 
     @PutMapping("/offer")

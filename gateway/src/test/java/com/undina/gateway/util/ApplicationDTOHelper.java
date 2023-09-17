@@ -18,9 +18,11 @@ import static com.undina.gateway.util.EmploymentDTOHelper.employmentDTO;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ApplicationDTOHelper {
     public static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    public static ApplicationDTO applicationDTO = new ApplicationDTO()
+    public static ApplicationDTO applicationDTO = ApplicationDTO
+            .builder()
             .applicationId(1L)
-            .client(new ClientDTO()
+            .client( ClientDTO
+                    .builder()
                     .clientId(1L)
                     .account("account")
                     .date(LocalDate.parse("2002-07-13", formatter))
@@ -30,18 +32,24 @@ public class ApplicationDTOHelper {
                     .firstName("Ivan")
                     .lastName("Ivanov")
                     .middleName("Ivanovich")
-                    .passport(new PassportDTO()
+                    .passport(PassportDTO
+                            .builder()
                             .number("123456")
                             .issueBranch("555-666")
                             .issueDate("2002-07-13")
-                            .series("1234"))
-                    .employment(employmentDTO))
+                            .series("1234")
+                            .build())
+                    .employment(employmentDTO)
+                    .build())
             .status("CC_APPROVED")
-            .statusHistory(List.of(new StatusHistoryDTO()
+            .statusHistory(List.of(StatusHistoryDTO
+                    .builder()
                     .status("CC_APPROVED")
-                            .time(LocalDateTime.now().minusMinutes(15).toString())
-                    .changeType(StatusHistoryDTO.ChangeTypeEnum.AUTOMATIC)))
-            .credit(creditDTO);
+                    .time(LocalDateTime.now().minusMinutes(15).toString())
+                    .changeType(StatusHistoryDTO.ChangeTypeEnum.AUTOMATIC).
+                    build()))
+            .credit(creditDTO)
+            .build();
 
     public static List<ApplicationDTO> applicationDTOList = List.of(applicationDTO);
 }

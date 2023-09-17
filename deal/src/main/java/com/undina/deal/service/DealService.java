@@ -4,7 +4,9 @@ import com.undina.deal.entity.Application;
 import com.undina.deal.entity.Client;
 import com.undina.deal.entity.Credit;
 import com.undina.deal.entity.StatusHistory;
-import com.undina.deal.enums.*;
+import com.undina.deal.enums.ApplicationStatus;
+import com.undina.deal.enums.ChangeType;
+import com.undina.deal.enums.CreditStatus;
 import com.undina.deal.exception.FeignDealException;
 import com.undina.deal.exception.NotFoundException;
 import com.undina.deal.feign.ConveyorFeignClient;
@@ -98,16 +100,8 @@ public class DealService {
         log.info("calculateCredit: client {}", client);
         ScoringDataDTO scoringDataDTO = scoringDataMapper.toScoringDataDTO(finishRegistrationRequestDTO, client,
                 application.getAppliedOffer());
-
-        client.setGender(Gender.valueOf(finishRegistrationRequestDTO.getGender().toString()));
-        client.setMaritalStatus(MaritalStatus.valueOf(finishRegistrationRequestDTO.getMaritalStatus().toString()));
-        client.setDependentAmount(finishRegistrationRequestDTO.getDependentAmount());
-        client.setEmployment(employmentMapper.toEmployment(finishRegistrationRequestDTO.getEmployment()));
-        client.setAccount(finishRegistrationRequestDTO.getAccount());
-        client.getPassport().setIssueBranch(finishRegistrationRequestDTO.getPassportIssueBranch());
-        client.getPassport().setIssueDate(finishRegistrationRequestDTO.getPassportIssueDate());
+        client = clientMapper.toClientFromFinishRegistrationRequestDTO(client, finishRegistrationRequestDTO);
         clientRepository.save(client);
-
         log.info("calculateCredit: scoringDataDTO  {}", ModelFormatter.toLogFormat(scoringDataDTO));
         CreditDTO creditDTO;
 
@@ -120,7 +114,6 @@ public class DealService {
                         EmailMessage.ThemeEnum.APPLICATION_DENIED, application.getApplicationId(),
                         "Вам отказано в кредите");
                 kafkaProducerService.writeMessage(emailMessage);
-                throw new FeignDealException(e.getMessage());
             }
             throw new FeignDealException(e.getMessage());
         }

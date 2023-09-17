@@ -111,9 +111,18 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
+                            <importMappings>
+                                <importMapping>java.util.Date=java.time.LocalDateTime</importMapping>
+                            </importMappings>
+                            <typeMappings>
+                                <typeMapping>Date=LocalDateTime</typeMapping>
+                            </typeMappings>
                             <inputSpec>${project.basedir}/src/main/resources/openapi.yaml</inputSpec>
                             <generatorName>spring</generatorName>
                             <configOptions>
+                                <additionalModelTypeAnnotations>
+                                    @lombok.Builder
+                                </additionalModelTypeAnnotations>
                                 <sourceFolder>src/gen/java/main</sourceFolder>
                                 <delegatePattern>true</delegatePattern>
                                 <interfaceOnly>true</interfaceOnly>

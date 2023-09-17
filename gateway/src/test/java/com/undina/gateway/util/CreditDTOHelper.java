@@ -10,7 +10,7 @@ import static com.undina.gateway.util.PaymentScheduleElementHelper.paymentSchedu
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CreditDTOHelper {
-    public static CreditDTO creditDTO = new CreditDTO()
+    public static CreditDTO creditDTO = CreditDTO.builder()
             .amount(BigDecimal.valueOf(10000))
             .term(6)
             .monthlyPayment(BigDecimal.valueOf(1725.48))
@@ -18,5 +18,6 @@ public class CreditDTOHelper {
             .psk(BigDecimal.valueOf(7.06))
             .isInsuranceEnabled(false)
             .isSalaryClient(false)
-            .paymentSchedule(paymentScheduleElements);
+            .paymentSchedule(paymentScheduleElements)
+            .build();
 }

@@ -95,7 +95,7 @@ paths:
   /gateway/deal/document/{applicationId}/sign:
     post:
       tags:
-        - GatewayDealController
+        - GatewayDocumentController
       summary: Запрос на подписание документов
       operationId: signDocuments
       parameters:
@@ -117,7 +117,7 @@ paths:
   /gateway/deal/document/{applicationId}/code:
     post:
       tags:
-        - GatewayDealController
+        - GatewayDocumentController
       summary: Подписание документов
       operationId: codeDocuments
       parameters:
@@ -144,7 +144,7 @@ paths:
   /gateway/deal/document/{applicationId}/send:
     post:
       tags:
-        - GatewayDealController
+        - GatewayDocumentController
       summary: Запрос на отправку документов
       operationId: sendDocuments
       parameters:
@@ -182,7 +182,6 @@ paths:
           content:
             application/json:
               schema:
-                type: object
                 $ref: '#/components/schemas/ApplicationDTO'
         '400':
           description: Bad Request
@@ -302,13 +301,14 @@ components:
     LoanApplicationRequestDTO:
       required:
         - amount
-        - birthdate
-        - email
+        - term
         - firstName
         - lastName
+        - middleName
+        - birthdate
+        - email
         - passportNumber
         - passportSeries
-        - term
       type: object
       properties:
         amount:
