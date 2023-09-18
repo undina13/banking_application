@@ -12,7 +12,6 @@ import com.undina.deal.exception.NotFoundException;
 import com.undina.deal.feign.ConveyorFeignClient;
 import com.undina.deal.mapper.ClientMapper;
 import com.undina.deal.mapper.CreditMapper;
-import com.undina.deal.mapper.EmploymentMapper;
 import com.undina.deal.mapper.ScoringDataMapper;
 import com.undina.deal.repository.ApplicationRepository;
 import com.undina.deal.repository.ClientRepository;
@@ -46,8 +45,6 @@ public class DealService {
     private final ConveyorFeignClient conveyorFeignClient;
 
     private final KafkaProducerService kafkaProducerService;
-
-    private final EmploymentMapper employmentMapper;
 
     public List<LoanOfferDTO> createApplication(LoanApplicationRequestDTO loanApplication) {
         log.info("createApplication - start: {}", ModelFormatter.toLogFormat(loanApplication));

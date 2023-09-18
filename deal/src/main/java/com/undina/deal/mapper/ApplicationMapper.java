@@ -10,11 +10,10 @@ import java.util.List;
 @Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR,
         uses = {ClientMapper.class, CreditMapper.class, StatusHistoryMapper.class})
 public interface ApplicationMapper {
-    Application toApplication(ApplicationDTO applicationDTO);
 
     ApplicationDTO toApplicationDTO(Application application);
 
-   List<ApplicationDTO> toListApplicationDTO(List<Application> applicationList);
+    List<ApplicationDTO> toListApplicationDTO(List<Application> applicationList);
 }
 
 

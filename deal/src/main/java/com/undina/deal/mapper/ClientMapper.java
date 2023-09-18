@@ -20,16 +20,14 @@ public interface ClientMapper {
     ClientDTO toClientDTO(Client client);
 
 
-        @Mapping(target = "gender", source = "finishRegistrationRequestDTO.gender")
+    @Mapping(target = "gender", source = "finishRegistrationRequestDTO.gender")
     @Mapping(target = "maritalStatus", source = "finishRegistrationRequestDTO.maritalStatus")
     @Mapping(target = "dependentAmount", source = "finishRegistrationRequestDTO.dependentAmount")
     @Mapping(target = "employment", source = "finishRegistrationRequestDTO.employment")
     @Mapping(target = "account", source = "finishRegistrationRequestDTO.account")
-
-          @Mapping(target = "passport.issueDate", source = "finishRegistrationRequestDTO.passportIssueDate")
-       @Mapping(target = "passport.issueBranch", source = "finishRegistrationRequestDTO.passportIssueBranch")
-
-        Client toClientFromFinishRegistrationRequestDTO(@MappingTarget Client client, FinishRegistrationRequestDTO finishRegistrationRequestDTO);
+    @Mapping(target = "passport.issueDate", source = "finishRegistrationRequestDTO.passportIssueDate")
+    @Mapping(target = "passport.issueBranch", source = "finishRegistrationRequestDTO.passportIssueBranch")
+    Client toClientFromFinishRegistrationRequestDTO(@MappingTarget Client client, FinishRegistrationRequestDTO finishRegistrationRequestDTO);
 }
 
 

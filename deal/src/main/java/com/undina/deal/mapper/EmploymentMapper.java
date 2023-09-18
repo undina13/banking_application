@@ -8,8 +8,6 @@ import org.openapitools.model.EmploymentDTO;
 
 @Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface EmploymentMapper {
-    @Mapping(target = "status", source = "employmentStatus")
-    Employment toEmployment(EmploymentDTO employmentDTO);
 
     @Mapping(target = "employmentStatus", source = "status")
     EmploymentDTO toEmploymentDTO(Employment employment);
