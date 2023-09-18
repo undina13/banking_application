@@ -2,16 +2,20 @@ package com.undina.deal.service;
 
 import com.undina.deal.entity.Application;
 import com.undina.deal.entity.Client;
+import com.undina.deal.entity.Credit;
 import com.undina.deal.entity.StatusHistory;
 import com.undina.deal.enums.ApplicationStatus;
 import com.undina.deal.enums.ChangeType;
+import com.undina.deal.enums.CreditStatus;
 import com.undina.deal.exception.FeignDealException;
 import com.undina.deal.exception.NotFoundException;
 import com.undina.deal.feign.ConveyorFeignClient;
 import com.undina.deal.mapper.ClientMapper;
+import com.undina.deal.mapper.CreditMapper;
 import com.undina.deal.mapper.ScoringDataMapper;
 import com.undina.deal.repository.ApplicationRepository;
 import com.undina.deal.repository.ClientRepository;
+import com.undina.deal.repository.CreditRepository;
 import com.undina.deal.util.ModelFormatter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +34,11 @@ public class DealService {
 
     private final ScoringDataMapper scoringDataMapper;
 
+    private final CreditMapper creditMapper;
+
     private final ClientRepository clientRepository;
+
+    private final CreditRepository creditRepository;
 
     private final ApplicationRepository applicationRepository;
 
@@ -89,8 +97,30 @@ public class DealService {
         log.info("calculateCredit: client {}", client);
         ScoringDataDTO scoringDataDTO = scoringDataMapper.toScoringDataDTO(finishRegistrationRequestDTO, client,
                 application.getAppliedOffer());
+        client = clientMapper.toClientFromFinishRegistrationRequestDTO(client, finishRegistrationRequestDTO);
+        clientRepository.save(client);
         log.info("calculateCredit: scoringDataDTO  {}", ModelFormatter.toLogFormat(scoringDataDTO));
-        CreditDTO creditDTO = conveyorFeignClient.calculateCredit(scoringDataDTO).getBody();
+        CreditDTO creditDTO;
+
+        try {
+            creditDTO = conveyorFeignClient.calculateCredit(scoringDataDTO).getBody();
+        } catch (Exception e) {
+            log.info("calculateCredit - exception:    {}", e.getMessage());
+            if (e.getMessage().contains("Вам отказано в кредите")) {
+                EmailMessage emailMessage = new EmailMessage(application.getClient().getEmail(),
+                        EmailMessage.ThemeEnum.APPLICATION_DENIED, application.getApplicationId(),
+                        "Вам отказано в кредите");
+                kafkaProducerService.writeMessage(emailMessage);
+            }
+            throw new FeignDealException(e.getMessage());
+        }
+
+        Credit credit = creditMapper.toCredit(creditDTO);
+        application.setCredit(credit);
+        updateStatus(application, ApplicationStatus.CC_DENIED);
+        credit.setCreditStatus(CreditStatus.CALCULATED);
+        creditRepository.save(credit);
+        applicationRepository.save(application);
         log.info("calculateCredit - result:  ok,  {}", creditDTO);
     }
 
