@@ -1,22 +1,22 @@
 openapi: 3.0.1
 info:
-  title: Deal
-  description: Deal application
+  title: Gateway
+  description: Gateway application
   contact:
     name: undina
     email: foxundina@gmail.com
   version: 1.0.0
 servers:
-  - url: http://localhost:8081
+  - url: http://localhost:8089
     description: Generated server url
 tags:
-  - name: DealController
-    description: Контроллер DealController
+  - name: GatewayController
+    description: Контроллер GatewayController
 paths:
-  /deal/offer:
+  /gateway/application/offer:
     put:
       tags:
-        - DealController
+        - GatewayApplicationController
       summary: Выбор одного из предложений. Request LoanOfferDTO
       operationId: applyLoanOffer
       requestBody:
@@ -37,10 +37,34 @@ paths:
         '500':
           description: Ошибка
           content: {}
-  /deal/calculate/{applicationId}:
+  /gateway/application:
+    post:
+      tags:
+        - GatewayApplicationController
+      summary: Создание application и client, получение 4 кредитных предложений
+      operationId: createApplication
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoanApplicationRequestDTO'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Ошибка валидации
+          content: {}
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /gateway/deal/calculate/{applicationId}:
     put:
       tags:
-        - DealController
+        - GatewayDealController
       summary: Завершение регистрации + полный подсчёт кредита
       operationId: getCalculation
       parameters:
@@ -68,40 +92,10 @@ paths:
         '500':
           description: Отказано в кредите
           content: {}
-  /deal/application:
+  /gateway/deal/document/{applicationId}/sign:
     post:
       tags:
-        - DealController
-      summary: Создание application и client, получение 4 кредитных предложений
-      operationId: createApplication
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/LoanApplicationRequestDTO'
-        required: true
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/LoanOfferDTO'
-        '400':
-          description: Ошибка валидации
-          content: {}
-        '500':
-          description: Internal Server Error
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-  /deal/document/{applicationId}/sign:
-    post:
-      tags:
-        - DocumentController
+        - GatewayDealController
       summary: Запрос на подписание документов
       operationId: signDocuments
       parameters:
@@ -120,10 +114,10 @@ paths:
             '*/*':
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  /deal/document/{applicationId}/code:
+  /gateway/deal/document/{applicationId}/code:
     post:
       tags:
-        - DocumentController
+        - GatewayDealController
       summary: Подписание документов
       operationId: codeDocuments
       parameters:
@@ -147,10 +141,10 @@ paths:
             '*/*':
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  /deal/document/{applicationId}/send:
+  /gateway/deal/document/{applicationId}/send:
     post:
       tags:
-        - DocumentController
+        - GatewayDealController
       summary: Запрос на отправку документов
       operationId: sendDocuments
       parameters:
@@ -169,10 +163,10 @@ paths:
             '*/*':
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  /deal/admin/application/{applicationId}:
+  /gateway/admin/application/{applicationId}:
     get:
       tags:
-        - AdminController
+        - GatewayAdminController
       summary: Получить заявку по id
       operationId: getApplication
       parameters:
@@ -196,10 +190,10 @@ paths:
             '*/*':
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  /deal/admin/application:
+  /gateway/admin/application:
     get:
       tags:
-        - AdminController
+        - GatewayAdminController
       summary: Получить все заявки
       operationId: getAllApplications
       responses:
@@ -217,6 +211,64 @@ paths:
             '*/*':
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+  /login:
+    post:
+      tags:
+        - GatewayUserController
+      summary: Логирование пользователя
+      operationId: authenticateUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/JWTToken'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Ошибка
+          content: {}
+  /signup:
+    post:
+      tags:
+        - GatewayUserController
+      summary: Регистрация пользователя
+      operationId: registerUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/JWTToken'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Ошибка
+          content: {}
 components:
   schemas:
     ErrorResponse:
@@ -385,104 +437,6 @@ components:
           type: number
         remainingDebt:
           type: number
-    ScoringDataDTO:
-      required:
-        - account
-        - amount
-        - birthdate
-        - dependentAmount
-        - employment
-        - firstName
-        - gender
-        - isInsuranceEnabled
-        - isSalaryClient
-        - lastName
-        - maritalStatus
-        - passportIssueBranch
-        - passportIssueDate
-        - passportNumber
-        - passportSeries
-        - term
-      type: object
-      properties:
-        amount:
-          minimum: 10000
-          type: number
-        term:
-          minimum: 6
-          type: integer
-          format: int32
-        firstName:
-          pattern: ^[a-zA-Z]{2,30}$
-          type: string
-        lastName:
-          pattern: ^[a-zA-Z]{2,30}$
-          type: string
-        middleName:
-          pattern: ^[a-zA-Z]{2,30}$
-          type: string
-        gender:
-          type: string
-          enum:
-            - MALE
-            - FEMALE
-            - NON_BINARY
-        birthdate:
-          type: string
-          format: date
-        passportSeries:
-          pattern: ^[0-9]{4}$
-          type: string
-        passportNumber:
-          pattern: ^[0-9]{6}$
-          type: string
-        passportIssueDate:
-          type: string
-          format: date
-        passportIssueBranch:
-          type: string
-        maritalStatus:
-          type: string
-          enum:
-            - MARRIED
-            - DIVORCED
-            - NOT_MARRIED
-        dependentAmount:
-          type: integer
-          format: int32
-        employment:
-          $ref: '#/components/schemas/EmploymentDTO'
-        account:
-          type: string
-        isInsuranceEnabled:
-          type: boolean
-        isSalaryClient:
-          type: boolean
-    EmailMessage:
-        required:
-          - address
-          - theme
-          - applicationId
-          - text
-        type: object
-        properties:
-          address:
-            pattern: ^[\w\.]{2,50}@[\w\.]{2,20}$
-            type: string
-          theme:
-            type: string
-            enum:
-              - FINISH_REGISTRATION
-              - CREATE_DOCUMENTS
-              - SEND_DOCUMENTS
-              - SEND_SES
-              - CREDIT_ISSUED
-              - APPLICATION_DENIED
-          applicationId:
-            type: integer
-            format: int64
-          text:
-            type: string
     StatusHistoryDTO:
       type: object
       properties:
@@ -595,3 +549,23 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/StatusHistoryDTO'
+    LoginRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+    JWTToken:
+      type: object
+      required:
+        - email
+        - accessToken
+      properties:
+        email:
+          type: string
+        accessToken:
+          type: string

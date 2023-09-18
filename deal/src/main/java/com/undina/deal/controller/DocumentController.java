@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 public class DocumentController implements DocumentControllerApi {
-    private  final DocumentService documentService;
+
+    private final DocumentService documentService;
 
     @Override
     public ResponseEntity<Void> sendDocuments(Long applicationId) {
@@ -36,6 +37,4 @@ public class DocumentController implements DocumentControllerApi {
         log.info("codeDocuments - result: OK");
         return ResponseEntity.ok().build();
     }
-
-
 }
