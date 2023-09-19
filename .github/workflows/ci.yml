@@ -33,6 +33,7 @@ jobs:
 #        run: |
 #          docker-compose stop
 #          docker-compose down
+      -
 
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
