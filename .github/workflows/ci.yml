@@ -5,11 +5,22 @@ on: [pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+#    timeout-minutes: 10
     steps:
       - name: Checkout target repo
         uses: actions/checkout@v3
+      - name: package application
+        run: mvn -B clean package --file ./application/pom.xml
+      - name: package conveyor
+        run: mvn -B clean package --file ./conveyor/pom.xml
+      - name: package deal
+        run: mvn -B clean package --file ./deal/pom.xml
+      - name: package dossier
+        run: mvn -B clean package --file ./dossier/pom.xml
       - name: Check and Build applications
+      - name: package gateway
+        run: mvn -B clean package --file ./gateway/pom.xml
+      - name: build
         run: |
           docker-compose build
       - name: Run application
