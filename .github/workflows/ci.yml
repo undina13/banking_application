@@ -9,34 +9,35 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - name: Checkout target repo
-        uses: actions/checkout@v3
-      - name: package application
-        run: mvn -B clean package --file ./application/pom.xml
-      - name: package conveyor
-        run: mvn -B clean package --file ./conveyor/pom.xml
-      - name: package deal
-        run: mvn -B clean package --file ./deal/pom.xml
-      - name: package dossier
-        run: mvn -B clean package --file ./dossier/pom.xml
-      - name: package gateway
-        run: mvn -B clean package --file ./gateway/pom.xml
-      - name: build
-        run: |
-          docker-compose build
-      - name: Run application
-        run: |
-          docker-compose up --detach
-          docker-compose ps
-          docker-compose logs
-      - name: Compose down
-        run: |
-          docker-compose stop
-          docker-compose down
+#      - name: Checkout target repo
+#        uses: actions/checkout@v3
+#      - name: package application
+#        run: mvn -B clean package --file ./application/pom.xml
+#      - name: package conveyor
+#        run: mvn -B clean package --file ./conveyor/pom.xml
+#      - name: package deal
+#        run: mvn -B clean package --file ./deal/pom.xml
+#      - name: package dossier
+#        run: mvn -B clean package --file ./dossier/pom.xml
+#      - name: package gateway
+#        run: mvn -B clean package --file ./gateway/pom.xml
+#      - name: build
+#        run: |
+#          docker-compose build
+#      - name: Run application
+#        run: |
+#          docker-compose up --detach
+#          docker-compose ps
+#          docker-compose logs
+#      - name: Compose down
+#        run: |
+#          docker-compose stop
+#          docker-compose down
 
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+            run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=undina13_undina
 
