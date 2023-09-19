@@ -17,7 +17,6 @@ jobs:
         run: mvn -B clean package --file ./deal/pom.xml
       - name: package dossier
         run: mvn -B clean package --file ./dossier/pom.xml
-      - name: Check and Build applications
       - name: package gateway
         run: mvn -B clean package --file ./gateway/pom.xml
       - name: build
