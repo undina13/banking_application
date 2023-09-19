@@ -44,4 +44,11 @@ server:
   port: 8086
 
 
+---
+spring:
+  profiles:
+    active: docker
+  kafka:
+    consumer:
+      bootstrap-servers: kafka1:9092
 

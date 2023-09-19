@@ -1,0 +1,6 @@
+feign:
+  deal:
+    url: http://localhost:9081/deal
+
+
+

@@ -40,6 +40,19 @@ topic:
   credit-issued: credit-issued
   application-denied: application-denied
 
-
+---
+spring:
+  profiles:
+    active: docker
+  datasource:
+    url: jdbc:postgresql://postgres:5432/deal
+  kafka:
+    producer:
+      bootstrap-servers: kafka1:9092
+  liquibase:
+    url: jdbc:postgresql://postgres:5432/deal
+feign:
+  conveyor:
+    url: http://conveyor:8080/conveyor
 
 
