@@ -1,0 +1,3 @@
+feign:
+  deal:
+    url: http://deal:8081/deal
