@@ -25,6 +25,8 @@
 		<org.openapitools.version>6.6.0</org.openapitools.version>
 		<jackson-databind-nullable.version>0.2.6</jackson-databind-nullable.version>
 		<org.mock-server.version>5.15.0</org.mock-server.version>
+		<sonar.organization>undina13</sonar.organization>
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 
 	<dependencies>

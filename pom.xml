@@ -18,6 +18,10 @@
 		<lombok.version>1.18.28</lombok.version>
 		<swagger-annotations.version>2.2.15</swagger-annotations.version>
 		<springdoc.version>1.7.0</springdoc.version>
+
+			<sonar.organization>undina13</sonar.organization>
+			<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+
 	</properties>
 	<dependencies>
 		<dependency>
