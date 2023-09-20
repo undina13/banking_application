@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.undina</groupId>
-    <artifactId>conveyor</artifactId>
+    <artifactId>banking</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>banking_application</name>
