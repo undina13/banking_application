@@ -83,7 +83,7 @@ components:
           type: integer
           format: int32
         firstName:
-          pattern: ^[a-zA-Z]{2,30}$
+          pattern: ^[а-zА-Z]{2,30}$
           type: string
         lastName:
           pattern: ^[a-zA-Z]{2,30}$

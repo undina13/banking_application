@@ -33,6 +33,7 @@ spring:
               delegate:
                 class: org.springframework.kafka.support.serializer.JsonDeserializer
 
+
 topic:
   finish-registration: finish-registration
   create-documents: create-documents
