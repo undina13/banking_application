@@ -1,0 +1,40 @@
+name: CI_
+
+on: [push]
+
+
+   
+jobs:
+
+
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout target repo
+        uses: actions/checkout@v3
+      - name: package application
+        run: mvn -B clean package --file ./application/pom.xml
+      - name: package conveyor
+        run: mvn -B clean package --file ./conveyor/pom.xml
+      - name: package deal
+        run: mvn -B clean package --file ./deal/pom.xml
+      - name: package dossier
+        run: mvn -B clean package --file ./dossier/pom.xml
+      - name: package gateway
+        run: mvn -B clean package --file ./gateway/pom.xml
+
+      - name: build
+        run: |
+          docker-compose build
+      - name: Run application
+        run: |
+          docker-compose up --detach
+          docker-compose ps
+          docker-compose logs
+      - name: Compose down
+        run: |
+          docker-compose stop
+          docker-compose down
+
+

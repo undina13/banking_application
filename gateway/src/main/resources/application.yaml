@@ -7,3 +7,13 @@ server:
   port: 8089
 
 
+---
+spring:
+  profiles:
+    active: docker
+feign:
+  deal:
+    url: http://deal:8081/deal
+  application:
+    url: http://application:8082/application
+

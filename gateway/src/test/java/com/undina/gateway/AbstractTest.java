@@ -17,6 +17,6 @@ public abstract class AbstractTest {
 
     @Autowired
     protected ObjectMapper mapper;
-    protected static MockServerClient mockDealServerClient = startClientAndServer(8081);
-    protected static MockServerClient mockApplicationServerClient = startClientAndServer(8082);
+    protected static MockServerClient mockDealServerClient = startClientAndServer(9081);
+    protected static MockServerClient mockApplicationServerClient = startClientAndServer(9082);
 }

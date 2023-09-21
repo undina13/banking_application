@@ -11,6 +11,9 @@ public interface EmploymentMapper {
 
     @Mapping(target = "employmentStatus", source = "status")
     EmploymentDTO toEmploymentDTO(Employment employment);
+
+    @Mapping(target = "status", source = "employmentStatus")
+    Employment toEmployment(EmploymentDTO employmentDTO);
 }
 
 

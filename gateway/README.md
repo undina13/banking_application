@@ -8,4 +8,4 @@
 /gateway/deal/document/{applicationId}/send - запрос на отправку документов
 
 /gateway/admin/application/{applicationId} - получить заявку по id
-/gateway/admin/application - получить все заявки
+/gateway/admin/application - получить все заявки 

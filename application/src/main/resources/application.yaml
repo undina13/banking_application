@@ -3,3 +3,13 @@ feign:
     url: http://localhost:8081/deal
 server:
   port: 8082
+
+---
+spring:
+  profiles:
+    active: docker
+feign:
+  deal:
+    url: http://deal:8081/deal
+
+

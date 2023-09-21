@@ -119,7 +119,8 @@ public class DealService {
         application.setCredit(credit);
         updateStatus(application, ApplicationStatus.CC_DENIED);
         credit.setCreditStatus(CreditStatus.CALCULATED);
-        creditRepository.save(credit);
+        credit = creditRepository.save(credit);
+        application.setCredit(credit);
         applicationRepository.save(application);
         log.info("calculateCredit - result:  ok,  {}", creditDTO);
     }

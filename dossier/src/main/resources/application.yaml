@@ -33,6 +33,7 @@ spring:
               delegate:
                 class: org.springframework.kafka.support.serializer.JsonDeserializer
 
+
 topic:
   finish-registration: finish-registration
   create-documents: create-documents
@@ -44,4 +45,11 @@ server:
   port: 8086
 
 
+---
+spring:
+  profiles:
+    active: docker
+  kafka:
+    consumer:
+      bootstrap-servers: kafka1:9092
 
